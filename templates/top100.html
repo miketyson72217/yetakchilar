@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOP 100 YETAKCHI YOSHLAR — OʻzYYE</title>
+  <meta name="description" content="Oʻzbekistonning eng taʻsirli va muvaffaqiyatli 100 yetakchi yoshlari roʻyxati." />
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon-192x192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link">Yetakchilardan iqtiboslar</a></li>
+          
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">YILLIK REYTING</span>
+        <h1 class="page-hero-title">TOP 100 Oʻzbekiston Yetakchi Yoshlari</h1>
+        <p class="page-hero-subtitle">Mamlakatimizning eng taʻsirli va muvaffaqiyatli yetakchi yoshlarining yillik reytingi</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="top100-list-container" style="display:flex; flex-direction:column; gap:16px;">
+          {% for leader in top_leaders %}
+            <div class="top100-item reveal" style="background:var(--bg-surface); border:1px solid var(--border-subtle); padding:20px 24px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:space-between; backdrop-filter:blur(16px);">
+              <div style="display:flex; align-items:center; gap:20px;">
+                <div style="font-family:var(--font-heading); font-size:1.5rem; font-weight:900; color:#00A6EB; width:40px;">
+                  #{{ forloop.counter }}
+                </div>
+                <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader2.png{% endif %}" alt="{{ leader.name }}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:2px solid #00A6EB;" />
+                <div>
+                  <a href="{% url 'leader_detail' leader.slug %}" style="font-size:1.15rem; font-weight:800; color:var(--text-primary); text-decoration:none; display:block;">
+                    {{ leader.name }}
+                  </a>
+                  <span style="font-size:0.85rem; color:var(--text-tertiary);">{{ leader.short_bio }}</span>
+                </div>
+              </div>
+              <div>
+                <span class="meta-pill">{{ leader.get_sphere_display }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="footer-logo" />
+        <p class="footer-desc">Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi.</p>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>© 2026 Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

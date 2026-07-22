@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yetakchilardan iqtiboslar — OʻzYYE</title>
+  <meta name="description" content="Oʻzbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtiboslar va hayotiy hikoyalar." />
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon-192x192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+
+  <style>
+    .quotes-master-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 36px;
+      margin-top: 40px;
+    }
+
+    .premium-quote-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .premium-quote-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00A6EB 0%, #D4AF37 100%);
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .premium-quote-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 166, 235, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 166, 235, 0.18);
+    }
+
+    .premium-quote-card:hover::before {
+      opacity: 1;
+    }
+
+    .quote-header-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .quote-author-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #00A6EB;
+      box-shadow: 0 0 20px rgba(0, 166, 235, 0.3);
+      flex-shrink: 0;
+      background: #090d1a;
+    }
+
+    .quote-author-details h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: #00A6EB;
+      color: #fff;
+      font-size: 0.65rem;
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .quote-author-details span {
+      font-size: 0.8rem;
+      color: #00A6EB;
+      font-weight: 600;
+      display: block;
+      line-height: 1.3;
+    }
+
+    .quote-mark-icon {
+      font-size: 3.5rem;
+      font-family: Georgia, serif;
+      color: #00A6EB;
+      opacity: 0.25;
+      line-height: 0;
+      position: absolute;
+      top: 36px; right: 28px;
+      pointer-events: none;
+    }
+
+    .quote-body-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      font-weight: 400;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    .quote-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    .quote-tag-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #D4AF37;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .btn-copy-quote {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-copy-quote:hover {
+      background: rgba(0,166,235,0.2);
+      border-color: #00A6EB;
+      color: #00A6EB;
+    }
+
+    @media (max-width: 768px) {
+      .quotes-master-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link active">Yetakchilardan iqtiboslar</a></li>
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">LIDERLAR AFORIZMLARI</span>
+        <h1 class="page-hero-title">Yetakchi Yoshlardan Iqtiboslar</h1>
+        <p class="page-hero-subtitle">Muvaffaqiyat, qatʻiyat va shaxsiy rivojlanish haqida ilhomlantiruvchi fikrlar</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="quotes-master-grid" id="quotes-page-grid">
+          {% if quotes %}
+            {% for q in quotes %}
+              <div class="premium-quote-card reveal">
+                <div class="quote-mark-icon">&rdquo;</div>
+                <div>
+                  <div class="quote-header-row">
+                    <img src="{% if q.author_photo %}{{ q.author_photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.author_name }}" class="quote-author-avatar" />
+                    <div class="quote-author-details">
+                      <h3>{{ q.author_name }} <span class="verified-badge">&#10003;</span></h3>
+                      <span>{{ q.author_title }}</span>
+                    </div>
+                  </div>
+                  <p class="quote-body-text">&ldquo;{{ q.quote_text }}&rdquo;</p>
+                </div>
+                <div class="quote-footer-row">
+                  <span class="quote-tag-pill">LIDER IQTIBOSI</span>
+                  <button class="btn-copy-quote" onclick="copyQuote(this, `{{ q.quote_text|escapejs }} — {{ q.author_name|escapejs }}`)">Nusxalash</button>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="footer-logo" />
+        <p class="footer-desc">Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi.</p>
+      </div>
+      <div class="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    function copyQuote(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const oldText = btn.textContent;
+        btn.textContent = 'Nusxalandi! ✓';
+        btn.style.color = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        setTimeout(() => {
+          btn.textContent = oldText;
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

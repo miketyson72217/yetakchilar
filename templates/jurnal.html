@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if journal %}{{ journal.title }}{% else %}Oʻzbekiston Yetakchi Yoshlari Online Jurnali{% endif %} — OʻzYYE</title>
+  <meta name="description" content="Oʻzbekiston Yetakchi Yoshlari online jurnali — eksklyuziv intervyular, muvaffaqiyat sirlari va 3D flipbook tajribasi." />
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon-192x192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+  <script src="/static/page-flip.browser.js"></script>
+
+  <style>
+    :root {
+      --reader-bg: #04060f;
+      --flip-accent: #00A6EB;
+      --gold-accent: #D4AF37;
+    }
+
+    .journal-master-container { padding: 40px 0 100px; }
+
+    /* Magazine overview card */
+    .magazine-hero-card {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 48px;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 100px rgba(0,0,0,0.6);
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mag-cover-standalone {
+      position: relative;
+      cursor: pointer;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,166,235,0.2);
+    }
+
+    .mag-cover-img-flat {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .mag-cover-standalone:hover .mag-cover-img-flat {
+      transform: scale(1.03);
+      box-shadow: 0 25px 60px rgba(0,166,235,0.35);
+    }
+
+    .cover-tag-pill {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.7rem;
+      padding: 5px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.1em;
+      box-shadow: 0 4px 16px rgba(0,166,235,0.4);
+      z-index: 2;
+    }
+
+    .mag-info-block h1 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.18;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .mag-meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+
+    .mag-meta-item {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #00A6EB;
+      background: rgba(0,166,235,0.1);
+      border: 1px solid rgba(0,166,235,0.25);
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    .mag-desc-para {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .mag-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
+    }
+
+    .spec-box strong {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .spec-box span { font-weight: 800; font-size: 0.95rem; color: var(--text-primary); }
+
+    .mag-actions-flex { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Stories grid */
+    .cover-stories-section { margin-bottom: 72px; }
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .story-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .story-card:hover {
+      border-color: #00A6EB;
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,166,235,0.12);
+    }
+    .story-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #00A6EB;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .story-title { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.3; }
+    .story-desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 18px; }
+    .story-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+      font-weight: 700;
+    }
+
+    /* ===== FLIPBOOK STAGE ===== */
+    .flipbook-stage-wrapper {
+      background: #04060f;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 28px 20px 32px;
+      position: relative;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+      overflow: hidden;
+      margin-bottom: 60px;
+    }
+
+    /* Toolbar */
+    .flipbook-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,14,26,0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 10px 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(20px);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .toolbar-group { display: flex; align-items: center; gap: 8px; }
+
+    .tool-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary);
+      padding: 7px 16px;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .tool-btn:hover, .tool-btn.active {
+      background: rgba(0,166,235,0.2);
+      border-color: #00A6EB;
+      color: #00A6EB;
+    }
+
+    .page-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+
+    .page-num-input {
+      width: 44px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: #00A6EB;
+      text-align: center;
+      padding: 4px;
+      font-weight: 800;
+      font-family: inherit;
+    }
+
+    /* Viewport */
+    .flipbook-viewport {
+      width: 100%;
+      min-height: 660px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: radial-gradient(circle at center, #0a1128 0%, #03040a 100%);
+      border: 1px solid rgba(0, 166, 235, 0.15);
+      box-shadow: inset 0 0 60px rgba(0,0,0,0.8);
+      padding: 30px 10px;
+      transition: transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    #flipbook-instance {
+      margin: 0 auto;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.95);
+      border-radius: 6px;
+    }
+
+    /* Flipbook page strict styles */
+    .fpage {
+      width: 440px;
+      height: 620px;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+      background: #0d1428;
+    }
+
+    /* Cover pages: image fills 100% strictly */
+    .fpage-cover {
+      background: #060913;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .fpage-cover img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block;
+      border-radius: 0;
+    }
+
+    /* Interior magazine pages */
+    .fpage-inner {
+      background: linear-gradient(150deg, #0e172e 0%, #090d1c 100%);
+      box-shadow: inset 0 0 35px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .fpage-content {
+      padding: 32px 28px;
+      color: #ffffff;
+      height: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .mag-page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #00A6EB;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #00A6EB;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .mag-page-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 10px;
+      margin-top: 10px;
+      font-size: 0.68rem;
+      color: #94a3b8;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .mag-page-footer .page-num-tag {
+      background: rgba(0,166,235,0.15);
+      border: 1px solid rgba(0,166,235,0.3);
+      color: #00A6EB;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-weight: 800;
+    }
+
+    .page-section-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #D4AF37;
+      margin-bottom: 8px;
+      line-height: 1.2;
+      flex-shrink: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .page-article-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .page-author {
+      font-size: 0.72rem;
+      color: #00A6EB;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .page-body {
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: #cbd5e1;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .page-body p { margin-bottom: 10px; }
+
+    .page-body p::first-letter {
+      font-size: 2rem;
+      float: left;
+      line-height: 0.85;
+      padding-right: 8px;
+      color: #00A6EB;
+      font-weight: 900;
+    }
+
+    .page-pull-quote {
+      font-size: 0.88rem;
+      font-style: italic;
+      font-weight: 700;
+      color: #ffffff;
+      padding: 10px 14px;
+      background: rgba(0,166,235,0.08);
+      border-left: 3px solid #D4AF37;
+      border-radius: 4px;
+      margin: 10px 0;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 8px;
+    }
+    .toc-item-title { font-weight: 700; font-size: 0.82rem; color: #fff; }
+    .toc-item-sub { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
+    .toc-item-page { color: #00A6EB; font-weight: 800; font-size: 0.85rem; flex-shrink: 0; margin-left: 12px; }
+
+    /* Drawer sidebar */
+    .drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .drawer-sidebar {
+      position: fixed; top: 0; right: -440px;
+      width: 420px; height: 100%;
+      background: #08091a;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      z-index: 10000;
+      transition: right 0.35s cubic-bezier(0.2,0.8,0.2,1);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-overlay.active .drawer-sidebar { right: 0; }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 14px;
+    }
+    .drawer-title { font-size: 1.1rem; font-weight: 800; color: #00A6EB; }
+
+    .thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      overflow-y: auto; flex: 1;
+    }
+
+    .thumb-card {
+      border: 2px solid transparent;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(255,255,255,0.02);
+    }
+    .thumb-card:hover, .thumb-card.active { border-color: #00A6EB; transform: scale(1.03); }
+    .thumb-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
+    .thumb-card-inner { width: 100%; height: 130px; padding: 12px; font-size: 0.72rem; color: #fff; background: #0b101f; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .thumb-label { text-align: center; padding: 6px; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 920px) {
+      .magazine-hero-card { grid-template-columns: 1fr; padding: 28px 20px; }
+      .flipbook-viewport { min-height: 540px; }
+      .drawer-sidebar { width: 100%; right: -100%; }
+    }
+  </style>
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="OʻzYYE" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link active">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link">Yetakchilardan iqtiboslar</a></li>
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">OʻZBEKISTON YETAKCHI YOSHLARI</span>
+        <h1 class="page-hero-title">Online Jurnal &amp; Eksklyuziv Mutolaa</h1>
+        <p class="page-hero-subtitle">Muvaffaqiyat sirlari, tahliliy maqolalar va 3D interaktiv bosma jurnal tajribasi</p>
+      </div>
+    </section>
+
+    <div class="journal-master-container">
+      <div class="container">
+
+        {% if journal_setting and journal_setting.is_coming_soon %}
+        <!-- Coming Soon Card -->
+        <div style="background: var(--bg-surface); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 70px 40px; text-align: center; backdrop-filter: blur(24px); box-shadow: 0 35px 100px rgba(0,0,0,0.7); max-width: 840px; margin: 40px auto 80px; position: relative; overflow: hidden;" class="reveal">
+          <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,235,0.25) 0%, rgba(0,0,0,0) 70%); pointer-events: none; border-radius: 50%;"></div>
+          <span style="display: inline-block; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.85rem; padding: 7px 22px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; box-shadow: 0 4px 20px rgba(0,166,235,0.4); margin-bottom: 24px;">🚀 TEZ ORADA / COMING SOON</span>
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2;">{{ journal_setting.coming_soon_title }}</h2>
+          <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 650px; margin: 0 auto 36px;">{{ journal_setting.coming_soon_description }}</p>
+          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="btn btn-primary" style="padding: 14px 28px;">Bosh sahifaga qaytish &rarr;</a>
+            <a href="/ariza/" class="btn btn-outline" style="padding: 14px 28px;">Ariza qoldirish</a>
+          </div>
+        </div>
+        {% else %}
+
+        {% if journal %}
+        <!-- Magazine Overview Hero -->
+        <div class="magazine-hero-card reveal">
+          <div class="mag-cover-standalone" id="open-flipbook-trigger">
+            <span class="cover-tag-pill">3D FLIPBOOK</span>
+            <img src="{% if journal and journal.front_cover %}{{ journal.front_cover.url }}{% else %}/static/images/journal_front_cover.png{% endif %}" onerror="this.src='/static/images/journal_front_cover.png'" alt="Jurnal muqovasi" class="mag-cover-img-flat" />
+          </div>
+
+          <div class="mag-info-block">
+            <div class="mag-meta-row">
+              <span class="mag-meta-item">{{ journal.issue_number }}-SON</span>
+              <span class="mag-meta-item" style="color:#22c55e; background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.25);">BEPUL MUTOLAA</span>
+            </div>
+            <h1>{{ journal.title }}</h1>
+            <p class="mag-desc-para">{{ journal.description }}</p>
+
+            <div class="mag-specs-grid">
+              <div class="spec-box">
+                <strong>Muallif</strong>
+                <span>{% if journal.author and journal.author != "Oʻzbekiston Yetakchi Yoshlari" %}{{ journal.author }}{% else %}Oʻzbekiston Yetakchi Yoshlari{% endif %}</span>
+              </div>
+              <div class="spec-box">
+                <strong>Chop etilgan sana</strong>
+                <span>{{ journal.release_date }}</span>
+              </div>
+              <div class="spec-box">
+                <strong>Sahifalar soni</strong>
+                <span>{{ journal.pages_count }} Sahifa</span>
+              </div>
+              <div class="spec-box">
+                <strong>Fayl hajmi</strong>
+                <span>{{ journal.file_size }}</span>
+              </div>
+              <div class="spec-box">
+                <strong>ISSN Indeksi</strong>
+                <span>{{ journal.issn }}</span>
+              </div>
+            </div>
+
+            <div class="mag-actions-flex">
+              <a href="#flipbook-stage" class="btn btn-primary">
+                3D Virtual Kitobni Ochish &rarr;
+              </a>
+              {% if journal.pdf_file %}
+              <a href="{{ journal.pdf_file.url }}" download class="btn btn-outline" id="btn-download-pdf">
+                Yuklab olish (PDF)
+              </a>
+              {% endif %}
+              <button class="btn btn-outline" id="btn-share-journal">
+                Ulashish
+              </button>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div style="text-align:center; padding:80px 20px;">
+          <p style="font-size:1.2rem; color:var(--text-secondary);">Hozircha jurnal mavjud emas. Admin yangi jurnal qoʻshishi bilanoq bu yerda koʻrinadi.</p>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <!-- Cover Stories -->
+        <div class="cover-stories-section reveal">
+          <span class="section-label">EKSKLYUZIV JURNAL MAQOLALARI</span>
+          <h2 class="section-title">Ushbu sonda nimalar bor?</h2>
+          <p class="section-desc">Chuqurlashtirilgan jurnalistika, tahliliy suhbatlar va mualliflik darslari</p>
+
+          <div class="stories-grid">
+            <div class="story-card">
+              <div>
+                <div class="story-badge">LIDERLIK &amp; INTIZOM</div>
+                <h3 class="story-title">Kelajak Intizom Bilan Bunyod Etiladi</h3>
+                <p class="story-desc">Yosh siyosatshunoslik, jamoatchilik faoliyati hamda ekologik loyihalar tashabbuskorining amaliy tajribasi.</p>
+              </div>
+              <div class="story-meta"><span>Yusufjon Yusufov</span><span>SAHIFA 04</span></div>
+            </div>
+            <div class="story-card">
+              <div>
+                <div class="story-badge">TEXNOLOGIYA &amp; IT</div>
+                <h3 class="story-title">Sunʻiy Intellekt va Kelajak</h3>
+                <p class="story-desc">AI platformalarini yaratish, dasturlash intizomi va raqamli iqtisodiyot tendensiyalari tahlili.</p>
+              </div>
+              <div class="story-meta"><span>Javohir Alimov</span><span>SAHIFA 05</span></div>
+            </div>
+            <div class="story-card">
+              <div>
+                <div class="story-badge">SPORT &amp; INTIZOM</div>
+                <h3 class="story-title">Chempionlik Sirlari</h3>
+                <p class="story-desc">Chempionlik ruhiyatini shakllantirish, toʻsiqlarni yengish va har kungi qatʻiy intizom tamoyillari.</p>
+              </div>
+              <div class="story-meta"><span>Zebo Karimova</span><span>SAHIFA 06</span></div>
+            </div>
+            <div class="story-card">
+              <div>
+                <div class="story-badge">MOLIYA &amp; INNOVATSIYA</div>
+                <h3 class="story-title">Yashil Energiya va Venchur</h3>
+                <p class="story-desc">Kelajak energetikasi, venchur fondlar va istiqbolli investitsion loyihalar boʻyicha tahlil.</p>
+              </div>
+              <div class="story-meta"><span>Ekspert Sharhi</span><span>SAHIFA 07</span></div>
+            </div>
+          </div>
+        </div>
+
+        {% if journal %}
+        <!-- 3D Flipbook Reader Stage -->
+        <div class="flipbook-stage-wrapper reveal" id="flipbook-stage">
+
+          <!-- Toolbar -->
+          <div class="flipbook-toolbar">
+            <div class="toolbar-group">
+              <button class="tool-btn" id="tb-prev">&larr; Oldingi</button>
+              <div class="page-input-wrap">
+                <input type="number" class="page-num-input" id="tb-page-num" value="1" min="1" />
+                <span>/ <span id="tb-total-pages">10</span></span>
+              </div>
+              <button class="tool-btn" id="tb-next">Keyingi &rarr;</button>
+            </div>
+
+            <div class="toolbar-group">
+              <button class="tool-btn" id="tb-zoom-out">Kichik &minus;</button>
+              <button class="tool-btn" id="tb-zoom-reset">100%</button>
+              <button class="tool-btn" id="tb-zoom-in">Katta +</button>
+              <button class="tool-btn" id="tb-thumbs">Miniatyura</button>
+              <button class="tool-btn" id="tb-fullscreen">Toʻliq ekran</button>
+            </div>
+          </div>
+
+          <!-- Flipbook viewport -->
+          <div class="flipbook-viewport" id="flipbook-viewport">
+            <div id="flipbook-instance">
+
+              <!-- Sahifa 1: Old muqova (HARD COVER) -->
+              <div class="fpage fpage-cover" data-density="hard">
+                <img src="{% if journal and journal.front_cover %}{{ journal.front_cover.url }}{% else %}/static/images/journal_front_cover.png{% endif %}" onerror="this.src='/static/images/journal_front_cover.png'" alt="Old muqova" />
+              </div>
+
+              <!-- Sahifa 2: Jurnal haqida (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>OʻzYYE JURNALI — {{ journal.issue_number }}-SON</span>
+                    <span>YETAKCHI YOSHLAR</span>
+                  </div>
+                  <div class="page-section-title">02 | JURNAL HAQIDA</div>
+                  <div class="page-author">Oʻzbekiston Yetakchi Yoshlari</div>
+                  <div class="page-body">
+                    <p>Ushbu elektron jurnal Oʻzbekistonning turli sohalarida yutuqlarga erishayotgan faol yoshlarning tajribasi, maslahatlari hamda ilhomlantiruvchi hikoyalarini jamlagan loyihadir.</p>
+                    <div class="page-pull-quote">"Kelajakni bugungi mehnat va intizom belgilaydi."</div>
+                    <p>Ushbu sonda biznes, IT, sport va ilm-fan sohalarida faoliyat yuritayotgan yoshlarimiz tajribasi bilan tanishishingiz mumkin.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Oʻzbekiston Yetakchi Yoshlari</span>
+                    <span class="page-num-tag">SAHIFA 02</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 3: Mundarija (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>OʻzYYE JURNALI</span>
+                    <span>MUNDARIJA</span>
+                  </div>
+                  <div class="page-section-title">03 | MUNDARIJA</div>
+                  <div style="flex:1; overflow:hidden;">
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Kelajak Intizom Bilan Bunyod Etiladi</div><div class="toc-item-sub">Yusufjon Yusufov — Yosh Siyosatshunos &amp; Jamoa Faoli</div></div>
+                      <div class="toc-item-page">04</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Sunʻiy Intellekt va Kelajak</div><div class="toc-item-sub">Javohir Alimov — IT va AI Texnologiyalari</div></div>
+                      <div class="toc-item-page">05</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Chempionlik Sirlari</div><div class="toc-item-sub">Zebo Karimova — Sport va Intizom</div></div>
+                      <div class="toc-item-page">06</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Yashil Energiya va Venchur</div><div class="toc-item-sub">Ekspert Sharhi</div></div>
+                      <div class="toc-item-page">07</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Liderlik va Psixologiya</div><div class="toc-item-sub">Zamonaviy Yetakchi Odatlari</div></div>
+                      <div class="toc-item-page">08</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">Yoshlar uchun 10 Oltin Qoida</div><div class="toc-item-sub">Amaliy Rivojlanish Yoʻl Xaritasi</div></div>
+                      <div class="toc-item-page">09</div>
+                    </div>
+                    <div class="toc-item">
+                      <div><div class="toc-item-title">TOP 100 Reyting Eʻloni</div><div class="toc-item-sub">Tanlov va Qabul Jarayoni</div></div>
+                      <div class="toc-item-page">10</div>
+                    </div>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Oʻzbekiston Yetakchi Yoshlari</span>
+                    <span class="page-num-tag">SAHIFA 03</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 4: Maqola 1 (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>LIDERLIK &amp; SIYOSATSHUNOSLIK</span>
+                    <span>EKSKLYUZIV SUHBAT</span>
+                  </div>
+                  <div class="page-section-title">04 | Kelajak Intizom Bilan Bunyod Etiladi</div>
+                  <div class="page-author">Muallif: Yusufjon Yusufov Baxtiyorjon oʻgʻli</div>
+                  <div class="page-body">
+                    <p>Yoshlar oʻz intizomi, harbiy-vatanparvarlik ruhi, ekologik masʻuliyati hamda siyosiy-ijtimoiy faolligi orqali jamiyat kelajagini shakllantiradi.</p>
+                    <div class="page-pull-quote">"Kelajak tasodifan yaratilmaydi, u bugungi intizom bilan bunyod etiladi."</div>
+                    <p>Har bir yosh yetakchi oʻz sohasida yetuk bilimga va tashabbuskorlikka ega boʻlishi — yurtimiz taraqqiyotining kafolatidir.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Liderlik Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 04</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 5: Maqola 2 (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>TEXNOLOGIYA &amp; IT</span>
+                    <span>TAHLILIY SHARH</span>
+                  </div>
+                  <div class="page-section-title">05 | Sunʻiy Intellekt va Kelajak</div>
+                  <div class="page-author">Muallif: Javohir Alimov, IT Innovatori</div>
+                  <div class="page-body">
+                    <p>Bugungi kunda sunʻiy intellekt (AI) insoniyat hayotining har bir sohasiga shiddat bilan kirib bormoqda. IT sohasida yetakchi boʻlish uchun har kuni yangi bilimlarni egallash talab etiladi.</p>
+                    <div class="page-pull-quote">"Kelajak texnologiyasini bugun oʻrganmagan kishi ertaga kuzatuvchiga aylanadi."</div>
+                    <p>Dasturlash — bu shunchaki kod yozish emas, balki insoniyat muammolarini mantiqiy hal etish sanʻatidir. Kelajak texnologiyalarini oʻrganish har bir yoshning asosiy maqsadi boʻlishi kerak.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Texnologiya Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 05</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 6: Maqola 3 (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>SPORT &amp; INTIZOM</span>
+                    <span>CHEMPION SIRI</span>
+                  </div>
+                  <div class="page-section-title">06 | Chempionlik Sirlari</div>
+                  <div class="page-author">Muallif: Zebo Karimova, Olimpiya Chempioni</div>
+                  <div class="page-body">
+                    <p>Chempion boʻlish — bu bir kunlik gʻalaba emas, balki yillar davomida toʻplangan intizom, mashaqqat va qatʻiyatning natijasi. Men har kuni mashaqqatli mashgʻulotdan soʻng oʻzimga shuni eslataman.</p>
+                    <div class="page-pull-quote">"Sport hayotda ham, kasbda ham oldinga intilishni oʻrgatdi."</div>
+                    <p>Har qanday toʻsiqni yengish mumkin — buning uchun faqat harakat va qatʻiyat kerak.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Sport Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 06</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 7: Maqola 4 (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>MOLIYA &amp; INNOVATSIYA</span>
+                    <span>INVESTITSIYA TAHLILI</span>
+                  </div>
+                  <div class="page-section-title">07 | Yashil Energiya va Venchur</div>
+                  <div class="page-author">Ekspert Sharhi</div>
+                  <div class="page-body">
+                    <p>Yashil energetika bugungi kunda dunyodagi eng tezkor oʻsayotgan investitsiya sohalaridan biridir. Oʻzbekistonda bu borada katta imkoniyatlar mavjud.</p>
+                    <div class="page-pull-quote">"Kelajak investori — bugundan yangi energiyaga sarmoya kiritadigandir."</div>
+                    <p>Venchur fondlar orqali innovatsion loyihalarga investitsiya jalb qilish — yangi avlod tadbirkorligining asosiy yoʻnalishi hisoblanadi.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Moliya Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 07</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 8: Liderlik (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>LIDERLIK &amp; PSIXOLOGIYA</span>
+                    <span>MUTAXASSIS SHARHI</span>
+                  </div>
+                  <div class="page-section-title">08 | Liderlik va Psixologiya</div>
+                  <div class="page-author">Jurnal Materiallari</div>
+                  <div class="page-body">
+                    <p>Haqiqiy lider — atrofdagilarni boshqaruvchi emas, balki ilhomlantiruvchi insondir. Liderlikda eng muhim xususiyat — boshqalarga ishonish va imkoniyat berishdir.</p>
+                    <div class="page-pull-quote">"Yetakchi oʻzini kuchli qilish orqali emas, balki jamoasini kuchli qilish orqali muvaffaqiyatga erishadi."</div>
+                    <p>Psixologik mustahkamlik, hissiy intellekt va samarali muloqot — zamonaviy yetakchining asosiy qurolidir.</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Liderlik Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 08</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 9: Yoshlar uchun maslahatlar (SOFT PAGE) -->
+              <div class="fpage fpage-inner" data-density="soft">
+                <div class="fpage-content">
+                  <div class="mag-page-header">
+                    <span>YOSHLAR UCHUN</span>
+                    <span>AMALIY MASLAHATLAR</span>
+                  </div>
+                  <div class="page-section-title">09 | Yoshlar uchun 10 Oltin Qoida</div>
+                  <div class="page-author">OʻzYYE Loyihasi</div>
+                  <div class="page-body">
+                    <p>Muvaffaqiyatli yetakchi boʻlish uchun erta boshlash, doim oʻrganish va hech qachon taslim boʻlmaslik zarur. Quyidagi maslahatlar sizga yoʻlda yordam beradi.</p>
+                    <div class="page-pull-quote">"Kelajakni bugun qilayotgan harakatlaringiz belgilaydi."</div>
+                    <p>Telefon oʻrniga kitob oʻqing. Bir sohada mutaxassis boʻling. Tarmoqlaringizni kengaytiring. Har kuni yangi bilim oling. Va eng muhimi — harakat qiling!</p>
+                  </div>
+                  <div class="mag-page-footer">
+                    <span>Yoshlar Maqolasi</span>
+                    <span class="page-num-tag">SAHIFA 09</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sahifa 10: Orqa muqova (HARD COVER) -->
+              <div class="fpage fpage-cover" data-density="hard">
+                <img src="{% if journal and journal.back_cover %}{{ journal.back_cover.url }}{% else %}/static/images/journal_back_cover.png{% endif %}" onerror="this.src='/static/images/journal_back_cover.png'" alt="Orqa muqova" />
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Sidebar Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay">
+    <div class="drawer-sidebar">
+      <div class="drawer-header">
+        <h3 class="drawer-title" id="drawer-header-title">Miniatyuralar</h3>
+        <button class="tool-btn" id="drawer-close">&#x2715;</button>
+      </div>
+      <div class="thumbs-grid" id="thumbs-grid">
+        <div class="thumb-card active" onclick="goToPageNum(0)">
+          <img src="{% if journal and journal.front_cover %}{{ journal.front_cover.url }}{% else %}/static/images/journal_front_cover.png{% endif %}" onerror="this.src='/static/images/journal_front_cover.png'" />
+          <div class="thumb-label">1 — Old Muqova</div>
+        </div>
+        <div class="thumb-card" onclick="goToPageNum(1)"><div class="thumb-card-inner">02 — Jurnal Haqida</div><div class="thumb-label">2</div></div>
+        <div class="thumb-card" onclick="goToPageNum(2)"><div class="thumb-card-inner">03 — Mundarija</div><div class="thumb-label">3</div></div>
+        <div class="thumb-card" onclick="goToPageNum(3)"><div class="thumb-card-inner">04 — Startap Maqolasi</div><div class="thumb-label">4</div></div>
+        <div class="thumb-card" onclick="goToPageNum(4)"><div class="thumb-card-inner">05 — AI va IT</div><div class="thumb-label">5</div></div>
+        <div class="thumb-card" onclick="goToPageNum(5)"><div class="thumb-card-inner">06 — Chempionlik</div><div class="thumb-label">6</div></div>
+        <div class="thumb-card" onclick="goToPageNum(6)"><div class="thumb-card-inner">07 — Yashil Energiya</div><div class="thumb-label">7</div></div>
+        <div class="thumb-card" onclick="goToPageNum(7)"><div class="thumb-card-inner">08 — Liderlik</div><div class="thumb-label">8</div></div>
+        <div class="thumb-card" onclick="goToPageNum(8)"><div class="thumb-card-inner">09 — Maslahatlar</div><div class="thumb-label">9</div></div>
+        <div class="thumb-card" onclick="goToPageNum(9)">
+          <img src="{% if journal and journal.back_cover %}{{ journal.back_cover.url }}{% else %}/static/images/journal_back_cover.png{% endif %}" onerror="this.src='/static/images/journal_back_cover.png'" />
+          <div class="thumb-label">10 — Orqa Muqova</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="footer-logo" />
+        <p class="footer-desc">Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi.</p>
+      </div>
+      <div class="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    let pageFlip = null;
+    let currentZoom = 1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const target = document.getElementById('flipbook-instance');
+      if (!target || !window.St || !window.St.PageFlip) {
+        console.warn('StPageFlip library not found');
+        return;
+      }
+
+      pageFlip = new St.PageFlip(target, {
+        width: 440,
+        height: 620,
+        size: "stretch",
+        minWidth: 300,
+        maxWidth: 500,
+        minHeight: 420,
+        maxHeight: 700,
+        maxShadowOpacity: 0.7,
+        showCover: true,
+        mobileScrollSupport: true,
+        useMouseEvents: true,
+        swipeDistance: 25,
+        clickEventForward: true
+      });
+
+      pageFlip.loadFromHTML(document.querySelectorAll('.fpage'));
+
+      const pageNumInput = document.getElementById('tb-page-num');
+      const totalPagesSpan = document.getElementById('tb-total-pages');
+
+      if (totalPagesSpan) totalPagesSpan.textContent = pageFlip.getPageCount();
+
+      pageFlip.on('flip', (e) => {
+        if (pageNumInput) pageNumInput.value = e.data + 1;
+        document.querySelectorAll('.thumb-card').forEach((c, i) => {
+          c.classList.toggle('active', i === e.data);
+        });
+      });
+
+      document.getElementById('tb-prev')?.addEventListener('click', () => pageFlip.flipPrev());
+      document.getElementById('tb-next')?.addEventListener('click', () => pageFlip.flipNext());
+      document.getElementById('open-flipbook-trigger')?.addEventListener('click', () => {
+        document.getElementById('flipbook-stage')?.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      if (pageNumInput) {
+        pageNumInput.addEventListener('change', (e) => {
+          const val = parseInt(e.target.value, 10);
+          const max = pageFlip.getPageCount();
+          if (val >= 1 && val <= max) {
+            pageFlip.flip(val - 1);
+          } else {
+            e.target.value = pageFlip.getCurrentPageIndex() + 1;
+          }
+        });
+      }
+
+      const viewport = document.getElementById('flipbook-viewport');
+
+      function applyZoom(z) {
+        currentZoom = Math.max(0.8, Math.min(1.5, z));
+        viewport.style.transform = `scale(${currentZoom})`;
+        document.getElementById('tb-zoom-reset').textContent = Math.round(currentZoom * 100) + '%';
+      }
+
+      document.getElementById('tb-zoom-in')?.addEventListener('click', () => applyZoom(currentZoom + 0.15));
+      document.getElementById('tb-zoom-out')?.addEventListener('click', () => applyZoom(currentZoom - 0.15));
+      document.getElementById('tb-zoom-reset')?.addEventListener('click', () => applyZoom(1));
+
+      const stage = document.getElementById('flipbook-stage');
+
+      document.getElementById('tb-fullscreen')?.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          stage.requestFullscreen({ navigationUI: 'hide' }).then(() => {
+            stage.style.borderRadius = '0';
+            stage.style.padding = '20px';
+            stage.style.background = '#000';
+            if (pageFlip) pageFlip.update();
+          }).catch(err => {
+            console.warn('Fullscreen error:', err);
+            alert('Toʻliq ekran rejimi ushbu brauzerda ishlamadi.');
+          });
+        } else {
+          document.exitFullscreen().then(() => {
+            stage.style.borderRadius = '';
+            stage.style.padding = '';
+            stage.style.background = '';
+            if (pageFlip) pageFlip.update();
+          });
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        const btn = document.getElementById('tb-fullscreen');
+        if (document.fullscreenElement) {
+          btn.textContent = 'Ekrandan chiq';
+          btn.classList.add('active');
+        } else {
+          btn.textContent = 'Toʻliq ekran';
+          btn.classList.remove('active');
+          stage.style.borderRadius = '';
+          stage.style.padding = '';
+          stage.style.background = '';
+          if (pageFlip) pageFlip.update();
+        }
+      });
+
+      document.getElementById('btn-share-journal')?.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({ title: document.title, url: window.location.href });
+        } else {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Jurnal havolasi nusxalandi!');
+          });
+        }
+      });
+    });
+
+    const drawerOverlay = document.getElementById('drawer-overlay');
+
+    document.getElementById('tb-thumbs')?.addEventListener('click', () => {
+      document.getElementById('drawer-header-title').textContent = 'Miniatyuralar';
+      drawerOverlay.classList.add('active');
+    });
+
+    document.getElementById('drawer-close')?.addEventListener('click', () => {
+      drawerOverlay.classList.remove('active');
+    });
+
+    drawerOverlay?.addEventListener('click', (e) => {
+      if (e.target === drawerOverlay) drawerOverlay.classList.remove('active');
+    });
+
+    function goToPageNum(idx) {
+      if (pageFlip) pageFlip.flip(idx);
+      drawerOverlay.classList.remove('active');
+    }
+  </script>
+</body>
+</html>

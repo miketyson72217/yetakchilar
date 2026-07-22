@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {% if leader %}
+  <title>{{ leader.name }} — Profil | Oʻzbekiston Yetakchi Yoshlari</title>
+  <meta name="description" content="{{ leader.name }} — {{ leader.short_bio }}. Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasida profil sahifasi." />
+  <meta name="keywords" content="{{ leader.name }}, Oʻzbekiston yetakchi yoshlar, {{ leader.get_sphere_display }}, {{ leader.region }}, OʻzYYE, lider" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="{{ leader.name }} — Oʻzbekiston Yetakchi Yoshlari" />
+  <meta property="og:description" content="{{ leader.short_bio }}" />
+  <meta property="og:image" content="{% if leader.photo %}{{ leader.photo.url }}{% endif %}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ leader.name }} — OʻzYYE" />
+  <meta name="twitter:description" content="{{ leader.short_bio }}" />
+  <meta name="twitter:image" content="{% if leader.photo %}{{ leader.photo.url }}{% endif %}" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ leader.name }}",
+    "description": "{{ leader.short_bio }}",
+    "image": "{% if leader.photo %}{{ leader.photo.url }}{% endif %}",
+    "jobTitle": "{{ leader.get_sphere_display }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ leader.region }}",
+      "addressCountry": "UZ"
+    },
+    "memberOf": {
+      "@type": "Organization",
+      "name": "Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi",
+      "url": "{{ request.scheme }}://{{ request.get_host }}"
+    }
+  }
+  </script>
+  {% else %}
+  <title>Profil topilmadi | OʻzYYE</title>
+  <meta name="robots" content="noindex" />
+  {% endif %}
+
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon-192x192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+
+  <style>
+    .hall-hero-wrapper { padding: 130px 0 80px; position: relative; }
+
+    .hall-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      background: rgba(0,166,235,0.12);
+      border: 1px solid rgba(0,166,235,0.3);
+      border-radius: 100px;
+      color: #00A6EB;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      box-shadow: 0 0 25px rgba(0,166,235,0.2);
+    }
+
+    .hall-profile-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .hall-portrait-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      position: sticky;
+      top: 100px;
+      backdrop-filter: blur(20px);
+    }
+
+    .hall-portrait-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--border-highlight);
+      box-shadow: 0 0 40px rgba(0,166,235,0.2);
+      display: block;
+    }
+
+    .portrait-sphere-badge {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #00A6EB;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hall-info-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 44px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 35px 100px rgba(0,0,0,0.6);
+    }
+
+    .hall-leader-name {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .hall-leader-submeta {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #00A6EB;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hall-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hall-stat-item strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .hall-stat-item span {
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .quick-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border-subtle);
+      padding: 20px;
+      border-radius: var(--radius-md);
+    }
+
+    .spec-item strong {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .spec-item span { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); }
+
+    .hall-cta-flex {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .detail-section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .detail-section-h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #00A6EB;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+
+    .detail-para {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .detail-para strong { color: #ffffff; }
+
+    /* ===== IQTIBOS POSTER — Dynamic HTML Card from DB ===== */
+    .poster-showcase-box {
+      margin-top: 36px;
+      margin-bottom: 28px;
+    }
+
+    .quote-poster-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0,166,235,0.25);
+      background: linear-gradient(135deg, #a7e8da 0%, #8de2d1 60%, #76d3c0 100%);
+      border: 2px solid rgba(0,166,235,0.4);
+    }
+
+    .poster-top-header {
+      padding: 24px 36px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .poster-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .poster-logo-img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .poster-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .poster-logo-text strong {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #0b1727;
+      letter-spacing: 0.04em;
+    }
+
+    .poster-logo-text span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #0b1727;
+      letter-spacing: 0.12em;
+    }
+
+    .poster-quote-icon {
+      width: 52px;
+      height: 52px;
+      background: #00A6EB;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(0,166,235,0.3);
+    }
+
+    .poster-quote-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: #ffffff;
+    }
+
+    .poster-middle-body {
+      position: relative;
+      padding: 16px 36px 24px;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 20px;
+      align-items: center;
+      min-height: 240px;
+    }
+
+    .quote-text-main {
+      font-family: 'Space Grotesk', 'Outfit', sans-serif;
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      text-shadow: 0 4px 14px rgba(11,23,39,0.35);
+      z-index: 2;
+    }
+
+    .poster-person-img-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100%;
+    }
+
+    .poster-person-img-wrap img {
+      max-height: 300px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.35));
+    }
+
+    .poster-bottom-bar {
+      background: linear-gradient(90deg, #009ce6 0%, #00A6EB 50%, #00b4ff 100%);
+      padding: 22px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-top: 3px solid #ffffff;
+    }
+
+    .poster-author-fullname {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .poster-author-subline {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.92);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .poster-script-tag {
+      font-family: 'Dancing Script', 'Pacifico', 'Brush Script MT', cursive;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .detail-cta-banner {
+      background: linear-gradient(135deg, rgba(0,166,235,0.15) 0%, rgba(0,102,255,0.15) 100%);
+      border: 1px solid rgba(0,166,235,0.3);
+      padding: 44px;
+      border-radius: var(--radius-xl);
+      margin-top: 40px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .detail-cta-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 14px; color: #ffffff; }
+
+    .detail-cta-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 640px;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    .detail-cta-flex { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    .related-leaders-section { margin-top: 64px; margin-bottom: 40px; }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .related-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .related-card:hover {
+      border-color: #00A6EB;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,166,235,0.12);
+    }
+
+    .related-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-highlight);
+      flex-shrink: 0;
+    }
+
+    .related-card-name { font-size: 0.92rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .related-card-sub { font-size: 0.78rem; color: var(--text-tertiary); }
+
+    @media (max-width: 900px) {
+      .hall-profile-grid { grid-template-columns: 1fr; }
+      .hall-portrait-card { position: static; }
+      .quote-poster-top { grid-template-columns: 1fr; min-height: auto; }
+      .quote-person-photo-wrap { display: none; }
+      .quote-poster-bottom { flex-direction: column; text-align: center; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link active">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link">Yetakchilardan iqtiboslar</a></li>
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    {% if leader %}
+    <div class="hall-hero-wrapper">
+      <div class="container">
+
+        <div class="hall-verified-badge">
+          OʻZBEKISTON YETAKCHI YOSHLARI ENSIKLOPEDIYASI — PROFIL
+        </div>
+
+        <div class="hall-profile-grid">
+
+          <!-- Left: Portrait Card (Dynamically loaded from Database / Bucket) -->
+          <div class="hall-portrait-card">
+            <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="hall-portrait-img" />
+            <div class="portrait-sphere-badge">{{ leader.get_sphere_display }}</div>
+          </div>
+
+          <!-- Right: Profile Info (Dynamically loaded from Database) -->
+          <div class="hall-info-card">
+            <h1 class="hall-leader-name">{{ leader.name }}</h1>
+            <div class="hall-leader-submeta">{{ leader.short_bio }}</div>
+
+            {% if leader.birth_date or leader.region %}
+            <div class="hall-stats-row">
+              {% if leader.birth_date %}
+              <div class="hall-stat-item">
+                <strong style="font-size:1rem;">{{ leader.birth_date }}</strong>
+                <span>Tugʻilgan sana</span>
+              </div>
+              {% endif %}
+              {% if leader.region %}
+              <div class="hall-stat-item">
+                <strong style="font-size:1rem;">{{ leader.region }}</strong>
+                <span>Viloyat</span>
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="quick-specs-grid">
+              {% if leader.birth_place %}
+              <div class="spec-item">
+                <strong>Tugʻilgan joyi</strong>
+                <span>{{ leader.birth_place }}</span>
+              </div>
+              {% endif %}
+              {% if leader.education %}
+              <div class="spec-item">
+                <strong>Taʻlimi</strong>
+                <span>{{ leader.education }}</span>
+              </div>
+              {% endif %}
+              <div class="spec-item">
+                <strong>Faoliyat sohasi</strong>
+                <span>{{ leader.get_sphere_display }}</span>
+              </div>
+            </div>
+
+            <div class="hall-cta-flex">
+              <a href="/ariza/" class="btn btn-primary">
+                Siz ham Ensiklopediyaga kiring &rarr;
+              </a>
+              <a href="/yetakchilar/" class="btn btn-outline">
+                Barcha yetakchilar
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Full Biography loaded dynamically from Database -->
+        {% if leader.full_bio %}
+        <div class="detail-section-card reveal">
+          <h2 class="detail-section-h2">Kasbiy yoʻl va yutuqlar</h2>
+          <div class="detail-para" style="white-space: pre-line;">{{ leader.full_bio }}</div>
+        </div>
+        {% endif %}
+
+        <!-- Quote Poster — Generated dynamically from Database data -->
+        <div class="poster-showcase-box reveal">
+          <span class="section-label">IQTIBOS POSTERI</span>
+          <h2 class="section-title" style="font-size:1.6rem; margin-bottom:24px; color:#ffffff;">Mualliflik Iqtibosi</h2>
+
+          {% if leader.quote_poster %}
+            <!-- Custom image poster uploaded in DB -->
+            <img src="{{ leader.quote_poster.url }}" alt="Iqtibos posteri" style="max-width:100%; border-radius:16px; box-shadow:0 25px 60px rgba(0,0,0,0.7); border:1px solid rgba(0,166,235,0.2);" />
+          {% else %}
+            <!-- Dynamic HTML Poster matching Image 2 -->
+            <div class="quote-poster-card">
+              <div class="poster-top-header">
+                <div class="poster-logo-wrap">
+                  <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="poster-logo-img" />
+                  <div class="poster-logo-text">
+                    <strong>OʻZBEKISTON LIDER YOSHLARI</strong>
+                    <span>ENSIKLOPEDIYASI</span>
+                  </div>
+                </div>
+                <div class="poster-quote-icon">
+                  <svg viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                </div>
+              </div>
+
+              <div class="poster-middle-body">
+                <div class="quote-text-main">
+                  {% if leader.short_bio %}
+                    "{{ leader.short_bio|upper }}"
+                  {% else %}
+                    "KELAJAK TASODIFAN YARATILMAYDI, U BUGUNGI INTIZOM BILAN BUNYOD ETILADI."
+                  {% endif %}
+                </div>
+
+                {% if leader.photo %}
+                <div class="poster-person-img-wrap">
+                  <img src="{{ leader.photo.url }}" alt="{{ leader.name }}" />
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="poster-bottom-bar">
+                <div>
+                  <div class="poster-author-fullname">{{ leader.name }}</div>
+                  <div class="poster-author-subline">{{ leader.get_sphere_display }}{% if leader.region %} &mdash; {{ leader.region }}{% endif %} | OʻzYYE Aʻzosi</div>
+                </div>
+                <div class="poster-script-tag">
+                  Liderlar iqtibosi!!!
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- CTA Conversion Banner -->
+        <div class="detail-cta-banner reveal">
+          <h3 class="detail-cta-title">Siz ham Ensiklopediyaga kiring va Online Jurnalimizga buyurtma bering!</h3>
+          <p class="detail-cta-desc">
+            Oʻzbekistonning eng faol yetakchi yoshlari safidan joy oling, shaxsiy biografiyangiz va yutuqlaringizni jurnalimizda eʻlon qiling! Barcha jurnal sonlarini xarid qilish va ensiklopediyada oʻz sahifangizga ega boʻlish uchun hoziroq ariza topshirishingiz mumkin.
+          </p>
+          <div class="detail-cta-flex">
+            <a href="/ariza/" class="btn btn-primary">Ariza qoldirish &rarr;</a>
+            <a href="/jurnal/" class="btn btn-outline">Online Jurnalga Oʻtish</a>
+          </div>
+        </div>
+
+        <!-- Related Leaders dynamically fetched from DB -->
+        {% if related_leaders %}
+        <div class="related-leaders-section reveal">
+          <span class="section-label">BU SOHANING BOSHQA YETAKCHILARI</span>
+          <h2 class="section-title">Siz qiziqishi mumkin</h2>
+          <div class="related-grid">
+            {% for r in related_leaders %}
+            <a href="{% url 'leader_detail' r.slug %}" class="related-card">
+              <img src="{% if r.photo %}{{ r.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ r.name }}" />
+              <div>
+                <div class="related-card-name">{{ r.name }}</div>
+                <div class="related-card-sub">{{ r.get_sphere_display }}</div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+    {% else %}
+    <div style="padding: 200px 20px; text-align: center;">
+      <h1 style="color: var(--text-primary); font-size: 2rem; margin-bottom: 16px;">Yetakchi topilmadi</h1>
+      <p style="color: var(--text-secondary); margin-bottom: 32px;">Siz izlagan profil bazadan topilmadi.</p>
+      <a href="/yetakchilar/" class="btn btn-primary">Barcha yetakchilarga qaytish &rarr;</a>
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="site-footer" id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand" id="footer-brand">
+        <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi.</p>
+      </div>
+      <div class="footer-nav" id="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact" id="footer-contact">
+        <h3 class="footer-nav-title">Bogʻlanish</h3>
+        <ul class="footer-contact-list" role="list">
+          <li><span>Toshkent, Oʻzbekiston</span></li>
+          <li><a href="mailto:info@yetakchilar.uz">info@yetakchilar.uz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" id="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

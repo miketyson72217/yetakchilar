@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yetakchilar — OʻzYYE</title>
+  <meta name="description" content="Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi." />
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicon-192x192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link active">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link">Yetakchilardan iqtiboslar</a></li>
+          
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">ENSIKLOPEDIYA</span>
+        <h1 class="page-hero-title" id="leaders-page-title">Oʻzbekiston Yetakchi Yoshlari</h1>
+        <p class="page-hero-subtitle" id="leaders-page-sub">Mamlakatimizning turli sohalarida nom qozongan ilhomlantiradigan zamondoshlarimiz</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filter-bar" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:40px; justify-content:center;">
+          <a href="?sphere=all" class="filter-btn {% if active_sphere == 'all' %}active{% endif %}">Barchasi</a>
+          <a href="?sphere=biznes" class="filter-btn {% if active_sphere == 'biznes' %}active{% endif %}">Tadbirkorlik</a>
+          <a href="?sphere=texno" class="filter-btn {% if active_sphere == 'texno' %}active{% endif %}">Texnologiya &amp; IT</a>
+          <a href="?sphere=sport" class="filter-btn {% if active_sphere == 'sport' %}active{% endif %}">Sport</a>
+          <a href="?sphere=fan" class="filter-btn {% if active_sphere == 'fan' %}active{% endif %}">Fan &amp; Taʻlim</a>
+          <a href="?sphere=tibbiyot" class="filter-btn {% if active_sphere == 'tibbiyot' %}active{% endif %}">Tibbiyot</a>
+        </div>
+
+        <div class="leaders-grid" id="leaders-grid">
+          {% for leader in leaders %}
+            <a href="{% url 'leader_detail' leader.slug %}" class="leader-card reveal" style="text-decoration:none;">
+              <div class="leader-photo-wrap">
+                <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" />
+              </div>
+              <div class="leader-info">
+                <h3 class="leader-name">{{ leader.name }}</h3>
+                <span class="leader-sphere">{{ leader.get_sphere_display }} — {{ leader.region }}</span>
+              </div>
+            </a>
+          {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text-secondary);">
+              Ushbu soha boʻyicha yetakchilar topilmadi.
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="/static/images/main_logo.png" alt="OʻzYYE Logo" class="footer-logo" />
+        <p class="footer-desc">Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi.</p>
+      </div>
+      <div class="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>© 2026 Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
