@@ -8,11 +8,18 @@ from django.contrib.auth.models import User
 from core.models import Leader, Journal, Quote, Application
 
 # 1. Superuser
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@yetakchilar.uz', 'admin123')
-    print('Superuser created: admin / admin123')
+admin_username = os.environ.get('SUPERUSER_NAME', 'admin_yt_8f9a2b')
+admin_password = os.environ.get('SUPERUSER_PASS', 'P@ss_9k2m4x7q8v')
+
+if not User.objects.filter(username=admin_username).exists():
+    User.objects.create_superuser(admin_username, 'admin@yetakchilar.uz', admin_password)
+    print(f'Superuser created: {admin_username} / {admin_password}')
 else:
-    print('Superuser admin already exists')
+    u = User.objects.get(username=admin_username)
+    u.set_password(admin_password)
+    u.save()
+    print(f'Superuser password updated for: {admin_username}')
+
 
 # 2. Leaders with full names (Ism Familiya Otasining ismi)
 leaders_data = [

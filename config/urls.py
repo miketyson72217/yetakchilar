@@ -1,11 +1,14 @@
+import os
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views
 
+admin_url_path = os.environ.get('ADMIN_URL_PATH', 'admin-yt-9k8v7q2x4m/').strip('/')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(f'{admin_url_path}/', admin.site.urls),
     
     # Home routes
     path('', views.index_view, name='index'),
