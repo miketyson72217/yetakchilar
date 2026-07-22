@@ -60,7 +60,7 @@
           {% for leader in leaders %}
             <a href="{% url 'leader_detail' leader.slug %}" class="leader-card reveal" style="text-decoration:none;">
               <div class="leader-photo-wrap">
-                <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" />
+                <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" onerror="this.src='/static/images/leader_male_default.png'" />
               </div>
               <div class="leader-info">
                 <h3 class="leader-name">{{ leader.name }}</h3>
