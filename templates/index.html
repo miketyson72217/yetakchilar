@@ -189,18 +189,21 @@
           <span class="section-label">IQTIBOSLAR</span>
           <h2 class="section-title" id="quotes-title">Yetakchi yoshlardan iqtiboslar</h2>
         </div>
-        <div class="quotes-grid" id="quotes-grid">
+        <div class="quotes-grid" id="quotes-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:32px;">
           {% if quotes %}
             {% for q in quotes %}
-              <div class="quote-card {% if forloop.counter == 2 %}featured{% endif %}">
-                <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
-                  <img src="{% if q.author_photo %}{{ q.author_photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.author_name }}" style="width:52px; height:52px; border-radius:50%; object-fit:cover; border:2px solid #00A6EB;" />
-                  <div>
-                    <strong style="display:block; font-size:1.05rem; color:#fff;">{{ q.author_name }} <span style="color:#00A6EB; font-size:0.75rem;">✓</span></strong>
-                    <span style="font-size:0.78rem; color:#00A6EB;">{{ q.author_title }}</span>
+              <div class="quote-card" style="padding:0; overflow:hidden; border-radius:24px; border:1px solid rgba(255,255,255,0.08); background:#0c1224;">
+                {% if q.poster_image %}
+                  <a href="/iqtiboslar/" style="display:block; width:100%; aspect-ratio:1/1; overflow:hidden; position:relative;">
+                    <img src="{{ q.poster_image.url }}" alt="{{ q.author_name }}" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+                  </a>
+                {% else %}
+                  <div style="padding:28px;">
+                    <strong style="display:block; font-size:1.1rem; color:#fff; margin-bottom:4px;">{{ q.author_name }}</strong>
+                    <span style="font-size:0.8rem; color:#00A6EB; margin-bottom:12px; display:block;">{{ q.author_title }}</span>
+                    <p style="font-size:0.95rem; color:#cbd5e1; font-style:italic;">&ldquo;{{ q.quote_text }}&rdquo;</p>
                   </div>
-                </div>
-                <p class="quote-text" style="font-style:italic;">&ldquo;{{ q.quote_text }}&rdquo;</p>
+                {% endif %}
               </div>
             {% endfor %}
           {% endif %}

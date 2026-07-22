@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yetakchilardan iqtiboslar — OʻzYYE</title>
-  <meta name="description" content="Oʻzbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtiboslar va hayotiy hikoyalar." />
+  <title>Yetakchilardan Iqtibos Posterlari — OʻzYYE</title>
+  <meta name="description" content="Oʻzbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtibos posterlari toʻplami." />
   <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
   <link rel="icon" type="image/png" sizes="48x48" href="/static/images/favicon-48x48.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
@@ -17,161 +17,206 @@
   <link rel="stylesheet" href="/static/pages.css" />
 
   <style>
-    .quotes-master-grid {
+    .quotes-poster-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 36px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 40px;
       margin-top: 40px;
     }
 
-    .premium-quote-card {
+    .poster-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 36px 32px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(20px);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      position: relative;
     }
 
-    .premium-quote-card::before {
-      content: '';
+    .poster-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 166, 235, 0.5);
+      box-shadow: 0 30px 70px rgba(0, 166, 235, 0.25);
+    }
+
+    .poster-img-wrap {
+      width: 100%;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #04060f;
+    }
+
+    .poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .poster-card:hover .poster-img {
+      transform: scale(1.04);
+    }
+
+    .poster-overlay-btn {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #00A6EB 0%, #D4AF37 100%);
-      opacity: 0.6;
+      inset: 0;
+      background: rgba(0, 166, 235, 0.25);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
       transition: opacity 0.3s ease;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
     }
 
-    .premium-quote-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(0, 166, 235, 0.4);
-      box-shadow: 0 25px 60px rgba(0, 166, 235, 0.18);
-    }
-
-    .premium-quote-card:hover::before {
+    .poster-img-wrap:hover .poster-overlay-btn {
       opacity: 1;
     }
 
-    .quote-header-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
+    .poster-info-block {
+      padding: 24px 28px;
     }
 
-    .quote-author-avatar {
-      width: 68px;
-      height: 68px;
+    .poster-author-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .poster-author-avatar {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid #00A6EB;
-      box-shadow: 0 0 20px rgba(0, 166, 235, 0.3);
+      box-shadow: 0 0 15px rgba(0, 166, 235, 0.3);
       flex-shrink: 0;
-      background: #090d1a;
+      background: #0b132b;
     }
 
-    .quote-author-details h3 {
-      font-size: 1.15rem;
+    .poster-author-name {
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1.25;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 2px;
     }
 
-    .verified-badge {
+    .poster-author-sub {
+      font-size: 0.78rem;
+      color: #00A6EB;
+      font-weight: 600;
+    }
+
+    .poster-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .poster-action-btn {
+      flex: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 18px;
-      height: 18px;
-      background: #00A6EB;
-      color: #fff;
-      font-size: 0.65rem;
-      border-radius: 50%;
-      font-weight: 900;
-    }
-
-    .quote-author-details span {
-      font-size: 0.8rem;
-      color: #00A6EB;
-      font-weight: 600;
-      display: block;
-      line-height: 1.3;
-    }
-
-    .quote-mark-icon {
-      font-size: 3.5rem;
-      font-family: Georgia, serif;
-      color: #00A6EB;
-      opacity: 0.25;
-      line-height: 0;
-      position: absolute;
-      top: 36px; right: 28px;
-      pointer-events: none;
-    }
-
-    .quote-body-text {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: #e2e8f0;
-      font-weight: 400;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 1;
-      font-style: italic;
-    }
-
-    .quote-footer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 16px;
-      margin-top: auto;
-    }
-
-    .quote-tag-pill {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #D4AF37;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      padding: 4px 12px;
+      gap: 6px;
+      padding: 10px;
       border-radius: 100px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .btn-copy-quote {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-secondary);
-      padding: 6px 14px;
-      border-radius: 100px;
-      font-size: 0.78rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
+      text-decoration: none;
       font-family: inherit;
     }
 
-    .btn-copy-quote:hover {
-      background: rgba(0,166,235,0.2);
+    .poster-action-btn:hover {
+      background: rgba(0, 166, 235, 0.2);
       border-color: #00A6EB;
       color: #00A6EB;
     }
 
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 15, 0.95);
+      backdrop-filter: blur(16px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.9), 0 0 40px rgba(0,166,235,0.3);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #00A6EB;
+      color: #fff;
+    }
+
     @media (max-width: 768px) {
-      .quotes-master-grid { grid-template-columns: 1fr; }
+      .quotes-poster-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -196,32 +241,43 @@
   <main>
     <section class="page-hero" id="page-hero">
       <div class="container page-hero-content">
-        <span class="section-label">LIDERLAR AFORIZMLARI</span>
-        <h1 class="page-hero-title">Yetakchi Yoshlardan Iqtiboslar</h1>
-        <p class="page-hero-subtitle">Muvaffaqiyat, qatʻiyat va shaxsiy rivojlanish haqida ilhomlantiruvchi fikrlar</p>
+        <span class="section-label">IQTIBOS POSTERLARI</span>
+        <h1 class="page-hero-title">Yetakchi Yoshlar Iqtibos Posterlari</h1>
+        <p class="page-hero-subtitle">Rasmiy bosma poster va ilhomlantiruvchi aforizmlar toʻplami</p>
       </div>
     </section>
 
     <section class="content-section">
       <div class="container">
-        <div class="quotes-master-grid" id="quotes-page-grid">
+        <div class="quotes-poster-grid" id="quotes-poster-grid">
           {% if quotes %}
             {% for q in quotes %}
-              <div class="premium-quote-card reveal">
-                <div class="quote-mark-icon">&rdquo;</div>
-                <div>
-                  <div class="quote-header-row">
-                    <img src="{% if q.author_photo %}{{ q.author_photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.author_name }}" class="quote-author-avatar" />
-                    <div class="quote-author-details">
-                      <h3>{{ q.author_name }} <span class="verified-badge">&#10003;</span></h3>
-                      <span>{{ q.author_title }}</span>
+              <div class="poster-card reveal">
+                <div class="poster-img-wrap" onclick="openLightbox('{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                  <img src="{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" onerror="this.src='/static/images/quotes/yusufjon_poster.jpg'" alt="{{ q.author_name }}" class="poster-img" />
+                  <div class="poster-overlay-btn">🔍 Toʻliq Koʻrish</div>
+                </div>
+
+                <div class="poster-info-block">
+                  <div class="poster-author-title-row">
+                    <img src="{% if q.author_photo %}{{ q.author_photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.author_name }}" class="poster-author-avatar" />
+                    <div>
+                      <h3 class="poster-author-name">{{ q.author_name }}</h3>
+                      <span class="poster-author-sub">{{ q.author_title }}</span>
                     </div>
                   </div>
-                  <p class="quote-body-text">&ldquo;{{ q.quote_text }}&rdquo;</p>
-                </div>
-                <div class="quote-footer-row">
-                  <span class="quote-tag-pill">LIDER IQTIBOSI</span>
-                  <button class="btn-copy-quote" onclick="copyQuote(this, `{{ q.quote_text|escapejs }} — {{ q.author_name|escapejs }}`)">Nusxalash</button>
+
+                  <div class="poster-actions-row">
+                    <button class="poster-action-btn" onclick="openLightbox('{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                      🔍 Koʻrish
+                    </button>
+                    <a href="{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" download class="poster-action-btn">
+                      ⬇️ Yuklab olish
+                    </a>
+                    <button class="poster-action-btn" onclick="copyQuoteText(this, `{{ q.quote_text|escapejs }} — {{ q.author_name|escapejs }}`)">
+                      📋 Nusxalash
+                    </button>
+                  </div>
                 </div>
               </div>
             {% endfor %}
@@ -230,6 +286,14 @@
       </div>
     </section>
   </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox(event)">
+    <div class="lightbox-content-box">
+      <button class="lightbox-close-btn" onclick="closeLightboxDirect()">&times;</button>
+      <img id="lightbox-img" src="" alt="Iqtibos Posteri" class="lightbox-img" />
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -258,16 +322,31 @@
 
   <script src="/static/script.js"></script>
   <script>
-    function copyQuote(btn, text) {
+    function openLightbox(src) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeLightboxDirect() {
+      document.getElementById('lightbox-modal').classList.remove('active');
+    }
+
+    function closeLightbox(e) {
+      if (e.target.id === 'lightbox-modal') {
+        closeLightboxDirect();
+      }
+    }
+
+    function copyQuoteText(btn, text) {
       navigator.clipboard.writeText(text).then(() => {
-        const oldText = btn.textContent;
-        btn.textContent = 'Nusxalandi! ✓';
+        const old = btn.textContent;
+        btn.textContent = '✓ Nusxalandi';
         btn.style.color = '#22c55e';
-        btn.style.borderColor = '#22c55e';
         setTimeout(() => {
-          btn.textContent = oldText;
+          btn.textContent = old;
           btn.style.color = '';
-          btn.style.borderColor = '';
         }, 2000);
       });
     }
