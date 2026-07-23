@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://yetakchilar.uz/</loc>
+      <changefreq>daily</changefreq>
+      <priority>1.0</priority>
+   </url>
+   <url>
+      <loc>https://yetakchilar.uz/biz-haqimizda/</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://yetakchilar.uz/yetakchilar/</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://yetakchilar.uz/jurnal/</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://yetakchilar.uz/iqtiboslar/</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://yetakchilar.uz/ariza/</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   {% for leader in leaders %}
+   <url>
+      <loc>https://yetakchilar.uz/leader/{{ leader.slug }}/</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   {% endfor %}
+</urlset>

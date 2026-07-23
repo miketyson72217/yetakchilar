@@ -50,6 +50,10 @@ urlpatterns = [
     path('ariza/', views.ariza_view, name='ariza_slash'),
     path('ariza', views.ariza_view, name='ariza_clean'),
     path('ariza.html', views.ariza_view, name='ariza'),
+
+    # SEO routes
+    path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
 ]
 
 if settings.DEBUG:

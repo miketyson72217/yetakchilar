@@ -129,3 +129,17 @@ def ariza_view(request):
     return render(request, 'ariza.html')
 
 
+from django.http import HttpResponse
+
+def robots_txt(request):
+    content = """User-agent: *
+Allow: /
+
+Sitemap: https://yetakchilar.uz/sitemap.xml
+"""
+    return HttpResponse(content, content_type='text/plain')
+
+
+def sitemap_xml(request):
+    leaders = Leader.objects.all()
+    return render(request, 'sitemap.xml', {'leaders': leaders}, content_type='application/xml')

@@ -9,7 +9,9 @@
   <meta name="description" content="{{ leader.name }} — {{ leader.short_bio }}. Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasida profil sahifasi." />
   <meta name="keywords" content="{{ leader.name }}, Oʻzbekiston yetakchi yoshlar, {{ leader.get_sphere_display }}, {{ leader.region }}, OʻzYYE, lider" />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yetakchilar.uz/leader/{{ leader.slug }}/" />
   <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Yetakchilar.uz" />
   <meta property="og:title" content="{{ leader.name }} — Oʻzbekiston Yetakchi Yoshlari" />
   <meta property="og:description" content="{{ leader.short_bio }}" />
   <meta property="og:image" content="{% if leader.photo %}{{ leader.photo.url }}{% endif %}" />
