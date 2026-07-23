@@ -56,7 +56,7 @@ class Command(BaseCommand):
                             "👋 <b>Assalomu alaykum!</b>\n\n"
                             "<b>'Yosh Yetakchilar'</b> Telegram botiga xush kelibsiz!\n\n"
                             "Siz bu bot orqali loyihada ishtirok etish uchun ariza topshirishingiz "
-                            "va adminlar bilan bog'lanishingiz mumkin.\n\n"
+                            "va adminlar bilan bogʻlanishingiz mumkin.\n\n"
                             "📌 <b>Mavjud buyruqlar:</b>\n"
                             "/ariza - Loyihaga ariza topshirish\n"
                             "/id - Chat ID raqamingizni olish (Adminlar uchun)\n"
@@ -82,7 +82,7 @@ class Command(BaseCommand):
                         self.send_message(api_url, chat_id, reply)
 
             except KeyboardInterrupt:
-                self.stdout.write(self.style.WARNING("Bot to'xtatildi."))
+                self.stdout.write(self.style.WARNING("Bot toʻxtatildi."))
                 break
             except Exception as e:
                 logger.error(f"Bot xatoligi: {e}")

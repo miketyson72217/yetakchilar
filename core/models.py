@@ -1,13 +1,14 @@
 from django.db import models
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 class Leader(models.Model):
     SPHERE_CHOICES = [
         ('biznes', 'Tadbirkorlik & Biznes'),
         ('texno', 'Texnologiya & IT'),
         ('sport', 'Sport'),
-        ('fan', 'Fan & Taʻlim'),
-        ('sanat', 'Sanʻat & Madaniyat'),
+        ('fan', 'Fan & Taʼlim'),
+        ('sanat', 'Sanʼat & Madaniyat'),
         ('tibbiyot', 'Tibbiyot'),
         ('ijtimoiy', 'Ijtimoiy faoliyat'),
     ]
@@ -35,10 +36,10 @@ class Leader(models.Model):
     region = models.CharField(max_length=100, choices=REGION_CHOICES, verbose_name="Viloyat")
     photo = models.ImageField(upload_to='leaders/', verbose_name="Portret rasm")
     short_bio = models.CharField(max_length=255, verbose_name="Qisqa tavsif / Unvon")
-    full_bio = models.TextField(blank=True, verbose_name="Toʻliq biografiya va yutuqlar")
+    full_bio = RichTextField(blank=True, verbose_name="Toʻliq biografiya va yutuqlar")
     birth_date = models.CharField(max_length=100, blank=True, verbose_name="Tugʻilgan sana")
     birth_place = models.CharField(max_length=100, blank=True, verbose_name="Tugʻilgan joy")
-    education = models.CharField(max_length=255, blank=True, verbose_name="Taʻlim")
+    education = models.CharField(max_length=255, blank=True, verbose_name="Taʼlim")
     top100_rank = models.PositiveIntegerField(null=True, blank=True, verbose_name="TOP 100 oʻrni")
     quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (Rasm sifatida)")
     is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada koʻrsatish")
@@ -87,7 +88,7 @@ class Journal(models.Model):
     file_size = models.CharField(max_length=50, default='24 MB', verbose_name="Fayl hajmi")
     issn = models.CharField(max_length=50, default='ISSN 2023-1234', verbose_name="ISSN raqami")
     release_date = models.CharField(max_length=100, default='Iyun 2024', verbose_name="Chop etilgan sana")
-    is_active = models.BooleanField(default=True, verbose_name="Faol / Eʻlon qilingan")
+    is_active = models.BooleanField(default=True, verbose_name="Faol / Eʼlon qilingan")
 
     class Meta:
         verbose_name = "Online Jurnal"
@@ -135,3 +136,21 @@ class Application(models.Model):
 
     def __str__(self):
         return f"Ariza: {self.full_name} ({self.phone}) — {self.get_status_display()}"
+
+class JournalArticle(models.Model):
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name='articles', verbose_name="Jurnal")
+    category = models.CharField(max_length=100, verbose_name="Kategoriya (masalan: LIDERLIK & INTIZOM)")
+    title = models.CharField(max_length=255, verbose_name="Maqola sarlavhasi")
+    short_description = models.TextField(verbose_name="Qisqa tavsif (Ushbu sonda nimalar bor uchun)")
+    author_name = models.CharField(max_length=255, verbose_name="Muallif ismi")
+    page_number = models.PositiveIntegerField(verbose_name="Sahifa raqami (Jurnal ichida)")
+    content = models.TextField(verbose_name="Maqola matni (paragraflar uchun)")
+    pull_quote = models.CharField(max_length=500, blank=True, null=True, verbose_name="Iqtibos (Pull quote)")
+    
+    class Meta:
+        verbose_name = "Jurnal Maqolasi"
+        verbose_name_plural = "Jurnal Maqolalari"
+        ordering = ['page_number']
+
+    def __str__(self):
+        return f"{self.title} ({self.page_number}-sahifa)"

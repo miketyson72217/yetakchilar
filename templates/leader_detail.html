@@ -223,7 +223,12 @@
       margin-bottom: 18px;
     }
 
-    .detail-para strong { color: #ffffff; }
+    .detail-para p { margin-bottom: 14px; }
+    .detail-para ul { margin-left: 20px; margin-bottom: 18px; }
+    .detail-para li { margin-bottom: 8px; list-style-type: disc; }
+    .detail-para h3 { font-size: 1.2rem; color: #fff; margin-top: 24px; margin-bottom: 12px; font-weight: 800; }
+
+    .detail-para strong, .detail-para b { color: #ffffff; font-weight: 800; }
 
     /* ===== IQTIBOS POSTER — Dynamic HTML Card from DB ===== */
     .poster-showcase-box {
@@ -508,7 +513,7 @@
               {% endif %}
               {% if leader.education %}
               <div class="spec-item">
-                <strong>Taʻlimi</strong>
+                <strong>Taʼlimi</strong>
                 <span>{{ leader.education }}</span>
               </div>
               {% endif %}
@@ -534,7 +539,7 @@
         {% if leader.full_bio %}
         <div class="detail-section-card reveal">
           <h2 class="detail-section-h2">Kasbiy yoʻl va yutuqlar</h2>
-          <div class="detail-para" style="white-space: pre-line;">{{ leader.full_bio }}</div>
+          <div class="detail-para" style="line-height: 1.85;">{{ leader.full_bio|safe }}</div>
         </div>
         {% endif %}
 
@@ -581,7 +586,7 @@
               <div class="poster-bottom-bar">
                 <div>
                   <div class="poster-author-fullname">{{ leader.name }}</div>
-                  <div class="poster-author-subline">{{ leader.get_sphere_display }}{% if leader.region %} &mdash; {{ leader.region }}{% endif %} | OʻzYYE Aʻzosi</div>
+                  <div class="poster-author-subline">{{ leader.get_sphere_display }}{% if leader.region %} &mdash; {{ leader.region }}{% endif %} | OʻzYYE Aʼzosi</div>
                 </div>
                 <div class="poster-script-tag">
                   Liderlar iqtibosi!!!
@@ -595,7 +600,7 @@
         <div class="detail-cta-banner reveal">
           <h3 class="detail-cta-title">Siz ham Ensiklopediyaga kiring va Online Jurnalimizga buyurtma bering!</h3>
           <p class="detail-cta-desc">
-            Oʻzbekistonning eng faol yetakchi yoshlari safidan joy oling, shaxsiy biografiyangiz va yutuqlaringizni jurnalimizda eʻlon qiling! Barcha jurnal sonlarini xarid qilish va ensiklopediyada oʻz sahifangizga ega boʻlish uchun hoziroq ariza topshirishingiz mumkin.
+            Oʻzbekistonning eng faol yetakchi yoshlari safidan joy oling, shaxsiy biografiyangiz va yutuqlaringizni jurnalimizda eʼlon qiling! Barcha jurnal sonlarini xarid qilish va ensiklopediyada oʻz sahifangizga ega boʻlish uchun hoziroq ariza topshirishingiz mumkin.
           </p>
           <div class="detail-cta-flex">
             <a href="/ariza/" class="btn btn-primary">Ariza qoldirish &rarr;</a>

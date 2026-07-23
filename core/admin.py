@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Leader, Journal, Quote, Application
+from .models import Leader, Journal, Quote, Application, JournalArticle
 
 admin.site.site_header = "Oʻzbekiston Yetakchi Yoshlari Ensiklopediyasi"
 admin.site.site_title = "OʻzYYE Boshqaruv Paneli"
@@ -17,7 +17,7 @@ class LeaderAdmin(admin.ModelAdmin):
 
 
     fieldsets = (
-        ("Asosiy Maʻlumotlar", {
+        ("Asosiy Maʼlumotlar", {
             'fields': ('name', 'slug', 'sphere', 'region', 'photo', 'short_bio', 'is_featured', 'top100_rank')
         }),
         ("Iqtibos Poster Rasmi", {
@@ -70,10 +70,12 @@ class ApplicationAdmin(admin.ModelAdmin):
     readonly_fields = ('full_name', 'phone', 'telegram_username', 'created_at')
 
     fieldsets = (
-        ("Nomzod Maʻlumotlari", {
+        ("Nomzod Maʼlumotlari", {
             'fields': ('full_name', 'phone', 'telegram_username', 'created_at')
         }),
         ("Qaror / Holat", {
             'fields': ('status',)
         }),
     )
+
+

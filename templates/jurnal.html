@@ -511,23 +511,6 @@
     <div class="journal-master-container">
       <div class="container">
 
-        {% if journal_setting and journal_setting.is_coming_soon %}
-        <!-- Coming Soon Card -->
-        <div style="background: var(--bg-surface); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 70px 40px; text-align: center; backdrop-filter: blur(24px); box-shadow: 0 35px 100px rgba(0,0,0,0.7); max-width: 840px; margin: 40px auto 80px; position: relative; overflow: hidden;" class="reveal">
-          <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,235,0.25) 0%, rgba(0,0,0,0) 70%); pointer-events: none; border-radius: 50%;"></div>
-          <span style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.85rem; padding: 7px 22px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; box-shadow: 0 4px 20px rgba(0,166,235,0.4); margin-bottom: 24px;">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:8px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
-            TEZ ORADA / COMING SOON
-          </span>
-          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2;">{{ journal_setting.coming_soon_title }}</h2>
-          <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 650px; margin: 0 auto 36px;">{{ journal_setting.coming_soon_description }}</p>
-          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="/" class="btn btn-primary" style="padding: 14px 28px;">Bosh sahifaga qaytish &rarr;</a>
-            <a href="/ariza/" class="btn btn-outline" style="padding: 14px 28px;">Ariza qoldirish</a>
-          </div>
-        </div>
-        {% else %}
-
         {% if journal %}
         <!-- Magazine Overview Hero -->
         <div class="magazine-hero-card reveal">
@@ -582,12 +565,6 @@
             </div>
           </div>
         </div>
-        {% else %}
-        <div style="text-align:center; padding:80px 20px;">
-          <p style="font-size:1.2rem; color:var(--text-secondary);">Hozircha jurnal mavjud emas. Admin yangi jurnal qoʻshishi bilanoq bu yerda koʻrinadi.</p>
-        </div>
-        {% endif %}
-        {% endif %}
 
         <!-- Cover Stories -->
         <div class="cover-stories-section reveal">
@@ -596,42 +573,23 @@
           <p class="section-desc">Chuqurlashtirilgan jurnalistika, tahliliy suhbatlar va mualliflik darslari</p>
 
           <div class="stories-grid">
+            {% for article in journal.articles.all %}
             <div class="story-card">
               <div>
-                <div class="story-badge">LIDERLIK &amp; INTIZOM</div>
-                <h3 class="story-title">Kelajak Intizom Bilan Bunyod Etiladi</h3>
-                <p class="story-desc">Yosh siyosatshunoslik, jamoatchilik faoliyati hamda ekologik loyihalar tashabbuskorining amaliy tajribasi.</p>
+                <div class="story-badge">{{ article.category }}</div>
+                <h3 class="story-title">{{ article.title }}</h3>
+                <p class="story-desc">{{ article.short_description }}</p>
               </div>
-              <div class="story-meta"><span>Yusufjon Yusufov</span><span>SAHIFA 04</span></div>
+              <div class="story-meta"><span>{{ article.author_name }}</span><span>SAHIFA {% if article.page_number < 10 %}0{% endif %}{{ article.page_number }}</span></div>
             </div>
-            <div class="story-card">
-              <div>
-                <div class="story-badge">TEXNOLOGIYA &amp; IT</div>
-                <h3 class="story-title">Sunʻiy Intellekt va Kelajak</h3>
-                <p class="story-desc">AI platformalarini yaratish, dasturlash intizomi va raqamli iqtisodiyot tendensiyalari tahlili.</p>
-              </div>
-              <div class="story-meta"><span>Javohir Alimov</span><span>SAHIFA 05</span></div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--text-tertiary);">
+                Hozircha maqolalar mavjud emas.
             </div>
-            <div class="story-card">
-              <div>
-                <div class="story-badge">SPORT &amp; INTIZOM</div>
-                <h3 class="story-title">Chempionlik Sirlari</h3>
-                <p class="story-desc">Chempionlik ruhiyatini shakllantirish, toʻsiqlarni yengish va har kungi qatʻiy intizom tamoyillari.</p>
-              </div>
-              <div class="story-meta"><span>Zebo Karimova</span><span>SAHIFA 06</span></div>
-            </div>
-            <div class="story-card">
-              <div>
-                <div class="story-badge">MOLIYA &amp; INNOVATSIYA</div>
-                <h3 class="story-title">Yashil Energiya va Venchur</h3>
-                <p class="story-desc">Kelajak energetikasi, venchur fondlar va istiqbolli investitsion loyihalar boʻyicha tahlil.</p>
-              </div>
-              <div class="story-meta"><span>Ekspert Sharhi</span><span>SAHIFA 07</span></div>
-            </div>
+            {% endfor %}
           </div>
         </div>
 
-        {% if journal %}
         <!-- 3D Flipbook Reader Stage -->
         <div class="flipbook-stage-wrapper reveal" id="flipbook-stage">
 
@@ -641,7 +599,7 @@
               <button class="tool-btn" id="tb-prev">&larr; Oldingi</button>
               <div class="page-input-wrap">
                 <input type="number" class="page-num-input" id="tb-page-num" value="1" min="1" />
-                <span>/ <span id="tb-total-pages">10</span></span>
+                <span>/ <span id="tb-total-pages">{{ journal.pages_count|default:"10" }}</span></span>
               </div>
               <button class="tool-btn" id="tb-next">Keyingi &rarr;</button>
             </div>
@@ -674,9 +632,7 @@
                   <div class="page-section-title">02 | JURNAL HAQIDA</div>
                   <div class="page-author">Oʻzbekiston Yetakchi Yoshlari</div>
                   <div class="page-body">
-                    <p>Ushbu elektron jurnal Oʻzbekistonning turli sohalarida yutuqlarga erishayotgan faol yoshlarning tajribasi, maslahatlari hamda ilhomlantiruvchi hikoyalarini jamlagan loyihadir.</p>
-                    <div class="page-pull-quote">"Kelajakni bugungi mehnat va intizom belgilaydi."</div>
-                    <p>Ushbu sonda biznes, IT, sport va ilm-fan sohalarida faoliyat yuritayotgan yoshlarimiz tajribasi bilan tanishishingiz mumkin.</p>
+                    <p>{{ journal.description|linebreaksbr }}</p>
                   </div>
                   <div class="mag-page-footer">
                     <span>Oʻzbekiston Yetakchi Yoshlari</span>
@@ -693,35 +649,13 @@
                     <span>MUNDARIJA</span>
                   </div>
                   <div class="page-section-title">03 | MUNDARIJA</div>
-                  <div style="flex:1; overflow:hidden;">
+                  <div style="flex:1; overflow:hidden; overflow-y:auto;">
+                    {% for article in journal.articles.all %}
                     <div class="toc-item">
-                      <div><div class="toc-item-title">Kelajak Intizom Bilan Bunyod Etiladi</div><div class="toc-item-sub">Yusufjon Yusufov — Yosh Siyosatshunos &amp; Jamoa Faoli</div></div>
-                      <div class="toc-item-page">04</div>
+                      <div><div class="toc-item-title">{{ article.title }}</div><div class="toc-item-sub">{{ article.author_name }} — {{ article.category }}</div></div>
+                      <div class="toc-item-page">{% if article.page_number < 10 %}0{% endif %}{{ article.page_number }}</div>
                     </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">Sunʻiy Intellekt va Kelajak</div><div class="toc-item-sub">Javohir Alimov — IT va AI Texnologiyalari</div></div>
-                      <div class="toc-item-page">05</div>
-                    </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">Chempionlik Sirlari</div><div class="toc-item-sub">Zebo Karimova — Sport va Intizom</div></div>
-                      <div class="toc-item-page">06</div>
-                    </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">Yashil Energiya va Venchur</div><div class="toc-item-sub">Ekspert Sharhi</div></div>
-                      <div class="toc-item-page">07</div>
-                    </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">Liderlik va Psixologiya</div><div class="toc-item-sub">Zamonaviy Yetakchi Odatlari</div></div>
-                      <div class="toc-item-page">08</div>
-                    </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">Yoshlar uchun 10 Oltin Qoida</div><div class="toc-item-sub">Amaliy Rivojlanish Yoʻl Xaritasi</div></div>
-                      <div class="toc-item-page">09</div>
-                    </div>
-                    <div class="toc-item">
-                      <div><div class="toc-item-title">TOP 100 Reyting Eʻloni</div><div class="toc-item-sub">Tanlov va Qabul Jarayoni</div></div>
-                      <div class="toc-item-page">10</div>
-                    </div>
+                    {% endfor %}
                   </div>
                   <div class="mag-page-footer">
                     <span>Oʻzbekiston Yetakchi Yoshlari</span>
@@ -730,133 +664,31 @@
                 </div>
               </div>
 
-              <!-- Sahifa 4: Maqola 1 (SOFT PAGE) -->
+              {% for article in journal.articles.all %}
+              <!-- Sahifa: Maqola (SOFT PAGE) -->
               <div class="fpage fpage-inner" data-density="soft">
                 <div class="fpage-content">
                   <div class="mag-page-header">
-                    <span>LIDERLIK &amp; SIYOSATSHUNOSLIK</span>
-                    <span>EKSKLYUZIV SUHBAT</span>
+                    <span>{{ article.category }}</span>
+                    <span>MAQOLA</span>
                   </div>
-                  <div class="page-section-title">04 | Kelajak Intizom Bilan Bunyod Etiladi</div>
-                  <div class="page-author">Muallif: Yusufjon Yusufov Baxtiyorjon oʻgʻli</div>
+                  <div class="page-section-title">{% if article.page_number < 10 %}0{% endif %}{{ article.page_number }} | {{ article.title }}</div>
+                  <div class="page-author">Muallif: {{ article.author_name }}</div>
                   <div class="page-body">
-                    <p>Yoshlar oʻz intizomi, harbiy-vatanparvarlik ruhi, ekologik masʻuliyati hamda siyosiy-ijtimoiy faolligi orqali jamiyat kelajagini shakllantiradi.</p>
-                    <div class="page-pull-quote">"Kelajak tasodifan yaratilmaydi, u bugungi intizom bilan bunyod etiladi."</div>
-                    <p>Har bir yosh yetakchi oʻz sohasida yetuk bilimga va tashabbuskorlikka ega boʻlishi — yurtimiz taraqqiyotining kafolatidir.</p>
+                    {% if article.pull_quote %}
+                    <div class="page-pull-quote">"{{ article.pull_quote }}"</div>
+                    {% endif %}
+                    <p>{{ article.content|linebreaksbr }}</p>
                   </div>
                   <div class="mag-page-footer">
-                    <span>Liderlik Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 04</span>
+                    <span>Maqola</span>
+                    <span class="page-num-tag">SAHIFA {% if article.page_number < 10 %}0{% endif %}{{ article.page_number }}</span>
                   </div>
                 </div>
               </div>
+              {% endfor %}
 
-              <!-- Sahifa 5: Maqola 2 (SOFT PAGE) -->
-              <div class="fpage fpage-inner" data-density="soft">
-                <div class="fpage-content">
-                  <div class="mag-page-header">
-                    <span>TEXNOLOGIYA &amp; IT</span>
-                    <span>TAHLILIY SHARH</span>
-                  </div>
-                  <div class="page-section-title">05 | Sunʻiy Intellekt va Kelajak</div>
-                  <div class="page-author">Muallif: Javohir Alimov, IT Innovatori</div>
-                  <div class="page-body">
-                    <p>Bugungi kunda sunʻiy intellekt (AI) insoniyat hayotining har bir sohasiga shiddat bilan kirib bormoqda. IT sohasida yetakchi boʻlish uchun har kuni yangi bilimlarni egallash talab etiladi.</p>
-                    <div class="page-pull-quote">"Kelajak texnologiyasini bugun oʻrganmagan kishi ertaga kuzatuvchiga aylanadi."</div>
-                    <p>Dasturlash — bu shunchaki kod yozish emas, balki insoniyat muammolarini mantiqiy hal etish sanʻatidir. Kelajak texnologiyalarini oʻrganish har bir yoshning asosiy maqsadi boʻlishi kerak.</p>
-                  </div>
-                  <div class="mag-page-footer">
-                    <span>Texnologiya Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 05</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sahifa 6: Maqola 3 (SOFT PAGE) -->
-              <div class="fpage fpage-inner" data-density="soft">
-                <div class="fpage-content">
-                  <div class="mag-page-header">
-                    <span>SPORT &amp; INTIZOM</span>
-                    <span>CHEMPION SIRI</span>
-                  </div>
-                  <div class="page-section-title">06 | Chempionlik Sirlari</div>
-                  <div class="page-author">Muallif: Zebo Karimova, Olimpiya Chempioni</div>
-                  <div class="page-body">
-                    <p>Chempion boʻlish — bu bir kunlik gʻalaba emas, balki yillar davomida toʻplangan intizom, mashaqqat va qatʻiyatning natijasi. Men har kuni mashaqqatli mashgʻulotdan soʻng oʻzimga shuni eslataman.</p>
-                    <div class="page-pull-quote">"Sport hayotda ham, kasbda ham oldinga intilishni oʻrgatdi."</div>
-                    <p>Har qanday toʻsiqni yengish mumkin — buning uchun faqat harakat va qatʻiyat kerak.</p>
-                  </div>
-                  <div class="mag-page-footer">
-                    <span>Sport Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 06</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sahifa 7: Maqola 4 (SOFT PAGE) -->
-              <div class="fpage fpage-inner" data-density="soft">
-                <div class="fpage-content">
-                  <div class="mag-page-header">
-                    <span>MOLIYA &amp; INNOVATSIYA</span>
-                    <span>INVESTITSIYA TAHLILI</span>
-                  </div>
-                  <div class="page-section-title">07 | Yashil Energiya va Venchur</div>
-                  <div class="page-author">Ekspert Sharhi</div>
-                  <div class="page-body">
-                    <p>Yashil energetika bugungi kunda dunyodagi eng tezkor oʻsayotgan investitsiya sohalaridan biridir. Oʻzbekistonda bu borada katta imkoniyatlar mavjud.</p>
-                    <div class="page-pull-quote">"Kelajak investori — bugundan yangi energiyaga sarmoya kiritadigandir."</div>
-                    <p>Venchur fondlar orqali innovatsion loyihalarga investitsiya jalb qilish — yangi avlod tadbirkorligining asosiy yoʻnalishi hisoblanadi.</p>
-                  </div>
-                  <div class="mag-page-footer">
-                    <span>Moliya Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 07</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sahifa 8: Liderlik (SOFT PAGE) -->
-              <div class="fpage fpage-inner" data-density="soft">
-                <div class="fpage-content">
-                  <div class="mag-page-header">
-                    <span>LIDERLIK &amp; PSIXOLOGIYA</span>
-                    <span>MUTAXASSIS SHARHI</span>
-                  </div>
-                  <div class="page-section-title">08 | Liderlik va Psixologiya</div>
-                  <div class="page-author">Jurnal Materiallari</div>
-                  <div class="page-body">
-                    <p>Haqiqiy lider — atrofdagilarni boshqaruvchi emas, balki ilhomlantiruvchi insondir. Liderlikda eng muhim xususiyat — boshqalarga ishonish va imkoniyat berishdir.</p>
-                    <div class="page-pull-quote">"Yetakchi oʻzini kuchli qilish orqali emas, balki jamoasini kuchli qilish orqali muvaffaqiyatga erishadi."</div>
-                    <p>Psixologik mustahkamlik, hissiy intellekt va samarali muloqot — zamonaviy yetakchining asosiy qurolidir.</p>
-                  </div>
-                  <div class="mag-page-footer">
-                    <span>Liderlik Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 08</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sahifa 9: Yoshlar uchun maslahatlar (SOFT PAGE) -->
-              <div class="fpage fpage-inner" data-density="soft">
-                <div class="fpage-content">
-                  <div class="mag-page-header">
-                    <span>YOSHLAR UCHUN</span>
-                    <span>AMALIY MASLAHATLAR</span>
-                  </div>
-                  <div class="page-section-title">09 | Yoshlar uchun 10 Oltin Qoida</div>
-                  <div class="page-author">OʻzYYE Loyihasi</div>
-                  <div class="page-body">
-                    <p>Muvaffaqiyatli yetakchi boʻlish uchun erta boshlash, doim oʻrganish va hech qachon taslim boʻlmaslik zarur. Quyidagi maslahatlar sizga yoʻlda yordam beradi.</p>
-                    <div class="page-pull-quote">"Kelajakni bugun qilayotgan harakatlaringiz belgilaydi."</div>
-                    <p>Telefon oʻrniga kitob oʻqing. Bir sohada mutaxassis boʻling. Tarmoqlaringizni kengaytiring. Har kuni yangi bilim oling. Va eng muhimi — harakat qiling!</p>
-                  </div>
-                  <div class="mag-page-footer">
-                    <span>Yoshlar Maqolasi</span>
-                    <span class="page-num-tag">SAHIFA 09</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sahifa 10: Orqa muqova (HARD COVER) -->
+              <!-- Oxirgi Sahifa: Orqa muqova (HARD COVER) -->
               <div class="fpage fpage-cover" data-density="hard">
                 <img src="{% if journal and journal.back_cover %}{{ journal.back_cover.url }}{% else %}/static/images/journal_back_cover.png{% endif %}" onerror="this.src='/static/images/journal_back_cover.png'" alt="Orqa muqova" />
               </div>
@@ -864,11 +696,29 @@
             </div>
           </div>
         </div>
+
+        {% else %}
+
+        <!-- Coming Soon Card -->
+        <div style="background: var(--bg-surface); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 70px 40px; text-align: center; backdrop-filter: blur(24px); box-shadow: 0 35px 100px rgba(0,0,0,0.7); max-width: 840px; margin: 40px auto 80px; position: relative; overflow: hidden;" class="reveal">
+          <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,235,0.25) 0%, rgba(0,0,0,0) 70%); pointer-events: none; border-radius: 50%;"></div>
+          <span style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.85rem; padding: 7px 22px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; box-shadow: 0 4px 20px rgba(0,166,235,0.4); margin-bottom: 24px;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:8px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            TEZ KUNDA / COMING SOON
+          </span>
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2;">Yangi Nashr Tez Kunda!</h2>
+          <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 650px; margin: 0 auto 36px;">Oʻzbekiston Yetakchi Yoshlari jurnalining navbatdagi maxsus soni tayyorlanmoqda. Tez kunda yangi va ilhomlantiruvchi hikoyalar bilan qaytamiz!</p>
+          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="btn btn-primary" style="padding: 14px 28px;">Bosh sahifaga qaytish &rarr;</a>
+            <a href="/ariza/" class="btn btn-outline" style="padding: 14px 28px;">Ariza qoldirish</a>
+          </div>
+        </div>
+
         {% endif %}
 
       </div>
     </div>
-  </main>
+</main>
 
   <!-- Sidebar Drawer -->
   <div class="drawer-overlay" id="drawer-overlay">
@@ -884,17 +734,16 @@
         </div>
         <div class="thumb-card" onclick="goToPageNum(1)"><div class="thumb-card-inner">02 — Jurnal Haqida</div><div class="thumb-label">2</div></div>
         <div class="thumb-card" onclick="goToPageNum(2)"><div class="thumb-card-inner">03 — Mundarija</div><div class="thumb-label">3</div></div>
-        <div class="thumb-card" onclick="goToPageNum(3)"><div class="thumb-card-inner">04 — Startap Maqolasi</div><div class="thumb-label">4</div></div>
-        <div class="thumb-card" onclick="goToPageNum(4)"><div class="thumb-card-inner">05 — AI va IT</div><div class="thumb-label">5</div></div>
-        <div class="thumb-card" onclick="goToPageNum(5)"><div class="thumb-card-inner">06 — Chempionlik</div><div class="thumb-label">6</div></div>
-        <div class="thumb-card" onclick="goToPageNum(6)"><div class="thumb-card-inner">07 — Yashil Energiya</div><div class="thumb-label">7</div></div>
-        <div class="thumb-card" onclick="goToPageNum(7)"><div class="thumb-card-inner">08 — Liderlik</div><div class="thumb-label">8</div></div>
-        <div class="thumb-card" onclick="goToPageNum(8)"><div class="thumb-card-inner">09 — Maslahatlar</div><div class="thumb-label">9</div></div>
-        <div class="thumb-card" onclick="goToPageNum(9)">
+        
+        {% for article in journal.articles.all %}
+        <div class="thumb-card" onclick="goToPageNum({{ forloop.counter|add:2 }})"><div class="thumb-card-inner">{% if article.page_number < 10 %}0{% endif %}{{ article.page_number }} — {{ article.title|truncatechars:20 }}</div><div class="thumb-label">{{ forloop.counter|add:3 }}</div></div>
+        {% endfor %}
+
+        <div class="thumb-card" onclick="goToPageNum({{ journal.articles.count|add:3 }})">
           <img src="{% if journal and journal.back_cover %}{{ journal.back_cover.url }}{% else %}/static/images/journal_back_cover.png{% endif %}" onerror="this.src='/static/images/journal_back_cover.png'" />
-          <div class="thumb-label">10 — Orqa Muqova</div>
+          <div class="thumb-label">{{ journal.articles.count|add:4 }} — Orqa Muqova</div>
         </div>
-      </div>
+      </div></div>
     </div>
   </div>
 

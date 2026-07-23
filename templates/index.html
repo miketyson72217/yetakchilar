@@ -89,7 +89,7 @@
               OʻzYYE — bu mamlakatning turli sohalarida yutuqlarga erishgan, faol va ilhomlantiruvchi yetakchi yoshlarni birlashtiruvchi ensiklopedik loyihadir. Ensiklopediya yoshlar uchun ibrat boʻlishi, ularning orzu va maqsadlariga yetishishida yoʻlkoʻrsatkich vazifasini oʻtaydi.
             </p>
             <p class="section-desc">
-              Biz oʻzbekistonlik yetakchi yoshlarning salohiyatini eʻtirof etib, ularning yutuqlarini butun jamiyatga namuna sifatida taqdim etamiz. Har bir yetakchi oʻz sohasida muhim yutuqlarga erishgan, millatimiz iftixori boʻlgan shaxsdir.
+              Biz oʻzbekistonlik yetakchi yoshlarning salohiyatini eʼtirof etib, ularning yutuqlarini butun jamiyatga namuna sifatida taqdim etamiz. Har bir yetakchi oʻz sohasida muhim yutuqlarga erishgan, millatimiz iftixori boʻlgan shaxsdir.
             </p>
             <a href="/biz-haqimizda/" class="btn btn-primary" id="btn-about-more">Batafsil &rarr;</a>
           </div>
@@ -139,7 +139,7 @@
               </a>
             {% endfor %}
           {% else %}
-            <p style="color: var(--text-secondary); padding: 32px; text-align: center;">Yetakchilar hali qoʻshilmagan. Admin yangi yetakchi qoʻshishi bilanoq bu yerda koʻrinadi.</p>
+            <p style="color: var(--text-secondary); padding: 32px; text-align: center;">Hozircha yetakchilar mavjud emas. Yangi yetakchilar tez kunda qoʻshiladi.</p>
           {% endif %}
         </div>
         <div class="section-footer">
@@ -151,15 +151,15 @@
     <!-- ===== JOURNAL SECTION ===== -->
     <section class="journal-section" id="journal-section">
       <div class="container">
-        {% if journal_setting and journal_setting.is_coming_soon %}
+        {% if not journal %}
         <div style="background: rgba(10,14,26,0.85); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 50px 30px; text-align: center; backdrop-filter: blur(20px); max-width: 800px; margin: 0 auto; box-shadow: 0 25px 80px rgba(0,0,0,0.6);">
           <span style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.78rem; padding: 6px 20px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,166,235,0.4);">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:6px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
-            TEZ ORADA / COMING SOON
+            TEZ KUNDA / COMING SOON
           </span>
-          <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; color: #ffffff; margin-bottom: 16px; line-height: 1.2;">{{ journal_setting.coming_soon_title }}</h2>
-          <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.7; max-width: 600px; margin: 0 auto 28px;">{{ journal_setting.coming_soon_description }}</p>
-          <a href="/jurnal/" class="btn btn-primary" id="btn-journal" style="padding: 12px 30px;">Batafsil maʻlumot &rarr;</a>
+          <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; color: #ffffff; margin-bottom: 16px; line-height: 1.2;">Yangi Nashr Tez Kunda!</h2>
+          <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.7; max-width: 600px; margin: 0 auto 28px;">Oʻzbekiston Yetakchi Yoshlari jurnalining navbatdagi maxsus soni tayyorlanmoqda. Tez kunda yangi va ilhomlantiruvchi hikoyalar bilan qaytamiz!</p>
+          <a href="/jurnal/" class="btn btn-primary" id="btn-journal" style="padding: 12px 30px;">Batafsil maʼlumot &rarr;</a>
         </div>
         {% else %}
         <div class="journal-grid">

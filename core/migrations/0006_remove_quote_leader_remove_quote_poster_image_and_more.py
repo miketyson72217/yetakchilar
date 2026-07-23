@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='journal',
             name='is_active',
-            field=models.BooleanField(default=True, verbose_name='Faol / Eʻlon qilingan'),
+            field=models.BooleanField(default=True, verbose_name='Faol / Eʼlon qilingan'),
         ),
         migrations.AlterField(
             model_name='journal',

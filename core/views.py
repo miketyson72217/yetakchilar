@@ -109,7 +109,7 @@ def ariza_view(request):
             except Exception as e:
                 logger.error(f"Telegram notification error: {e}")
 
-            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada adminlarimiz arizangizni koʻrib chiqib, siz bilan bogʻlanishadi.'
+            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada jamoamiz arizangizni koʻrib chiqib, siz bilan bogʻlanishadi.'
 
 
             is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', '').lower()
