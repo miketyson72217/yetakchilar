@@ -7,7 +7,7 @@ import boto3
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-from core.models import Leader, Quote
+from core.models import Leader
 
 # Ensure directories exist
 os.makedirs('/home/lochinbek/Desktop/yetakchilar/media/leaders', exist_ok=True)
@@ -221,7 +221,6 @@ for idx, item in enumerate(RAW_LEADERS, 1):
             'birth_date': birth_date,
             'birth_place': birth_place,
             'education': education,
-            'top100_rank': idx,
             'quote_poster': poster_s3_path,
             'is_featured': True
         }
@@ -235,21 +234,11 @@ for idx, item in enumerate(RAW_LEADERS, 1):
         leader.birth_date = birth_date
         leader.birth_place = birth_place
         leader.education = education
-        leader.top100_rank = idx
         leader.quote_poster = poster_s3_path
         leader.is_featured = True
         leader.save()
         
-    # Also create Quote entry
-    Quote.objects.update_or_create(
-        author_name=name,
-        defaults={
-            'quote_text': quote_text,
-            'author_title': short_bio,
-            'poster_image': poster_s3_path,
-            'is_featured': True
-        }
-    )
+
     print(f"[{idx}/45] Created/Updated: {name} ({sphere}, {region})")
 
 print("All 45 leaders & quotes successfully generated, uploaded to S3, and seeded to DB!")

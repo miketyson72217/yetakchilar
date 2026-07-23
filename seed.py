@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from core.models import Leader, Journal, Quote, Application
+from core.models import Leader, Journal, Application
 
 # 1. Superuser
 admin_username = os.environ.get('SUPERUSER_NAME', 'admin_yt_8f9a2b')
@@ -33,7 +33,6 @@ leaders_data = [
         'birth_date': '1-oktabr 1999-yil',
         'birth_place': 'Buxoro shahri',
         'education': 'Oliy (Vatel Hotel Management)',
-        'top100_rank': 1,
         'is_featured': True
     },
     {
@@ -46,7 +45,6 @@ leaders_data = [
         'birth_date': '15-may 1998-yil',
         'birth_place': 'Toshkent shahri',
         'education': 'Oliy (WESTMINSTER)',
-        'top100_rank': 2,
         'is_featured': True
     },
     {
@@ -59,7 +57,6 @@ leaders_data = [
         'birth_date': '10-iyun 2000-yil',
         'birth_place': 'Samarqand shahri',
         'education': 'Oliy (INHA)',
-        'top100_rank': 3,
         'is_featured': True
     },
     {
@@ -72,7 +69,6 @@ leaders_data = [
         'birth_date': '22-avgust 2001-yil',
         'birth_place': 'Toshkent shahri',
         'education': 'Oliy (Jismoniy Tarbiya Instituti)',
-        'top100_rank': 4,
         'is_featured': True
     },
     {
@@ -85,7 +81,6 @@ leaders_data = [
         'birth_date': '5-fevral 1997-yil',
         'birth_place': 'Buxoro shahri',
         'education': 'Oliy (TDIU)',
-        'top100_rank': 5,
         'is_featured': True
     },
     {
@@ -98,7 +93,6 @@ leaders_data = [
         'birth_date': '12-noyabr 1996-yil',
         'birth_place': 'Namangan shahri',
         'education': 'Oliy (Toshkent Tibbiyot Akademiyasi)',
-        'top100_rank': 6,
         'is_featured': True
     }
 ]
@@ -124,7 +118,6 @@ for ldata in leaders_data:
             birth_date=ldata['birth_date'],
             birth_place=ldata['birth_place'],
             education=ldata['education'],
-            top100_rank=ldata['top100_rank'],
             is_featured=ldata['is_featured']
         )
         print(f'Leader created: {new_leader.name} -> slug: {new_leader.slug}')
@@ -145,38 +138,6 @@ if not Journal.objects.filter(issue_number=1).exists():
     )
     print('Journal Issue 1 created')
 
-# 4. Quotes
-quotes_data = [
-    {
-        'quote_text': 'Muvaffaqiyat — bu tasodif emas, balki har kuni qilinadigan toʻgʻri tanlovlar natijasida.',
-        'author_name': 'Yusupova Malika Rustamovna',
-        'author_title': 'Tadbirkor & CEO',
-        'is_featured': True
-    },
-    {
-        'quote_text': 'Texnologiya — bu faqat vosita. Asosiy kuch — insonning aqli va ijodiy tafakkuridir.',
-        'author_name': 'Alimov Javohir Otabekovich',
-        'author_title': 'Texnologiya Innovatori',
-        'is_featured': True
-    },
-    {
-        'quote_text': 'Sport menga hayotda ham, kasbda ham oldinga intilishni oʻrgatdi. Har qanday toʻsiqni yengish mumkin.',
-        'author_name': 'Karimova Zebo Bobur qizi',
-        'author_title': 'Olimpiya Chempioni',
-        'is_featured': True
-    }
-]
 
-for qdata in quotes_data:
-    quote, created = Quote.objects.get_or_create(
-        author_name=qdata['author_name'],
-        defaults={
-            'quote_text': qdata['quote_text'],
-            'author_title': qdata['author_title'],
-            'is_featured': qdata['is_featured']
-        }
-    )
-    if created:
-        print(f'Quote created for {qdata["author_name"]}')
 
 print("Demo data successfully updated!")

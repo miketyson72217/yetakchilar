@@ -163,7 +163,7 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
         "core.Leader": "fas fa-user-tie",
-        "core.Quote": "fas fa-quote-right",
+
         "core.Journal": "fas fa-book",
         "core.JournalSetting": "fas fa-cogs",
     },

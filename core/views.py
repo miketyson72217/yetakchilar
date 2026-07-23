@@ -2,13 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from .models import Leader, Journal, Quote, Application
+from .models import Leader, Journal, Application
 from .telegram_bot import send_telegram_application_notification
 
 def index_view(request):
     featured_leaders = Leader.objects.all()[:6]
     journal = Journal.objects.filter(is_active=True).first()
-    quotes = Quote.objects.filter(is_featured=True)[:3]
+    quotes = Leader.objects.exclude(quote_poster='').order_by('-created_at')[:3]
     total_leaders_count = Leader.objects.count()
     
     context = {
@@ -72,7 +72,7 @@ def jurnal_view(request):
 
 
 def iqtiboslar_view(request):
-    quotes = Quote.objects.all()
+    quotes = Leader.objects.exclude(quote_poster='').order_by('-created_at')
     context = {
         'quotes': quotes,
     }

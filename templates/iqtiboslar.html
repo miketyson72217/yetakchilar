@@ -253,30 +253,27 @@
           {% if quotes %}
             {% for q in quotes %}
               <div class="poster-card reveal">
-                <div class="poster-img-wrap" onclick="openLightbox('{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
-                  <img src="{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" onerror="this.src='/static/images/quotes/yusufjon_poster.jpg'" alt="{{ q.author_name }}" class="poster-img" />
+                <div class="poster-img-wrap" onclick="openLightbox('{% if q.quote_poster %}{{ q.quote_poster.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                  <img src="{% if q.quote_poster %}{{ q.quote_poster.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" onerror="this.src='/static/images/quotes/yusufjon_poster.jpg'" alt="{{ q.name }}" class="poster-img" />
                   <div class="poster-overlay-btn"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:6px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Toʻliq Koʻrish</div>
                 </div>
 
                 <div class="poster-info-block">
                   <div class="poster-author-title-row">
-                    <img src="{% if q.author_photo %}{{ q.author_photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.author_name }}" class="poster-author-avatar" />
+                    <img src="{% if q.photo %}{{ q.photo.url }}{% else %}/static/images/leader1.png{% endif %}" onerror="this.src='/static/images/leader1.png'" alt="{{ q.name }}" class="poster-author-avatar" />
                     <div>
-                      <h3 class="poster-author-name">{{ q.author_name }}</h3>
-                      <span class="poster-author-sub">{{ q.author_title }}</span>
+                      <h3 class="poster-author-name">{{ q.name }}</h3>
+                      <span class="poster-author-sub">{{ q.short_bio }}</span>
                     </div>
                   </div>
 
                   <div class="poster-actions-row">
-                    <button class="poster-action-btn" onclick="openLightbox('{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                    <button class="poster-action-btn" onclick="openLightbox('{% if q.quote_poster %}{{ q.quote_poster.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
                       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Koʻrish
                     </button>
-                    <a href="{% if q.poster_image %}{{ q.poster_image.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" download class="poster-action-btn">
+                    <a href="{% if q.quote_poster %}{{ q.quote_poster.url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" download class="poster-action-btn">
                       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Yuklab olish
                     </a>
-                    <button class="poster-action-btn" onclick="copyQuoteText(this, `{{ q.quote_text|escapejs }} — {{ q.author_name|escapejs }}`)">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Nusxalash
-                    </button>
                   </div>
                 </div>
               </div>

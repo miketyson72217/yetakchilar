@@ -40,7 +40,6 @@ class Leader(models.Model):
     birth_date = models.CharField(max_length=100, blank=True, verbose_name="Tugʻilgan sana")
     birth_place = models.CharField(max_length=100, blank=True, verbose_name="Tugʻilgan joy")
     education = models.CharField(max_length=255, blank=True, verbose_name="Taʼlim")
-    top100_rank = models.PositiveIntegerField(null=True, blank=True, verbose_name="TOP 100 oʻrni")
     quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (Rasm sifatida)")
     is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada koʻrsatish")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qoʻshilgan vaqt")
@@ -99,20 +98,6 @@ class Journal(models.Model):
         return f"{self.issue_number}-son: {self.title}"
 
 
-class Quote(models.Model):
-    quote_text = models.TextField(verbose_name="Iqtibos matni")
-    author_name = models.CharField(max_length=255, verbose_name="Muallif ismi")
-    author_title = models.CharField(max_length=255, verbose_name="Muallif kasbi / unvoni")
-    author_photo = models.ImageField(upload_to='quotes/', blank=True, null=True, verbose_name="Muallif rasmi")
-    poster_image = models.ImageField(upload_to='quotes/posters/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (Rasm sifatida)")
-    is_featured = models.BooleanField(default=True, verbose_name="Bosh sahifada koʻrsatish")
-
-    class Meta:
-        verbose_name = "Iqtibos"
-        verbose_name_plural = "Iqtiboslar"
-
-    def __str__(self):
-        return f'"{self.quote_text[:40]}..." — {self.author_name}'
 
 
 class Application(models.Model):
