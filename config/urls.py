@@ -54,6 +54,7 @@ urlpatterns = [
     # SEO routes
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('googlea7829e18419689e0.html', views.google_verification, name='google_verification'),
 ]
 
 if settings.DEBUG:

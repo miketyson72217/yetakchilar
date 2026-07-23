@@ -143,3 +143,6 @@ Sitemap: https://yetakchilar.uz/sitemap.xml
 def sitemap_xml(request):
     leaders = Leader.objects.all()
     return render(request, 'sitemap.xml', {'leaders': leaders}, content_type='application/xml')
+
+def google_verification(request):
+    return HttpResponse("google-site-verification: googlea7829e18419689e0.html", content_type="text/html")
