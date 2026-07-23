@@ -134,6 +134,8 @@ else:
         },
     }
 
+WHITENOISE_MANIFEST_STRICT = False
+
 JAZZMIN_SETTINGS = {
     "site_title": "OʻzYYE Admin",
     "site_header": "OʻzYYE",
