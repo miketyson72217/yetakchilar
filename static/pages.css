@@ -388,3 +388,70 @@
     gap: 16px;
   }
 }
+
+
+/* ===== ADDITIONAL MOBILE TWEAKS FOR PAGES ===== */
+@media (max-width: 768px) {
+  .page-hero-title {
+    font-size: 2rem;
+  }
+  
+  .page-hero-content {
+    padding: 40px 16px 48px;
+  }
+  
+  .top100-title {
+    font-size: 2rem;
+  }
+  
+  .top100-badge {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .top100-num {
+    font-size: 2.5rem;
+  }
+  
+  .top100-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 16px;
+    gap: 16px;
+  }
+  
+  .top100-rank {
+    min-width: auto;
+    font-size: 1.5rem;
+  }
+  
+  .value-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 24px;
+  }
+  
+  .timeline::before {
+    left: 16px;
+  }
+  
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-left: 48px;
+  }
+  
+  .timeline-item::before {
+    left: 11px;
+    top: 4px;
+  }
+  
+  .timeline-year {
+    font-size: 1.25rem;
+  }
+  
+  .timeline-content {
+    padding: 20px;
+  }
+}

@@ -1092,3 +1092,90 @@ p, .section-desc {
     gap: 64px;
   }
 }
+
+
+/* ===== MOBILE RESPONSIVE TWEAKS ===== */
+@media (max-width: 768px) {
+  /* Layout Gaps & Padding */
+  .hero-main, .about-grid, .journal-grid, .footer-inner, .quotes-grid, .leaders-grid {
+    gap: 40px;
+  }
+  
+  .about-section, .journal-section, .quotes-section {
+    padding: 80px 0;
+  }
+  
+  .content-section {
+    padding: 60px 0;
+  }
+  
+  .site-footer {
+    padding-top: 40px;
+  }
+  
+  .footer-inner {
+    margin-bottom: 40px;
+  }
+
+  /* Typography */
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+  
+  /* Buttons */
+  .hero-buttons {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
+  }
+  
+  /* Cards */
+  .stat-card {
+    padding: 24px 16px;
+  }
+  
+  .quote-card {
+    padding: 32px 24px;
+  }
+  
+  .apply-form {
+    padding: 32px 20px;
+  }
+  
+  /* Header Inner */
+  .header-inner {
+    padding: 0 16px 0 20px;
+    height: 64px;
+  }
+  
+  .logo-img {
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .leaders-grid, .quotes-grid {
+    grid-template-columns: 1fr;
+  }
+}
