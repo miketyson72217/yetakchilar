@@ -1082,6 +1082,10 @@ p, .section-desc {
   .burger-btn { display: block; }
 }
 
+@media (min-width: 1201px) {
+  .mobile-menu { display: none !important; }
+}
+
 @media (max-width: 1024px) {
   .hero-main, .about-grid, .journal-grid, .footer-inner {
     grid-template-columns: 1fr;
