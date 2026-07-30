@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yetakchilardan iqtiboslar — Motivatsiya va Hikmatlar | O‘zYYE</title>
+  <meta name="description" content="O‘zbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtibos posterlari va muvaffaqiyatga undovchi aforizmlar to‘plami. Yoshlar ensiklopediyasi." />
+  <meta name="keywords" content="Iqtiboslar, motivatsiya, muvaffaqiyat, yetakchilar, O‘zbekiston yoshlari, aforizmlar, hikmatlar, O‘zYYE" />
+  <link rel="canonical" href="https://yetakchilar.uz/iqtiboslar/" />
+  <meta property="og:title" content="Yetakchilardan iqtiboslar — Motivatsiya va Hikmatlar" />
+  <meta property="og:description" content="O‘zbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtibos posterlari to‘plami." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yetakchilar.uz/iqtiboslar/" />
+  <meta property="og:image" content="https://yetakchilar.uz/static/images/main_logo.png" />
+  <meta property="og:site_name" content="Yetakchilar.uz" />
+  <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Yetakchi yoshlardan iqtiboslar",
+    "description": "O‘zbekiston Yetakchi Yoshlaridan ilhomlantiruvchi iqtibos posterlari to‘plami.",
+    "itemListElement": [
+      {% for q in quotes %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.counter }},
+        "item": {
+          "@type": "Quotation",
+          "text": "{{ q.short_bio|default:'Ilhomlantiruvchi iqtibos'|escapejs }}",
+          "spokenByCharacter": {
+            "@type": "Person",
+            "name": "{{ q.name|escapejs }}"
+          },
+          "image": "{{ request.scheme }}://{{ request.get_host }}{{ q.random_poster_url }}",
+          "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'leader_detail' q.slug %}"
+        }
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+
+  <style>
+    .quotes-poster-grid {
+      column-count: 1;
+      column-gap: 40px;
+      margin-top: 40px;
+    }
+    @media (min-width: 768px) {
+      .quotes-poster-grid { column-count: 2; }
+    }
+    @media (min-width: 1100px) {
+      .quotes-poster-grid { column-count: 3; }
+    }
+
+    .poster-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      position: relative;
+      break-inside: avoid;
+      margin-bottom: 40px;
+    }
+
+    .poster-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 166, 235, 0.5);
+      box-shadow: 0 30px 70px rgba(0, 166, 235, 0.25);
+    }
+
+    .poster-img-wrap {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #04060f;
+    }
+
+    .poster-img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .poster-card:hover .poster-img {
+      transform: scale(1.04);
+    }
+
+    .poster-overlay-btn {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 166, 235, 0.25);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .poster-img-wrap:hover .poster-overlay-btn {
+      opacity: 1;
+    }
+
+    .poster-info-block {
+      padding: 24px 28px;
+    }
+
+    .poster-author-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+
+
+    .poster-author-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+
+    .poster-author-sub {
+      font-size: 0.78rem;
+      color: #00A6EB;
+      font-weight: 600;
+    }
+
+    .poster-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .poster-action-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .poster-action-btn:hover {
+      background: rgba(0, 166, 235, 0.2);
+      border-color: #00A6EB;
+      color: #00A6EB;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 15, 0.95);
+      backdrop-filter: blur(16px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.9), 0 0 40px rgba(0,166,235,0.3);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #00A6EB;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      /* Masonry naturally falls back to 1 column */
+    }
+  </style>
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link active">Yetakchilardan iqtiboslar</a></li>
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-nav-list" role="list">
+      <li><a href="/" class="mobile-nav-link">Bosh sahifa</a></li>
+      <li><a href="/biz-haqimizda/" class="mobile-nav-link">Biz haqimizda</a></li>
+      <li><a href="/yetakchilar/" class="mobile-nav-link">Yetakchilar</a></li>
+      <li><a href="/jurnal/" class="mobile-nav-link">Yetakchilar online jurnali</a></li>
+      <li><a href="/iqtiboslar/" class="mobile-nav-link">Yetakchilardan iqtiboslar</a></li>
+      <li><a href="/ariza/" class="mobile-nav-link mobile-nav-cta">Ariza qoldirish</a></li>
+    </ul>
+  </div>
+
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">IQTIBOS POSTERLARI</span>
+        <h1 class="page-hero-title">Yetakchi Yoshlar Iqtibos Posterlari</h1>
+        <p class="page-hero-subtitle">Rasmiy bosma poster va ilhomlantiruvchi aforizmlar to‘plami</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+
+        <!-- Search Bar -->
+        <div class="search-bar-wrap" id="quotes-search-wrap">
+          <div class="search-bar-inner">
+            <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input
+              type="search"
+              id="quotes-search-input"
+              class="search-bar-input"
+              placeholder="Muallif ismi yoki soha bo‘yicha qidiring..."
+              autocomplete="off"
+              aria-label="Iqtiboslarni qidirish"
+            />
+            <button class="search-clear-btn" id="quotes-search-clear" aria-label="Tozalash" style="display:none">&times;</button>
+          </div>
+          <p class="search-results-count" id="quotes-count-text"></p>
+        </div>
+
+        <div class="quotes-poster-grid" id="quotes-poster-grid">
+          {% if quotes %}
+            {% for q in quotes %}
+              <div class="poster-card reveal">
+                <div class="poster-img-wrap" onclick="openLightbox('{% if q.random_poster_url %}{{ q.random_poster_url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                  <img src="{% if q.random_poster_url %}{{ q.random_poster_url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}" onerror="this.onerror=null; this.src='/static/images/quotes/yusufjon_poster.jpg'" alt="{{ q.name }}" class="poster-img" />
+                  <div class="poster-overlay-btn"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:6px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> To‘liq Ko‘rish</div>
+                </div>
+
+                <div class="poster-info-block">
+                  <a href="{% url 'leader_detail' q.slug %}" class="poster-author-title-row" style="text-decoration:none;">
+
+                    <div>
+                      <h3 class="poster-author-name">{{ q.name }}</h3>
+                      {% if q.short_bio %}<span class="poster-author-sub">{{ q.short_bio }}</span>{% endif %}
+                    </div>
+                  </a>
+
+                  <div class="poster-actions-row">
+                    <button class="poster-action-btn" onclick="openLightbox('{% if q.random_poster_url %}{{ q.random_poster_url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}')">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ko‘rish
+                    </button>
+                    <button class="poster-action-btn" onclick="forceDownload('{% if q.random_poster_url %}{{ q.random_poster_url }}{% else %}/static/images/quotes/yusufjon_poster.jpg{% endif %}', 'iqtibos_poster.jpg')">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Yuklab olish
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+          <!-- JS qidiruv natijasi bo‘sh bo‘lganda -->
+          <div class="search-empty-state" id="quotes-empty-state" style="display:none; text-align:center; padding:48px 20px; column-span:all;">
+            <svg width="48" height="48" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:16px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <p style="color:var(--text-secondary); font-size:1rem;">Hech narsa topilmadi. Boshqa kalit so‘z kiriting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox(event)">
+    <div class="lightbox-content-box">
+      <button class="lightbox-close-btn" onclick="closeLightboxDirect()">&times;</button>
+      <img id="lightbox-img" src="" alt="Iqtibos Posteri" class="lightbox-img" />
+    </div>
+  </div>
+
+    <footer class="site-footer" id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand" id="footer-brand">
+        <img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
+        <div class="footer-social" id="footer-social">
+          <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" id="social-telegram" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          </a>
+          <a href="#" class="social-link" id="social-instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-nav" id="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer-bottom" id="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    (function() {
+      const input = document.getElementById('quotes-search-input');
+      const clearBtn = document.getElementById('quotes-search-clear');
+      const countText = document.getElementById('quotes-count-text');
+      const emptyState = document.getElementById('quotes-empty-state');
+      const grid = document.getElementById('quotes-poster-grid');
+
+      function getCards() {
+        return grid.querySelectorAll('.poster-card');
+      }
+
+      function updateSearch() {
+        const q = input.value.trim().toLowerCase();
+        const cards = getCards();
+        let visible = 0;
+
+        cards.forEach(card => {
+          const name = (card.querySelector('.poster-author-name')?.textContent || '').toLowerCase();
+          const sub  = (card.querySelector('.poster-author-sub')?.textContent  || '').toLowerCase();
+          const match = !q || name.includes(q) || sub.includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+
+        clearBtn.style.display = q ? '' : 'none';
+        emptyState.style.display = (visible === 0 && q) ? 'block' : 'none';
+        countText.textContent = q ? `${visible} ta natija topildi` : '';
+      }
+
+      input.addEventListener('input', updateSearch);
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        input.focus();
+        updateSearch();
+      });
+    })();
+  </script>
+  <script>
+    function openLightbox(src) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeLightboxDirect() {
+      document.getElementById('lightbox-modal').classList.remove('active');
+    }
+
+    function closeLightbox(e) {
+      if (e.target.id === 'lightbox-modal') {
+        closeLightboxDirect();
+      }
+    }
+
+    function copyQuoteText(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const old = btn.textContent;
+        btn.textContent = '✓ Nusxalandi';
+        btn.style.color = '#22c55e';
+        setTimeout(() => {
+          btn.textContent = old;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    function forceDownload(url, filename) {
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(blobUrl);
+          document.body.removeChild(a);
+        })
+        .catch(err => {
+          console.error("Download failed", err);
+          window.open(url, '_blank');
+        });
+    }
+  </script>
+</body>
+</html>

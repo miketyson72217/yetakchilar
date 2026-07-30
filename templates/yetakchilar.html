@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barcha Yetakchilar ro‘yxati — O‘zYYE</title>
+  <meta name="description" content="O‘zbekistonning turli sohalarida o‘z o‘rniga ega bo‘lgan eng faol va muvaffaqiyatli yosh yetakchilarining to‘liq ro‘yxati." />
+  <meta name="keywords" content="Yetakchilar ro‘yxati, muvaffaqiyatli yoshlar, O‘zbekiston yetakchilari, yoshlar ensiklopediyasi, O‘zYYE" />
+  <link rel="canonical" href="https://yetakchilar.uz/yetakchilar/" />
+  <meta property="og:title" content="Barcha Yetakchilar ro‘yxati — O‘zYYE" />
+  <meta property="og:description" content="O‘zbekistonning turli sohalarida o‘z o‘rniga ega bo‘lgan eng faol va muvaffaqiyatli yosh yetakchilarining to‘liq ro‘yxati." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yetakchilar.uz/yetakchilar/" />
+  <meta property="og:image" content="https://yetakchilar.uz/static/images/main_logo.png" />
+  <meta property="og:site_name" content="Yetakchilar.uz" />
+  <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/pages.css" />
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "O‘zbekiston Yetakchi Yoshlari ro‘yxati",
+    "description": "Mamlakatning turli sohalarida yutuqlarga erishayotgan yosh yetakchilar to‘plami.",
+    "itemListElement": [
+      {% for leader in leaders %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.counter }},
+        "item": {
+          "@type": "Person",
+          "name": "{{ leader.name|escapejs }}",
+          "jobTitle": "{{ leader.get_sphere_display|escapejs }}",
+          "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'leader_detail' leader.slug %}"
+        }
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link active">Yetakchilar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/iqtiboslar/" class="nav-link">Yetakchilardan iqtiboslar</a></li>
+          
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-nav-list" role="list">
+      <li><a href="/" class="mobile-nav-link">Bosh sahifa</a></li>
+      <li><a href="/biz-haqimizda/" class="mobile-nav-link">Biz haqimizda</a></li>
+      <li><a href="/yetakchilar/" class="mobile-nav-link">Yetakchilar</a></li>
+      <li><a href="/jurnal/" class="mobile-nav-link">Yetakchilar online jurnali</a></li>
+      <li><a href="/iqtiboslar/" class="mobile-nav-link">Yetakchilardan iqtiboslar</a></li>
+      <li><a href="/ariza/" class="mobile-nav-link mobile-nav-cta">Ariza qoldirish</a></li>
+    </ul>
+  </div>
+
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">ENSIKLOPEDIYA</span>
+        <h1 class="page-hero-title" id="leaders-page-title">O‘zbekiston Yetakchi Yoshlari</h1>
+        <p class="page-hero-subtitle" id="leaders-page-sub">Mamlakatimizning turli sohalarida muvaffaqiyatga erishayotgan ilhomlantiradigan zamondoshlarimiz</p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+
+        <!-- Search Bar -->
+        <div class="search-bar-wrap" id="leaders-search-wrap">
+          <div class="search-bar-inner">
+            <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input
+              type="search"
+              id="leaders-search-input"
+              class="search-bar-input"
+              placeholder="Yetakchi ism yoki soha bo‘yicha qidiring..."
+              autocomplete="off"
+              aria-label="Yetakchilarni qidirish"
+            />
+            <button class="search-clear-btn" id="leaders-search-clear" aria-label="Tozalash" style="display:none">&times;</button>
+          </div>
+          <p class="search-results-count" id="leaders-count-text"></p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filter-bar" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:40px; justify-content:center;">
+          <a href="?sphere=all" class="filter-btn {% if active_sphere == 'all' %}active{% endif %}">Barchasi</a>
+          <a href="?sphere=biznes" class="filter-btn {% if active_sphere == 'biznes' %}active{% endif %}">Tadbirkorlik</a>
+          <a href="?sphere=texno" class="filter-btn {% if active_sphere == 'texno' %}active{% endif %}">Texnologiya &amp; IT</a>
+          <a href="?sphere=sport" class="filter-btn {% if active_sphere == 'sport' %}active{% endif %}">Sport</a>
+          <a href="?sphere=fan" class="filter-btn {% if active_sphere == 'fan' %}active{% endif %}">Fan &amp; Taʼlim</a>
+          <a href="?sphere=sanat" class="filter-btn {% if active_sphere == 'sanat' %}active{% endif %}">Sanʼat &amp; Madaniyat</a>
+          <a href="?sphere=tibbiyot" class="filter-btn {% if active_sphere == 'tibbiyot' %}active{% endif %}">Tibbiyot</a>
+          <a href="?sphere=ijtimoiy" class="filter-btn {% if active_sphere == 'ijtimoiy' %}active{% endif %}">Ijtimoiy faoliyat</a>
+        </div>
+
+        <div class="leaders-grid" id="leaders-grid">
+          {% for leader in leaders %}
+            <a href="{% url 'leader_detail' leader.slug %}" class="leader-card reveal" style="text-decoration:none;">
+              <div class="leader-photo-wrap">
+                <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" onerror="this.onerror=null; this.src='/static/images/leader_male_default.png'" />
+              </div>
+              <div class="leader-info">
+                <h3 class="leader-name">{{ leader.name }}</h3>
+                <span class="leader-sphere">{{ leader.get_sphere_display }} — {{ leader.get_region_display }}</span>
+              </div>
+            </a>
+          {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text-secondary);">
+              Ushbu soha bo‘yicha yetakchilar topilmadi.
+            </div>
+          {% endfor %}
+          <!-- JS qidiruv natijasi bo‘sh bo‘lganda -->
+          <div class="search-empty-state" id="leaders-empty-state" style="display:none; grid-column: 1 / -1; text-align:center; padding:48px 20px;">
+            <svg width="48" height="48" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:16px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <p style="color:var(--text-secondary); font-size:1rem;">Hech narsa topilmadi. Boshqa kalit so‘z kiriting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <script>
+    (function() {
+      const input = document.getElementById('leaders-search-input');
+      const clearBtn = document.getElementById('leaders-search-clear');
+      const countText = document.getElementById('leaders-count-text');
+      const emptyState = document.getElementById('leaders-empty-state');
+      const grid = document.getElementById('leaders-grid');
+
+      function getCards() {
+        return grid.querySelectorAll('a.leader-card');
+      }
+
+      function updateSearch() {
+        const q = input.value.trim().toLowerCase();
+        const cards = getCards();
+        let visible = 0;
+
+        cards.forEach(card => {
+          const name = (card.querySelector('.leader-name')?.textContent || '').toLowerCase();
+          const sphere = (card.querySelector('.leader-sphere')?.textContent || '').toLowerCase();
+          const match = !q || name.includes(q) || sphere.includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+
+        clearBtn.style.display = q ? '' : 'none';
+        emptyState.style.display = (visible === 0 && q) ? 'grid' : 'none';
+        countText.textContent = q ? `${visible} ta natija topildi` : '';
+      }
+
+      input.addEventListener('input', updateSearch);
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        input.focus();
+        updateSearch();
+      });
+    })();
+  </script>
+  </main>
+
+    <footer class="site-footer" id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand" id="footer-brand">
+        <img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
+        <div class="footer-social" id="footer-social">
+          <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" id="social-telegram" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          </a>
+          <a href="#" class="social-link" id="social-instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-nav" id="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer-bottom" id="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

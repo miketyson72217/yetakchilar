@@ -1,0 +1,132 @@
+from django.db import models
+from django.utils.text import slugify
+from ckeditor.fields import RichTextField
+import uuid
+
+class Leader(models.Model):
+    SPHERE_CHOICES = [
+        ('biznes', 'Tadbirkorlik & Biznes'),
+        ('texno', 'Texnologiya & IT'),
+        ('sport', 'Sport'),
+        ('fan', 'Fan & Taʼlim'),
+        ('sanat', 'Sanʼat & Madaniyat'),
+        ('tibbiyot', 'Tibbiyot'),
+        ('ijtimoiy', 'Ijtimoiy faoliyat'),
+    ]
+
+    REGION_CHOICES = [
+        ('Toshkent', 'Toshkent shahri'),
+        ('Samarqand', 'Samarqand'),
+        ('Farg‘ona', 'Farg‘ona'),
+        ('Namangan', 'Namangan'),
+        ('Andijon', 'Andijon'),
+        ('Buxoro', 'Buxoro'),
+        ('Xorazm', 'Xorazm'),
+        ('Qashqadaryo', 'Qashqadaryo'),
+        ('Surxondaryo', 'Surxondaryo'),
+        ('Sirdaryo', 'Sirdaryo'),
+        ('Jizzax', 'Jizzax'),
+        ('Navoiy', 'Navoiy'),
+        ('Qoraqalpog‘iston', 'Qoraqalpog‘iston'),
+        ('Toshkent viloyati', 'Toshkent viloyati'),
+    ]
+
+    name = models.CharField(max_length=255, verbose_name="F.I.SH. (Familiya, ism, sharif)")
+    slug = models.SlugField(max_length=255, unique=True, blank=True, verbose_name="URL slagi")
+    sphere = models.CharField(max_length=50, choices=SPHERE_CHOICES, verbose_name="Soha")
+    region = models.CharField(max_length=100, choices=REGION_CHOICES, verbose_name="Hudud")
+    photo = models.ImageField(upload_to='leaders/', verbose_name="Portret rasm")
+    short_bio = models.CharField(max_length=255, blank=True, null=True, verbose_name="Qisqa status (masalan: Ijodkor | Jamoatchilik faoli)")
+    full_bio = RichTextField(blank=True, verbose_name="To‘liq biografiya va yutuqlar")
+    bio_file = models.FileField(upload_to='bios/', blank=True, null=True, verbose_name="Biografiya fayli (PDF/DOCX, ixtiyoriy)")
+    birth_date = models.CharField(max_length=100, blank=True, verbose_name="Tug‘ilgan sana")
+    birth_place = models.CharField(max_length=100, blank=True, verbose_name="Tug‘ilgan joy")
+    education = models.CharField(max_length=255, blank=True, verbose_name="Taʼlim")
+    quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (16:9 keng)")
+    quote_poster_1x1 = models.ImageField(upload_to='leaders/quotes/1x1/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (1:1 kvadrat)")
+    is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada ko‘rsatish")
+    show_quote = models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan vaqt")
+
+    class Meta:
+        verbose_name = "Yetakchi"
+        verbose_name_plural = "Yetakchilar"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} ({self.get_sphere_display()})"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = str(uuid.uuid4())
+            while Leader.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = str(uuid.uuid4())
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+
+
+class Journal(models.Model):
+    issue_number = models.PositiveIntegerField(default=1, verbose_name="Son raqami")
+    title = models.CharField(max_length=255, verbose_name="Jurnal sarlavhasi")
+    author = models.CharField(max_length=255, default='O‘zbekiston Yetakchi Yoshlari', verbose_name="Muallif")
+    description = models.TextField(verbose_name="Tavsif")
+    front_cover = models.ImageField(upload_to='journals/covers/', verbose_name="Old muqova rasmi")
+    back_cover = models.ImageField(upload_to='journals/covers/', blank=True, null=True, verbose_name="Orqa muqova rasmi")
+    pdf_file = models.FileField(upload_to='journals/pdfs/', blank=True, null=True, verbose_name="PDF fayl (Yuklab olish uchun)")
+    pages_count = models.PositiveIntegerField(default=48, verbose_name="Sahifalar soni")
+    file_size = models.CharField(max_length=50, default='24 MB', verbose_name="Fayl hajmi")
+    issn = models.CharField(max_length=50, default='ISSN 2023-1234', verbose_name="ISSN raqami")
+    release_date = models.CharField(max_length=100, default='Iyun 2024', verbose_name="Chop etilgan sana")
+    is_active = models.BooleanField(default=True, verbose_name="Faol / Eʼlon qilingan")
+
+    class Meta:
+        verbose_name = "Online Jurnal"
+        verbose_name_plural = "Online Jurnallar"
+        ordering = ['-issue_number']
+
+    def __str__(self):
+        return f"{self.issue_number}-son: {self.title}"
+
+
+
+
+class Application(models.Model):
+    STATUS_CHOICES = [
+        ('NEW', 'Yangi'),
+        ('CONTACTED', 'Bog‘lanildi'),
+        ('APPROVED', 'Qabul qilindi'),
+        ('REJECTED', 'Rad etildi'),
+    ]
+
+    full_name = models.CharField(max_length=255, verbose_name="Ism va Familiya")
+    phone = models.CharField(max_length=50, verbose_name="Telefon raqami")
+    telegram_username = models.CharField(max_length=100, verbose_name="Telegram Username")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='NEW', verbose_name="Holat")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yuborilgan vaqt")
+
+    class Meta:
+        verbose_name = "Ariza"
+        verbose_name_plural = "Arizalar"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Ariza: {self.full_name} ({self.phone}) — {self.get_status_display()}"
+
+class JournalArticle(models.Model):
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name='articles', verbose_name="Jurnal")
+    category = models.CharField(max_length=100, verbose_name="Kategoriya (masalan: LIDERLIK & INTIZOM)")
+    title = models.CharField(max_length=255, verbose_name="Maqola sarlavhasi")
+    short_description = models.TextField(verbose_name="Qisqa tavsif (Ushbu sonda nimalar bor uchun)")
+    author_name = models.CharField(max_length=255, verbose_name="Muallif ismi")
+    page_number = models.PositiveIntegerField(verbose_name="Sahifa raqami (Jurnal ichida)")
+    content = models.TextField(verbose_name="Maqola matni (paragraflar uchun)")
+    pull_quote = models.CharField(max_length=500, blank=True, null=True, verbose_name="Iqtibos (Pull quote)")
+    
+    class Meta:
+        verbose_name = "Jurnal Maqolasi"
+        verbose_name_plural = "Jurnal Maqolalari"
+        ordering = ['page_number']
+
+    def __str__(self):
+        return f"{self.title} ({self.page_number}-sahifa)"

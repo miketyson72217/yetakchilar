@@ -1,0 +1,48 @@
+# === Python ===
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# === Django ===
+db.sqlite3
+db.sqlite3-journal
+*.log
+local_settings.py
+
+# === Maxfiy fayllar (HECH QACHON commit qilmang!) ===
+.env
+.env.*
+!.env.example
+env.txt
+secrets.json
+secrets.yaml
+
+# === Media va statik ===
+media/
+staticfiles/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# === IDE ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === Node (agar ishlatilsa) ===
+node_modules/
+npm-debug.log*
+
+# === Deploy ===
+*.pid
+*.sock
+venv/
