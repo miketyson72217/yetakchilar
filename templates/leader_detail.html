@@ -780,7 +780,6 @@
           <div class="related-grid">
             {% for r in related_leaders %}
             <a href="{% url 'leader_detail' r.slug %}" class="related-card">
-              <img src="{% if r.photo %}{{ r.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ r.name }}" />
               <div>
                 <div class="related-card-name">{{ r.name }}</div>
                 <div class="related-card-sub">{{ r.get_sphere_display }}</div>
