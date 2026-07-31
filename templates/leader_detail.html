@@ -873,22 +873,7 @@
       document.body.style.overflow = '';
     }
     function forceDownload(url, filename) {
-      fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = blobUrl;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(blobUrl);
-          document.body.removeChild(a);
-        })
-        .catch(err => {
-          window.open(url, '_blank');
-        });
+      window.location.href = '/download-image/?url=' + encodeURIComponent(url) + '&filename=' + encodeURIComponent(filename);
     }
     function downloadCurrentQuote() {
       let q16 = document.getElementById('quote-16x9');

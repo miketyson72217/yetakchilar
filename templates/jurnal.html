@@ -581,7 +581,7 @@
                 3D Virtual Kitobni Ochish &rarr;
               </a>
               {% if journal.pdf_file %}
-              <a href="{{ journal.pdf_file.url }}" download class="btn btn-outline" id="btn-download-pdf">
+              <a href="/download-image/?url={{ journal.pdf_file.url|urlencode }}&filename=jurnal.pdf" class="btn btn-outline" id="btn-download-pdf">
                 Yuklab olish (PDF)
               </a>
               {% endif %}

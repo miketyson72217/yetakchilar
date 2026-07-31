@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 from .models import Leader, Journal, Application
 from .telegram_bot import send_telegram_application_notification
+import urllib.request
+from urllib.error import URLError
+from urllib.parse import urlparse
+
 
 import random
 from django.db.models import Q
@@ -169,7 +173,7 @@ def ariza_view(request):
             except Exception as e:
                 logger.error(f"Telegram notification error: {e}")
 
-            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi.'
+            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi. Agar uzoq vaqt davomida aloqaga chiqilmasa, admin bilan Telegram orqali bog‘lanishingiz mumkin: @uzyye_admin. Yangiliklar va nashrlarni ijtimoiy tarmoqlardagi sahifalarimizda kuzatib borishni unutmang!'
 
 
             is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', '').lower()
@@ -206,3 +210,39 @@ def sitemap_xml(request):
 
 def google_verification(request):
     return HttpResponse("google-site-verification: googlea7829e18419689e0.html", content_type="text/html")
+
+
+def download_image_view(request):
+    url = request.GET.get('url')
+    if not url:
+        raise Http404("URL not provided")
+        
+    allowed_domains = ['s3.eu-central-1.idrivee2.com', 'eu-central-1.idrivee2.com']
+    
+    if url.startswith('/'):
+        url = request.build_absolute_uri(url)
+        
+    parsed_url = urlparse(url)
+    if parsed_url.netloc not in allowed_domains and parsed_url.netloc != request.get_host():
+        return HttpResponse("Ruxsat etilmagan manba", status=403)
+        
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=10) as response:
+            content = response.read()
+            content_type = response.headers.get('Content-Type', 'image/jpeg')
+            
+            django_resp = HttpResponse(content, content_type=content_type)
+            
+            filename = request.GET.get('filename')
+            if not filename:
+                filename = url.split('/')[-1]
+            if not filename or '?' in filename:
+                filename = "iqtibos_poster.jpg"
+                
+            django_resp['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return django_resp
+    except Exception as e:
+        logger.error(f"Image download failed for {url}: {e}")
+        return HttpResponse("Rasmni yuklab olishda xatolik yuz berdi", status=500)
+
