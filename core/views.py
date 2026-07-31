@@ -45,10 +45,12 @@ def index_view(request):
     quotes_qs = Leader.objects.filter(is_quote_featured=True, quote_poster__isnull=False).order_by('-created_at', '-id')[:3]
     quotes = list(quotes_qs)
     for q in quotes:
-        if q.quote_poster and q.quote_poster.url:
-            q.random_poster_url = q.quote_poster.url
-        elif q.quote_poster_1x1 and q.quote_poster_1x1.url:
-            q.random_poster_url = q.quote_poster_1x1.url
+        opts = []
+        if q.quote_poster: opts.append(q.quote_poster.url)
+        if q.quote_poster_1x1: opts.append(q.quote_poster_1x1.url)
+        if opts:
+            idx = q.id % len(opts)
+            q.random_poster_url = opts[idx]
         else:
             q.random_poster_url = None
 
@@ -124,10 +126,12 @@ def iqtiboslar_view(request):
     ).order_by('-created_at', '-id')
     quotes = list(quotes_qs)
     for q in quotes:
-        if q.quote_poster and q.quote_poster.url:
-            q.random_poster_url = q.quote_poster.url
-        elif q.quote_poster_1x1 and q.quote_poster_1x1.url:
-            q.random_poster_url = q.quote_poster_1x1.url
+        opts = []
+        if q.quote_poster: opts.append(q.quote_poster.url)
+        if q.quote_poster_1x1: opts.append(q.quote_poster_1x1.url)
+        if opts:
+            idx = q.id % len(opts)
+            q.random_poster_url = opts[idx]
         else:
             q.random_poster_url = None
 
