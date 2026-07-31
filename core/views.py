@@ -117,7 +117,9 @@ def jurnal_view(request):
 
 
 def iqtiboslar_view(request):
-    quotes_qs = Leader.objects.filter(show_quote=True).order_by('-created_at')[:7]
+    quotes_qs = Leader.objects.filter(
+        Q(quote_poster__isnull=False, quote_poster__gt='') | Q(quote_poster_1x1__isnull=False, quote_poster_1x1__gt='')
+    ).order_by('-created_at')
     quotes = list(quotes_qs)
     for q in quotes:
         opts = []

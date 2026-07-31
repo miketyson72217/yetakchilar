@@ -87,6 +87,12 @@
     <section class="content-section">
       <div class="container">
 
+        <!-- Explanatory Text -->
+        <div style="text-align: center; margin-bottom: 24px; color: var(--text-secondary); font-size: 0.95rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+          Dastlabki holatda faqat asosiy "Top" ro‘yxatdagi yetakchilar ko‘rsatiladi. <br>
+          <strong style="color: #00A6EB;">Agar o‘zingizni yoki boshqa yetakchini izlayotgan bo‘lsangiz, iltimos, qidiruvdan foydalaning!</strong>
+        </div>
+
         <!-- Search Bar -->
         <div class="search-bar-wrap" id="leaders-search-wrap">
           <div class="search-bar-inner">
@@ -118,7 +124,7 @@
 
         <div class="leaders-grid" id="leaders-grid">
           {% for leader in leaders %}
-            <a href="{% url 'leader_detail' leader.slug %}" class="leader-card reveal" style="text-decoration:none;">
+            <a href="{% url 'leader_detail' leader.slug %}" class="leader-card reveal" style="text-decoration:none;" data-is-top="{{ leader.is_featured|lower }}">
               <div class="leader-photo-wrap">
                 <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" onerror="this.onerror=null; this.src='/static/images/leader_male_default.png'" />
               </div>
@@ -161,15 +167,25 @@
         cards.forEach(card => {
           const name = (card.querySelector('.leader-name')?.textContent || '').toLowerCase();
           const sphere = (card.querySelector('.leader-sphere')?.textContent || '').toLowerCase();
-          const match = !q || name.includes(q) || sphere.includes(q);
-          card.style.display = match ? '' : 'none';
-          if (match) visible++;
+          const isTop = card.getAttribute('data-is-top') === 'true';
+
+          if (!q) {
+            card.style.display = isTop ? '' : 'none';
+            if (isTop) visible++;
+          } else {
+            const match = name.includes(q) || sphere.includes(q);
+            card.style.display = match ? '' : 'none';
+            if (match) visible++;
+          }
         });
 
         clearBtn.style.display = q ? '' : 'none';
         emptyState.style.display = (visible === 0 && q) ? 'grid' : 'none';
         countText.textContent = q ? `${visible} ta natija topildi` : '';
       }
+
+      // Initial filter on load
+      updateSearch();
 
       input.addEventListener('input', updateSearch);
       clearBtn.addEventListener('click', function() {
