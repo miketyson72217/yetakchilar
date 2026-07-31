@@ -42,7 +42,7 @@ def index_view(request):
     journal = Journal.objects.filter(is_active=True).first()
     
     # Random quote size for homepage
-    quotes_qs = Leader.objects.filter(show_quote=True, quote_poster__isnull=False).order_by('-created_at')[:3]
+    quotes_qs = Leader.objects.filter(is_quote_featured=True, quote_poster__isnull=False).order_by('-created_at')[:3]
     quotes = list(quotes_qs)
     for q in quotes:
         opts = []

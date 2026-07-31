@@ -45,8 +45,9 @@ class Leader(models.Model):
     quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (16:9 keng)")
     quote_poster_1x1 = models.ImageField(upload_to='leaders/quotes/1x1/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (1:1 kvadrat)")
     is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada ko‘rsatish")
-    show_quote = models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan vaqt")
+    show_quote = models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish (Top)")
+    is_quote_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada iqtibosini ko'rsatish")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana")
 
     class Meta:
         verbose_name = "Yetakchi"

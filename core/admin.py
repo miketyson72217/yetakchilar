@@ -9,16 +9,16 @@ admin.site.index_title = "Ensiklopediyani Boshqarish"
 
 @admin.register(Leader)
 class LeaderAdmin(admin.ModelAdmin):
-    list_display = ('photo_preview', 'name', 'sphere', 'region', 'is_featured', 'show_quote', 'created_at')
-    list_filter = ('sphere', 'region', 'is_featured', 'show_quote')
+    list_display = ('photo_preview', 'name', 'sphere', 'region', 'is_featured', 'show_quote', 'is_quote_featured', 'created_at')
+    list_filter = ('sphere', 'region', 'is_featured', 'show_quote', 'is_quote_featured')
     search_fields = ('name', 'short_bio', 'full_bio')
     prepopulated_fields = {'slug': ('name', 'sphere')}
-    list_editable = ('is_featured', 'show_quote')
+    list_editable = ('is_featured', 'show_quote', 'is_quote_featured')
 
 
     fieldsets = (
         ("Asosiy Maʼlumotlar", {
-            'fields': ('name', 'slug', 'sphere', 'region', 'photo', 'short_bio', 'is_featured', 'show_quote')
+            'fields': ('name', 'slug', 'sphere', 'region', 'photo', 'short_bio', 'is_featured', 'show_quote', 'is_quote_featured')
         }),
         ("Iqtibos Poster Rasmlari", {
             'fields': ('quote_poster', 'quote_poster_1x1')
