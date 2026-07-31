@@ -38,11 +38,11 @@ def sanitize_html(html_content):
     )
 
 def index_view(request):
-    featured_leaders = Leader.objects.filter(is_featured=True).order_by('-created_at')[:12]
+    featured_leaders = Leader.objects.filter(is_featured=True).order_by('-created_at', '-id')[:12]
     journal = Journal.objects.filter(is_active=True).first()
     
     # Random quote size for homepage
-    quotes_qs = Leader.objects.filter(is_quote_featured=True, quote_poster__isnull=False).order_by('-created_at')[:3]
+    quotes_qs = Leader.objects.filter(is_quote_featured=True, quote_poster__isnull=False).order_by('-created_at', '-id')[:3]
     quotes = list(quotes_qs)
     for q in quotes:
         opts = []
@@ -67,7 +67,7 @@ def biz_haqimizda_view(request):
 
 def yetakchilar_view(request):
     sphere = request.GET.get('sphere')
-    leaders = Leader.objects.all().order_by('-created_at')
+    leaders = Leader.objects.all().order_by('-created_at', '-id')
     if sphere and sphere != 'all':
         leaders = leaders.filter(sphere=sphere)
 
@@ -119,7 +119,7 @@ def jurnal_view(request):
 def iqtiboslar_view(request):
     quotes_qs = Leader.objects.filter(
         Q(quote_poster__isnull=False, quote_poster__gt='') | Q(quote_poster_1x1__isnull=False, quote_poster_1x1__gt='')
-    ).order_by('-created_at')
+    ).order_by('-created_at', '-id')
     quotes = list(quotes_qs)
     for q in quotes:
         opts = []
