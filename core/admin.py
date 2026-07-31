@@ -30,7 +30,7 @@ class LeaderAdmin(admin.ModelAdmin):
 
     def photo_preview(self, obj):
         if obj.photo:
-            return format_html('<img src="{}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />', obj.photo.url)
+            return format_html('<img src="{}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; object-position: top center;" />', obj.photo.url)
         return "Rasm yo‘q"
     photo_preview.short_description = "Rasm"
 
