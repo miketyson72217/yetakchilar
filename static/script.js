@@ -193,7 +193,7 @@ function animateCounter(el, target, suffix = '') {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
-    const current = Math.floor(eased * numTarget);
+    const current = Math.round(eased * numTarget);
     el.textContent = current.toLocaleString('en-US') + (isPlus ? '+' : suffix);
     if (progress < 1) requestAnimationFrame(update);
   };
