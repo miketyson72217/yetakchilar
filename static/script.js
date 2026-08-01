@@ -194,7 +194,7 @@ function animateCounter(el, target, suffix = '') {
     const progress = Math.min(elapsed / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
     const current = Math.floor(eased * numTarget);
-    el.textContent = current + (isPlus ? '+' : suffix);
+    el.textContent = current.toLocaleString('en-US') + (isPlus ? '+' : suffix);
     if (progress < 1) requestAnimationFrame(update);
   };
 
@@ -208,7 +208,7 @@ if (statNumbers.length && 'IntersectionObserver' in window) {
       if (entry.isIntersecting) {
         const el = entry.target;
         const text = el.textContent;
-        const num = parseInt(text);
+        const num = parseInt(text.replace(/,/g, ''));
         const suffix = text.includes('+') ? '+' : '';
         animateCounter(el, num, suffix);
         statsObserver.unobserve(el);
