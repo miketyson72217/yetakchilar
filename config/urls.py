@@ -4,11 +4,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views
+from django.views.generic.base import RedirectView
 
 admin_url_path = os.environ.get('ADMIN_URL_PATH', 'admin-yt-9k8v7q2x4m/').strip('/')
 
 urlpatterns = [
     path(f'{admin_url_path}/', admin.site.urls),
+    path('favicon.ico', RedirectView.as_view(url='/static/images/favicon-192x192.png', permanent=True)),
     
     # Home routes
     path('', views.index_view, name='index'),
