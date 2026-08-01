@@ -97,6 +97,7 @@ class Application(models.Model):
     STATUS_CHOICES = [
         ('NEW', 'Yangi'),
         ('CONTACTED', 'Bog‘lanildi'),
+        ('UNREACHABLE', 'Bog‘lanib bo‘lmadi'),
         ('APPROVED', 'Qabul qilindi'),
         ('REJECTED', 'Rad etildi'),
     ]

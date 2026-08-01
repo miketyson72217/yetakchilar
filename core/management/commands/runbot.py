@@ -98,17 +98,35 @@ class Command(BaseCommand):
         admin_name = admin_user.get('first_name', '')
         admin_username = f"@{admin_user.get('username')}" if admin_user.get('username') else admin_name
 
-        if data.startswith('app_contacted_') or data.startswith('app_rejected_'):
+        if data.startswith('app_contacted_') or data.startswith('app_unreachable_') or data.startswith('app_approved_') or data.startswith('app_rejected_'):
             app_id = data.split('_')[-1]
-            action = 'CONTACTED' if 'contacted' in data else 'REJECTED'
+            
+            if 'contacted' in data:
+                action = 'CONTACTED'
+            elif 'unreachable' in data:
+                action = 'UNREACHABLE'
+            elif 'approved' in data:
+                action = 'APPROVED'
+            else:
+                action = 'REJECTED'
 
             app = Application.objects.filter(id=app_id).first()
             if app:
                 app.status = action
                 app.save()
 
-            status_text = "✅ ISHLAB BO‘LINGAN ARIZA (Bog‘lanildi)" if action == 'CONTACTED' else "❌ RAD ETILGAN ARIZA"
-            status_badge = "🟢 Bog‘lanildi (Ko‘rib chiqildi)" if action == 'CONTACTED' else "🔴 Rad etildi"
+            if action == 'CONTACTED':
+                status_text = "🟡 BOG‘LANILDI (Kutilyapti)"
+                status_badge = "🟡 Bog‘lanildi, tasdiqlash kutilmoqda"
+            elif action == 'UNREACHABLE':
+                status_text = "⚠️ BOG‘LANISHNI ILOJI BO‘LMADI"
+                status_badge = "⚠️ Bog‘lanib bo‘lmadi"
+            elif action == 'APPROVED':
+                status_text = "✅ TASDIQLANGAN ARIZA"
+                status_badge = "🟢 Qabul qilindi"
+            else:
+                status_text = "❌ RAD ETILGAN ARIZA"
+                status_badge = "🔴 Rad etildi"
 
             new_text = (
                 f"<b>{status_text} (#id{app_id})</b>\n\n"
@@ -121,7 +139,14 @@ class Command(BaseCommand):
 
             new_buttons = []
             if action == 'CONTACTED':
-                new_buttons.append([{'text': '🟢 Ishlab bo‘lindi (Bog‘lanildi)', 'callback_data': 'done'}])
+                new_buttons.append([
+                    {'text': '✅ Tasdiqlash', 'callback_data': f'app_approved_{app_id}'},
+                    {'text': '❌ Rad etish', 'callback_data': f'app_rejected_{app_id}'}
+                ])
+            elif action == 'UNREACHABLE':
+                new_buttons.append([{'text': '⚠️ Bog‘lanib bo‘lmadi (Yakunlandi)', 'callback_data': 'done'}])
+            elif action == 'APPROVED':
+                new_buttons.append([{'text': '🟢 Tasdiqlangan', 'callback_data': 'done'}])
             else:
                 new_buttons.append([{'text': '🔴 Rad etildi', 'callback_data': 'done'}])
 

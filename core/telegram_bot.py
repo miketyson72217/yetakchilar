@@ -31,7 +31,7 @@ def send_telegram_application_notification(application):
     inline_keyboard = [
         [
             {'text': '✅ Bog‘lanildi', 'callback_data': f'app_contacted_{application.id}'},
-            {'text': '❌ Rad etildi', 'callback_data': f'app_rejected_{application.id}'}
+            {'text': '⚠️ Bog‘lanishni iloji bo‘lmadi', 'callback_data': f'app_unreachable_{application.id}'}
         ]
     ]
 
