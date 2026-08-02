@@ -12,7 +12,7 @@ class LeaderAdmin(admin.ModelAdmin):
     list_display = ('photo_preview', 'name', 'sphere', 'region', 'is_featured', 'show_in_leaders', 'show_quote', 'is_quote_featured', 'created_at')
     list_filter = ('sphere', 'region', 'is_featured', 'show_in_leaders', 'show_quote', 'is_quote_featured')
     search_fields = ('name', 'short_bio', 'full_bio')
-    prepopulated_fields = {'slug': ('name', 'sphere')}
+    readonly_fields = ('slug',)
     list_editable = ('is_featured', 'show_in_leaders', 'show_quote', 'is_quote_featured')
 
 
