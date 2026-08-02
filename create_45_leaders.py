@@ -162,7 +162,7 @@ def generate_quote_poster(leader_data, index):
         
     # Top Branding Header
     draw.text((540, 120), "O‘ZBEKISTON YETAKCHI YOSHLARI ENSIKLOPEDIYASI", fill='#00A6EB', font=font_header, anchor='mm')
-    draw.text((540, 170), "LIDERLAR IQTIBOSI", fill='#94a3b8', font=font_meta, anchor='mm')
+    draw.text((540, 170), "YETAKCHILAR IQTIBOSI", fill='#94a3b8', font=font_meta, anchor='mm')
     draw.line([200, 210, 880, 210], fill='#00A6EB', width=3)
     
     # Quote Icon

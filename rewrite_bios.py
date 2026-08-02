@@ -72,7 +72,7 @@ templates = {
             "{Name} o‘n minglab yoshlarni qamrab olgan ijtimoiy tadbirlar, ekologik va xayriya aksiyalarining asosiy tashkilotchisi sifatida nom qozongan."
         ),
         (
-            "Ijtimoiy-siyosiy sohada chuqur bilim va liderlik salohiyatini namoyon etayotgan yosh tahlilchi {Surname} {Name} qator davlat dasturlarining muvaffaqiyatli amalga oshishida bevosita ishtirok etmoqda.\n\nU yoshlarning muammolarini o‘rganish va ularga amaliy yechimlar taklif etish yo‘lida yuzlab forumlar va ochiq muloqotlar o‘tkazdi. Vatanparvarlik va fuqarolik masʼuliyati uning har bir harakatida yaqqol namoyon bo‘ladi. {Name} O‘zbekiston uchinchi renessansiga qadam qo‘yayotgan bir davrda yoshlar yetakchisi qanday bo‘lishi kerakligini amalda ko‘rsatib bermoqda.",
+            "Ijtimoiy-siyosiy sohada chuqur bilim va yetakchilik salohiyatini namoyon etayotgan yosh tahlilchi {Surname} {Name} qator davlat dasturlarining muvaffaqiyatli amalga oshishida bevosita ishtirok etmoqda.\n\nU yoshlarning muammolarini o‘rganish va ularga amaliy yechimlar taklif etish yo‘lida yuzlab forumlar va ochiq muloqotlar o‘tkazdi. Vatanparvarlik va fuqarolik masʼuliyati uning har bir harakatida yaqqol namoyon bo‘ladi. {Name} O‘zbekiston uchinchi renessansiga qadam qo‘yayotgan bir davrda yoshlar yetakchisi qanday bo‘lishi kerakligini amalda ko‘rsatib bermoqda.",
             "{Name} yoshlar bandligini taʼminlash hamda hududlarda yoshlar parlamentarizmini rivojlantirish dasturlari muallifidir."
         )
     ]
@@ -106,7 +106,7 @@ def generate_bio(leader):
         'fan': f"Yosh olim va innovatsion tadqiqotchi. Fan doktori (PhD).",
         'tibbiyot': f"Tibbiyot fanlari namoyandasi. Zamonaviy diagnostika va davolash eksperti.",
         'sanat': f"Sanʼat va madaniyat rivojiga hissa qo‘shib kelayotgan noyob isteʼdod egasi.",
-        'ijtimoiy': f"Davlat va jamiyat boshqaruvida o‘z so‘ziga ega yosh lider. Ijtimoiy loyihalar tashabbuskori."
+        'ijtimoiy': f"Davlat va jamiyat boshqaruvida o‘z so‘ziga ega yosh yetakchi. Ijtimoiy loyihalar tashabbuskori."
     }
     
     punchy_short_bio = titles.get(sphere, "O‘z sohasining yetuk va ilhomlantiruvchi yosh yetakchisi.")
