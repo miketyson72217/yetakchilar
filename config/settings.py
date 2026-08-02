@@ -172,7 +172,7 @@ if not DEBUG:
     CSRF_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
     CSRF_COOKIE_SAMESITE = 'Lax'
-    SESSION_COOKIE_AGE = 3600  # 1 hour session timeout
+    SESSION_COOKIE_AGE = 1209600  # 2 weeks session timeout
 
     # Security Headers
     SECURE_CONTENT_TYPE_NOSNIFF = True
