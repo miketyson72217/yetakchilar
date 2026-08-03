@@ -12,7 +12,7 @@ class Leader(models.Model):
         ('sanat', 'Sanʼat & Madaniyat'),
         ('tibbiyot', 'Tibbiyot'),
         ('ijtimoiy', 'Ijtimoiy faoliyat'),
-        ('media', 'Media & Jurnalistika'),
+        ('media', 'Media va Jurnalistika'),
     ]
 
     REGION_CHOICES = [
