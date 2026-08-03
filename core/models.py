@@ -5,11 +5,11 @@ import uuid
 
 class Leader(models.Model):
     SPHERE_CHOICES = [
-        ('biznes', 'Tadbirkorlik & Biznes'),
-        ('texno', 'Texnologiya & IT'),
+        ('biznes', 'Tadbirkorlik va Biznes'),
+        ('texno', 'Texnologiya va IT'),
         ('sport', 'Sport'),
-        ('fan', 'Fan & Taʼlim'),
-        ('sanat', 'Sanʼat & Madaniyat'),
+        ('fan', 'Fan va Taʼlim'),
+        ('sanat', 'Sanʼat va Madaniyat'),
         ('tibbiyot', 'Tibbiyot'),
         ('ijtimoiy', 'Ijtimoiy faoliyat'),
         ('media', 'Media va Jurnalistika'),
@@ -132,7 +132,7 @@ class Application(models.Model):
 
 class JournalArticle(models.Model):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name='articles', verbose_name="Jurnal")
-    category = models.CharField(max_length=100, verbose_name="Kategoriya (masalan: LIDERLIK & INTIZOM)")
+    category = models.CharField(max_length=100, verbose_name="Kategoriya (masalan: LIDERLIK va INTIZOM)")
     title = models.CharField(max_length=255, verbose_name="Maqola sarlavhasi")
     short_description = models.TextField(verbose_name="Qisqa tavsif (Ushbu sonda nimalar bor uchun)")
     author_name = models.CharField(max_length=255, verbose_name="Muallif ismi")
