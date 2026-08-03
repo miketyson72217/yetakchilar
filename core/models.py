@@ -99,14 +99,27 @@ class Application(models.Model):
         ('NEW', 'Yangi'),
         ('CONTACTED', 'Bog‘lanildi'),
         ('UNREACHABLE', 'Bog‘lanib bo‘lmadi'),
-        ('APPROVED', 'Qabul qilindi'),
+        ('APPROVED', 'Qabul qilindi — To‘lov kutilmoqda'),
         ('REJECTED', 'Rad etildi'),
+        ('IN_PROGRESS', 'Jarayonda (To‘lov boshlandi)'),
+        ('COMPLETED', 'Yakunlandi (To‘liq to‘landi)'),
+    ]
+
+    PAYMENT_TYPE_CHOICES = [
+        ('full', 'Bir martada — 80,000 so‘m'),
+        ('installment', 'Bo‘lib-bo‘lib — 12 kun'),
     ]
 
     full_name = models.CharField(max_length=255, verbose_name="Ism va Familiya")
     phone = models.CharField(max_length=50, verbose_name="Telefon raqami")
     telegram_username = models.CharField(max_length=100, verbose_name="Telegram Username")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='NEW', verbose_name="Holat")
+    payment_type = models.CharField(
+        max_length=20, choices=PAYMENT_TYPE_CHOICES,
+        null=True, blank=True, verbose_name="To'lov turi"
+    )
+    paid_amount = models.PositiveIntegerField(default=0, verbose_name="To'langan summa (so'mda)")
+    telegram_message_id = models.BigIntegerField(null=True, blank=True, verbose_name="Bot xabar IDsi")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yuborilgan vaqt")
 
     class Meta:

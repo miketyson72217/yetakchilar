@@ -57,6 +57,9 @@ urlpatterns = [
 
     # Download route
     path('download-image/', views.download_image_view, name='download_image'),
+
+    # Telegram Bot webhook
+    path('telegram-webhook/', views.telegram_webhook_view, name='telegram_webhook'),
 ]
 
 if settings.DEBUG:

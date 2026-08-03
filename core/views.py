@@ -3,7 +3,11 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from .models import Leader, Journal, Application
-from .telegram_bot import send_telegram_application_notification
+from .telegram_bot import (
+    send_telegram_application_notification,
+    edit_telegram_message,
+    answer_callback_query,
+)
 import urllib.request
 from urllib.error import URLError
 from urllib.parse import urlparse
@@ -176,15 +180,8 @@ def ariza_view(request):
             except Exception as e:
                 logger.error(f"Telegram notification error: {e}")
 
-            success_msg = (
-                "<b>Arizangiz muvaffaqiyatli yuborildi!</b> Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi.<br><br>"
-                "<b>Profilingizni Yetakchilar.uz platformasiga joylashtirish xizmati narxi — 80 000 soʻm.</b><br><br>"
-                "Toʻlovni qulaylik yaratish maqsadida 12 kun davomida boʻlib-boʻlib amalga oshirish imkoniyati mavjud.<br><br>"
-                "<b>Nima uchun toʻlov olinadi?</b><br>"
-                "Toʻlov profilingizni tayyorlash, maʼlumotlarni tekshirish va tahrirlash, platformaga joylashtirish hamda platformaning texnik va xizmat koʻrsatish xarajatlarini qoplash uchun olinadi.<br><br>"
-                "Agar toʻlovni bir martada toʻliq amalga oshirsangiz, profilingizni yaratish jarayoni toʻlov tasdiqlangach boshlanadi.<br><br>"
-                "Agar toʻlovni boʻlib-boʻlib amalga oshirishni tanlasangiz, boshlangʻich 10 000 soʻm toʻlov amalga oshirilgach, profilingizni yaratish jarayoni boshlanadi."
-            )
+            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi. Agar uzoq vaqt davomida aloqaga chiqilmasa, admin bilan Telegram orqali bog‘lanishingiz mumkin: @uzyye_admin.'
+
 
             is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', '').lower()
             if is_ajax:
@@ -255,4 +252,122 @@ def download_image_view(request):
     except Exception as e:
         logger.error(f"Image download failed for {url}: {e}")
         return HttpResponse("Rasmni yuklab olishda xatolik yuz berdi", status=500)
+
+
+import json as _json
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings as _settings
+
+@csrf_exempt
+def telegram_webhook_view(request):
+    """
+    Receives callback_query updates from Telegram Bot API.
+    Processes admin button presses and updates application status + bot message.
+    """
+    # Simple secret token check via URL query param
+    secret = request.GET.get('secret', '')
+    expected = getattr(_settings, 'TELEGRAM_WEBHOOK_SECRET', '')
+    if expected and secret != expected:
+        return HttpResponse(status=403)
+
+    if request.method != 'POST':
+        return HttpResponse('OK')
+
+    try:
+        data = _json.loads(request.body)
+    except Exception:
+        return HttpResponse(status=400)
+
+    callback = data.get('callback_query')
+    if not callback:
+        return HttpResponse('OK')
+
+    callback_id = callback.get('id')
+    cb_data = callback.get('data', '')
+
+    # Parse: action_subaction_appId
+    # Examples: app_contacted_5, app_pay_full_5, app_next_paid_5
+    parts = cb_data.rsplit('_', 1)
+    if len(parts) != 2:
+        answer_callback_query(callback_id, '❌ Noma\'lum buyruq')
+        return HttpResponse('OK')
+
+    action_key = parts[0]   # e.g. 'app_contacted' or 'app_pay_full'
+    try:
+        app_id = int(parts[1])
+    except ValueError:
+        answer_callback_query(callback_id, '❌ ID xato')
+        return HttpResponse('OK')
+
+    try:
+        application = Application.objects.get(id=app_id)
+    except Application.DoesNotExist:
+        answer_callback_query(callback_id, '❌ Ariza topilmadi')
+        return HttpResponse('OK')
+
+    # ------------------------------------------------------------------
+    # Route to correct handler
+    # ------------------------------------------------------------------
+    toast = ''
+
+    if action_key == 'app_contacted':
+        application.status = 'CONTACTED'
+        application.save(update_fields=['status'])
+        toast = '🔵 Holat: Bog\'lanildi'
+
+    elif action_key == 'app_unreachable':
+        application.status = 'UNREACHABLE'
+        application.save(update_fields=['status'])
+        toast = '⚠️ Bog\'lanishni iloji bo\'lmadi'
+
+    elif action_key == 'app_approved':
+        application.status = 'APPROVED'
+        application.save(update_fields=['status'])
+        toast = '✅ Qabul qilindi — To\'lov turini tanlang'
+
+    elif action_key == 'app_rejected':
+        application.status = 'REJECTED'
+        application.save(update_fields=['status'])
+        toast = '❌ Rad etildi'
+
+    elif action_key == 'app_pay_full':
+        application.status = 'IN_PROGRESS'
+        application.payment_type = 'full'
+        application.save(update_fields=['status', 'payment_type'])
+        toast = '💳 Bir martada to\'lov rejimi. To\'lov kelgach tasdiqlang.'
+
+    elif action_key == 'app_pay_installment':
+        application.status = 'IN_PROGRESS'
+        application.payment_type = 'installment'
+        application.paid_amount = 0
+        application.save(update_fields=['status', 'payment_type', 'paid_amount'])
+        toast = '📅 Bo\'lib-bo\'lib rejim. Har to\'lovni tasdiqlang.'
+
+    elif action_key == 'app_first_paid':
+        application.paid_amount = 10_000
+        application.save(update_fields=['paid_amount'])
+        toast = '✅ 10,000 so\'m keldi — Profil yaratishni boshlang!'
+
+    elif action_key == 'app_next_paid':
+        remaining = 80_000 - application.paid_amount
+        step = min(10_000, remaining)
+        application.paid_amount += step
+        application.save(update_fields=['paid_amount'])
+        toast = f'➕ +{step:,} so\'m. Jami: {application.paid_amount:,} / 80,000 so\'m'
+
+    elif action_key == 'app_fully_paid':
+        application.paid_amount = 80_000
+        application.status = 'COMPLETED'
+        application.save(update_fields=['paid_amount', 'status'])
+        toast = '🎉 To\'lov yakunlandi! Profil tayyorlash boshlandi.'
+
+    else:
+        answer_callback_query(callback_id, '❌ Noma\'lum buyruq')
+        return HttpResponse('OK')
+
+    # Update the existing bot message with new status + buttons
+    edit_telegram_message(application)
+    answer_callback_query(callback_id, toast, show_alert=False)
+
+    return HttpResponse('OK')
 
