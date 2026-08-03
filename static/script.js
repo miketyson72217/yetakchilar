@@ -154,7 +154,7 @@ applyForms.forEach(form => {
           `;
           form.parentNode.insertBefore(alertBox, form);
         } else {
-          alertBox.querySelector('.success-message-text').textContent = data.message;
+          alertBox.querySelector('.success-message-text').innerHTML = data.message;
           alertBox.style.display = 'flex';
         }
 

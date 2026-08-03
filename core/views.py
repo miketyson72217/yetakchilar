@@ -176,8 +176,15 @@ def ariza_view(request):
             except Exception as e:
                 logger.error(f"Telegram notification error: {e}")
 
-            success_msg = 'Arizangiz muvaffaqiyatli yuborildi! Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi. Agar uzoq vaqt davomida aloqaga chiqilmasa, admin bilan Telegram orqali bog‘lanishingiz mumkin: @uzyye_admin.'
-
+            success_msg = (
+                "<b>Arizangiz muvaffaqiyatli yuborildi!</b> Tez orada jamoamiz arizangizni ko‘rib chiqib, siz bilan bog‘lanishadi.<br><br>"
+                "<b>Profilingizni Yetakchilar.uz platformasiga joylashtirish xizmati narxi — 80 000 soʻm.</b><br><br>"
+                "Toʻlovni qulaylik yaratish maqsadida 12 kun davomida boʻlib-boʻlib amalga oshirish imkoniyati mavjud.<br><br>"
+                "<b>Nima uchun toʻlov olinadi?</b><br>"
+                "Toʻlov profilingizni tayyorlash, maʼlumotlarni tekshirish va tahrirlash, platformaga joylashtirish hamda platformaning texnik va xizmat koʻrsatish xarajatlarini qoplash uchun olinadi.<br><br>"
+                "Agar toʻlovni bir martada toʻliq amalga oshirsangiz, profilingizni yaratish jarayoni toʻlov tasdiqlangach boshlanadi.<br><br>"
+                "Agar toʻlovni boʻlib-boʻlib amalga oshirishni tanlasangiz, boshlangʻich 10 000 soʻm toʻlov amalga oshirilgach, profilingizni yaratish jarayoni boshlanadi."
+            )
 
             is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', '').lower()
             if is_ajax:
