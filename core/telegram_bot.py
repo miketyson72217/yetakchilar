@@ -140,6 +140,8 @@ def _get_status_header(application):
         label += f'\n💰 To\'langan: {application.paid_amount:,} / {TOTAL_PRICE:,} so\'m'
     elif application.status == 'IN_PROGRESS' and application.payment_type == 'full':
         label += f'\n💰 To\'lov kutilmoqda: {TOTAL_PRICE:,} so\'m (bir martada)'
+    elif application.status == 'COMPLETED':
+        label += f'\n💰 To\'liq to\'langan: {application.paid_amount:,} so\'m'
 
     return label
 

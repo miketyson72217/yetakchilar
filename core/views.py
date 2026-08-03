@@ -352,8 +352,14 @@ def telegram_webhook_view(request):
         remaining = 80_000 - application.paid_amount
         step = min(10_000, remaining)
         application.paid_amount += step
-        application.save(update_fields=['paid_amount'])
-        toast = f'➕ +{step:,} so\'m. Jami: {application.paid_amount:,} / 80,000 so\'m'
+        
+        if application.paid_amount >= 80_000:
+            application.status = 'COMPLETED'
+            application.save(update_fields=['paid_amount', 'status'])
+            toast = '🎉 To\'lov yakunlandi! Profil tayyorlash boshlandi.'
+        else:
+            application.save(update_fields=['paid_amount'])
+            toast = f'➕ +{step:,} so\'m. Jami: {application.paid_amount:,} / 80,000 so\'m'
 
     elif action_key == 'app_fully_paid':
         application.paid_amount = 80_000
