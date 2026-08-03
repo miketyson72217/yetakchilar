@@ -116,9 +116,9 @@ class Application(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='NEW', verbose_name="Holat")
     payment_type = models.CharField(
         max_length=20, choices=PAYMENT_TYPE_CHOICES,
-        null=True, blank=True, verbose_name="To'lov turi"
+        null=True, blank=True, verbose_name="To‘lov turi"
     )
-    paid_amount = models.PositiveIntegerField(default=0, verbose_name="To'langan summa (so'mda)")
+    paid_amount = models.PositiveIntegerField(default=0, verbose_name="To‘langan summa (so‘mda)")
     telegram_message_id = models.BigIntegerField(null=True, blank=True, verbose_name="Bot xabar IDsi")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yuborilgan vaqt")
 

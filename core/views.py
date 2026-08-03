@@ -313,17 +313,17 @@ def telegram_webhook_view(request):
     if action_key == 'app_contacted':
         application.status = 'CONTACTED'
         application.save(update_fields=['status'])
-        toast = '🔵 Holat: Bog\'lanildi'
+        toast = '🔵 Holat: Bog‘lanildi'
 
     elif action_key == 'app_unreachable':
         application.status = 'UNREACHABLE'
         application.save(update_fields=['status'])
-        toast = '⚠️ Bog\'lanishni iloji bo\'lmadi'
+        toast = '⚠️ Bog‘lanishni iloji bo‘lmadi'
 
     elif action_key == 'app_approved':
         application.status = 'APPROVED'
         application.save(update_fields=['status'])
-        toast = '✅ Qabul qilindi — To\'lov turini tanlang'
+        toast = '✅ Qabul qilindi — To‘lov turini tanlang'
 
     elif action_key == 'app_rejected':
         application.status = 'REJECTED'
@@ -334,19 +334,19 @@ def telegram_webhook_view(request):
         application.status = 'IN_PROGRESS'
         application.payment_type = 'full'
         application.save(update_fields=['status', 'payment_type'])
-        toast = '💳 Bir martada to\'lov rejimi. To\'lov kelgach tasdiqlang.'
+        toast = '💳 Bir martada to‘lov rejimi. To‘lov kelgach tasdiqlang.'
 
     elif action_key == 'app_pay_installment':
         application.status = 'IN_PROGRESS'
         application.payment_type = 'installment'
         application.paid_amount = 0
         application.save(update_fields=['status', 'payment_type', 'paid_amount'])
-        toast = '📅 Bo\'lib-bo\'lib rejim. Har to\'lovni tasdiqlang.'
+        toast = '📅 Bo‘lib-bo‘lib rejim. Har to‘lovni tasdiqlang.'
 
     elif action_key == 'app_first_paid':
         application.paid_amount = 10_000
         application.save(update_fields=['paid_amount'])
-        toast = '✅ 10,000 so\'m keldi — Profil yaratishni boshlang!'
+        toast = '✅ 10,000 so‘m keldi — Profil yaratishni boshlang!'
 
     elif action_key == 'app_next_paid':
         remaining = 80_000 - application.paid_amount
@@ -356,16 +356,16 @@ def telegram_webhook_view(request):
         if application.paid_amount >= 80_000:
             application.status = 'COMPLETED'
             application.save(update_fields=['paid_amount', 'status'])
-            toast = '🎉 To\'lov yakunlandi! Profil tayyorlash boshlandi.'
+            toast = '🎉 To‘lov yakunlandi! Profil tayyorlash boshlandi.'
         else:
             application.save(update_fields=['paid_amount'])
-            toast = f'➕ +{step:,} so\'m. Jami: {application.paid_amount:,} / 80,000 so\'m'
+            toast = f'➕ +{step:,} so‘m. Jami: {application.paid_amount:,} / 80,000 so‘m'
 
     elif action_key == 'app_fully_paid':
         application.paid_amount = 80_000
         application.status = 'COMPLETED'
         application.save(update_fields=['paid_amount', 'status'])
-        toast = '🎉 To\'lov yakunlandi! Profil tayyorlash boshlandi.'
+        toast = '🎉 To‘lov yakunlandi! Profil tayyorlash boshlandi.'
 
     else:
         answer_callback_query(callback_id, '❌ Noma\'lum buyruq')

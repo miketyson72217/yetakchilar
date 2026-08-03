@@ -43,8 +43,8 @@ def _get_keyboard_for_status(application):
     if status == 'NEW':
         keyboard = [
             [
-                {'text': '✅ Bog\'lanildi', 'callback_data': f'app_contacted_{app_id}'},
-                {'text': '⚠️ Bog\'lanishni iloji bo\'lmadi', 'callback_data': f'app_unreachable_{app_id}'},
+                {'text': '✅ Bog‘lanildi', 'callback_data': f'app_contacted_{app_id}'},
+                {'text': '⚠️ Bog‘lanishni iloji bo‘lmadi', 'callback_data': f'app_unreachable_{app_id}'},
             ]
         ]
         if tg_user and tg_user != 'kiritilmagan':
@@ -71,10 +71,10 @@ def _get_keyboard_for_status(application):
     if status == 'APPROVED':
         keyboard = [
             [
-                {'text': f'💳 Bir martada — {TOTAL_PRICE:,} so\'m', 'callback_data': f'app_pay_full_{app_id}'},
+                {'text': f'💳 Bir martada — {TOTAL_PRICE:,} so‘m', 'callback_data': f'app_pay_full_{app_id}'},
             ],
             [
-                {'text': f'📅 Bo\'lib-bo\'lib — {INSTALLMENT_DAYS} kun', 'callback_data': f'app_pay_installment_{app_id}'},
+                {'text': f'📅 Bo‘lib-bo‘lib — {INSTALLMENT_DAYS} kun', 'callback_data': f'app_pay_installment_{app_id}'},
             ],
         ]
         if tg_user and tg_user != 'kiritilmagan':
@@ -88,7 +88,7 @@ def _get_keyboard_for_status(application):
         if payment_type == 'full':
             # Waiting for full payment confirmation
             keyboard = [
-                [{'text': f'✅ {TOTAL_PRICE:,} so\'m to\'lov tasdiqlandi — PROFIL YARATING', 'callback_data': f'app_fully_paid_{app_id}'}],
+                [{'text': f'✅ {TOTAL_PRICE:,} so‘m to‘lov tasdiqlandi — PROFIL YARATING', 'callback_data': f'app_fully_paid_{app_id}'}],
             ]
         else:
             # Installment mode
@@ -98,16 +98,16 @@ def _get_keyboard_for_status(application):
 
             if paid == 0:
                 keyboard.append([{
-                    'text': f'✅ Birinchi {INSTALLMENT_STEP:,} so\'m keldi — Profil yaratishni boshlang',
+                    'text': f'✅ Birinchi {INSTALLMENT_STEP:,} so‘m keldi — Profil yaratishni boshlang',
                     'callback_data': f'app_first_paid_{app_id}'
                 }])
             elif paid < TOTAL_PRICE:
                 keyboard.append([{
-                    'text': f'➕ Keyingi to\'lov keldi (+{next_step:,} so\'m) — Jami: {paid + next_step:,} / {TOTAL_PRICE:,}',
+                    'text': f'➕ Keyingi to‘lov keldi (+{next_step:,} so‘m) — Jami: {paid + next_step:,} / {TOTAL_PRICE:,}',
                     'callback_data': f'app_next_paid_{app_id}'
                 }])
                 keyboard.append([{
-                    'text': f'✅ To\'lov yakunlandi ({TOTAL_PRICE:,} so\'m to\'liq)',
+                    'text': f'✅ To‘lov yakunlandi ({TOTAL_PRICE:,} so‘m to‘liq)',
                     'callback_data': f'app_fully_paid_{app_id}'
                 }])
 
@@ -127,21 +127,21 @@ def _get_status_header(application):
     """Returns a formatted status header line for the message."""
     icons = {
         'NEW': '🟡 Yangi ariza',
-        'CONTACTED': '🔵 Bog\'lanildi — Suhbat jarayonida',
-        'UNREACHABLE': '🔴 Bog\'lanishni iloji bo\'lmadi',
-        'APPROVED': '🟢 Qabul qilindi — To\'lov turi tanlansin',
+        'CONTACTED': '🔵 Bog‘lanildi — Suhbat jarayonida',
+        'UNREACHABLE': '🔴 Bog‘lanishni iloji bo‘lmadi',
+        'APPROVED': '🟢 Qabul qilindi — To‘lov turi tanlansin',
         'REJECTED': '❌ Rad etildi',
-        'IN_PROGRESS': '💳 Jarayonda — To\'lov kuzatilmoqda',
-        'COMPLETED': '✅ Yakunlandi — To\'lov to\'liq',
+        'IN_PROGRESS': '💳 Jarayonda — To‘lov kuzatilmoqda',
+        'COMPLETED': '✅ Yakunlandi — To‘lov to‘liq',
     }
     label = icons.get(application.status, application.status)
 
     if application.status == 'IN_PROGRESS' and application.payment_type == 'installment':
-        label += f'\n💰 To\'langan: {application.paid_amount:,} / {TOTAL_PRICE:,} so\'m'
+        label += f'\n💰 To‘langan: {application.paid_amount:,} / {TOTAL_PRICE:,} so‘m'
     elif application.status == 'IN_PROGRESS' and application.payment_type == 'full':
-        label += f'\n💰 To\'lov kutilmoqda: {TOTAL_PRICE:,} so\'m (bir martada)'
+        label += f'\n💰 To‘lov kutilmoqda: {TOTAL_PRICE:,} so‘m (bir martada)'
     elif application.status == 'COMPLETED':
-        label += f'\n💰 To\'liq to\'langan: {application.paid_amount:,} so\'m'
+        label += f'\n💰 To\'liq to‘langan: {application.paid_amount:,} so‘m'
 
     return label
 
