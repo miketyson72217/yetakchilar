@@ -3,145 +3,396 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dasturlar va Grantlar — O‘zYYE</title>
-  <meta name="description" content="O‘zbekiston va dunyoda bo‘layotgan turli xil dasturlar, grantlar va bellashuvlar haqida ma’lumot." />
+  <title>Imkoniyatlar — Grantlar va Dasturlar | O'zYYE</title>
+  <meta name="description" content="O'zbekiston va dunyoda bo'layotgan turli xil dasturlar, grantlar va bellashuvlar haqida ma'lumot." />
   <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.css" />
   <link rel="stylesheet" href="/static/pages.css" />
   <style>
-    .opp-container {
-      padding: 60px 0 100px;
+    /* ===== IMKONIYATLAR PAGE STYLES ===== */
+
+    /* Animated hero background */
+    .opp-hero {
+      position: relative;
+      padding: calc(var(--header-h) + 80px) 0 80px;
+      overflow: hidden;
+      text-align: center;
     }
-    .opp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
+    .opp-hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(0,166,235,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+      animation: heroGlow 6s ease-in-out infinite alternate;
     }
-    .opp-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
+    @keyframes heroGlow {
+      from { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.15); }
     }
-    .opp-card:hover {
-      border-color: #00A6EB;
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(0,166,235,0.12);
-    }
-    .opp-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    .opp-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-    .opp-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .opp-badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #00A6EB;
-      background: rgba(0,166,235,0.1);
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .opp-desc {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-    .opp-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 16px;
-      margin-top: auto;
-    }
-    .opp-deadline {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #ef4444;
-    }
-    .expiring-soon-box {
-      background: rgba(255, 184, 0, 0.05);
-      border: 1px solid rgba(255, 184, 0, 0.2);
-      border-radius: var(--radius-lg);
-      padding: 24px 32px;
-      margin-bottom: 40px;
-    }
-    .expiring-soon-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .expiring-soon-header h3 {
-      font-size: 1.25rem;
-      color: #FBBF24;
-      font-weight: 800;
-    }
-    .expiring-list {
-      list-style: none;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .expiring-list li {
-      display: flex;
-      align-items: center;
-    }
-    .expiring-list li::before {
-      content: '-';
-      color: var(--text-tertiary);
-      margin-right: 12px;
-    }
-    .expiring-list a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 1.05rem;
-      transition: color var(--transition);
+    .opp-hero-label {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      background: rgba(0,166,235,0.12);
+      border: 1px solid rgba(0,166,235,0.3);
+      color: #00A6EB;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      border-radius: 100px;
+      margin-bottom: 28px;
     }
-    .expiring-list a:hover {
-      color: #FBBF24;
+    .opp-hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 24px;
     }
-    .expiring-country {
-      font-size: 1rem;
+    .opp-hero-title span {
+      background: linear-gradient(135deg, #fff 30%, #00A6EB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .expiring-footer {
-      font-size: 0.95rem;
+    .opp-hero-sub {
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .opp-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.25);
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 0.9rem;
+      color: #fbbf24;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .opp-notice strong { color: #fde68a; }
+
+    /* ===== URGENCY BANNER ===== */
+    .urgency-banner {
+      background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.03) 100%);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: var(--radius-xl);
+      padding: 32px 36px;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .urgency-banner::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+      border-radius: 4px 0 0 4px;
+    }
+    .urgency-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .urgency-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(251,191,36,0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fbbf24;
+      flex-shrink: 0;
+    }
+    .urgency-header h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fbbf24;
+      letter-spacing: -0.01em;
+    }
+    .urgency-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .urgency-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .urgency-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fbbf24;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+    .urgency-item a {
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .urgency-item a:hover { color: #fbbf24; }
+    .urgency-footer {
+      font-size: 0.88rem;
+      color: var(--text-tertiary);
       padding-top: 16px;
+      border-top: 1px dashed rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== OPP GRID ===== */
+    .opp-section {
+      padding: 0 0 120px;
+    }
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    /* ===== OPP CARD ===== */
+    .opp-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+    .opp-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      transition: border-color 0.35s ease;
+      pointer-events: none;
+    }
+    .opp-card:hover {
+      transform: translateY(-8px);
+      border-color: transparent;
+      box-shadow: 0 24px 60px rgba(0,166,235,0.16), 0 0 0 1px rgba(0,166,235,0.3);
+    }
+    .opp-card:hover::after {
+      border-color: rgba(0,166,235,0.4);
+    }
+
+    /* Card image */
+    .opp-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 210px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0d1324, #0a1628);
+    }
+    .opp-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .opp-card:hover .opp-img-wrap img {
+      transform: scale(1.06);
+    }
+    .opp-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d1324 0%, #0a1a35 100%);
+    }
+    .opp-img-placeholder svg {
+      opacity: 0.15;
+    }
+    /* Gradient overlay on image */
+    .opp-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(to top, var(--bg-surface), transparent);
+    }
+
+    /* Card badges on image */
+    .opp-img-badges {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .opp-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .opp-badge-blue {
+      background: rgba(0,166,235,0.2);
+      color: #00A6EB;
+      border: 1px solid rgba(0,166,235,0.3);
+    }
+    .opp-badge-green {
+      background: rgba(16,185,129,0.2);
+      color: #10b981;
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+    .opp-badge-gold {
+      background: rgba(251,191,36,0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(251,191,36,0.3);
+    }
+
+    /* Card body */
+    .opp-body {
+      padding: 24px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .opp-country-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .opp-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      transition: color var(--transition);
+    }
+    .opp-card:hover .opp-card-title {
+      color: #00A6EB;
+    }
+    .opp-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+    .opp-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+      gap: 12px;
+    }
+    .opp-deadline-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #ef4444;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.2);
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .opp-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #00A6EB;
+      transition: gap var(--transition);
+    }
+    .opp-card:hover .opp-read-more {
+      gap: 10px;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .opp-empty {
+      background: var(--bg-surface);
+      border: 1px solid rgba(0,166,235,0.2);
+      border-radius: var(--radius-xl);
+      padding: 80px 40px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .opp-empty::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 300px;
+      background: radial-gradient(circle, rgba(0,166,235,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .opp-grid {
+        grid-template-columns: 1fr;
+      }
+      .urgency-banner {
+        padding: 24px 20px;
+      }
     }
   </style>
 </head>
 <body>
+
   <!-- HEADER -->
   <header id="main-header" class="site-header">
     <div class="header-inner container">
-      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O‘zYYE" class="logo-img" /></a>
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O'zYYE" class="logo-img" /></a>
       <nav class="main-nav" id="main-nav">
         <ul class="nav-list" role="list">
           <li><a href="/" class="nav-link">Bosh sahifa</a></li>
@@ -153,7 +404,7 @@
           <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
         </ul>
       </nav>
-      <button class="burger-btn" id="burger-btn"><span></span><span></span><span></span></button>
+      <button class="burger-btn" id="burger-btn" aria-label="Menyu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -171,101 +422,140 @@
   </div>
 
   <main>
-    <section class="page-hero" id="page-hero">
-      <div class="container page-hero-content">
-        <span class="section-label">GRANTLAR VA DASTURLAR</span>
-        <h1 class="page-hero-title">Imkoniyatlar</h1>
-        <p class="page-hero-subtitle">Xalqaro dasturlar va O‘zbekistonda bo‘layotgan turli xil bellashuvlar haqida ma’lumot.</p>
-        <div style="margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; background: rgba(0, 166, 235, 0.1); border: 1px solid rgba(0, 166, 235, 0.2); padding: 10px 20px; border-radius: 8px; display: inline-block;">
-          ⚠️ <strong>Eslatma:</strong> Biz ushbu dastur va grantlarni tashkillaydigan tashkilot emasmiz. Biz ularni shunchaki yoshlarga ma’lumot berish maqsadida e’lon qilingan ochiq manbalardan yig‘ib boramiz.
+    <!-- ===== HERO ===== -->
+    <section class="opp-hero">
+      <div class="container">
+        <div class="opp-hero-label">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          GRANTLAR VA DASTURLAR
+        </div>
+        <h1 class="opp-hero-title">
+          Kelajagingizni<br><span>shakllantiring</span>
+        </h1>
+        <p class="opp-hero-sub">
+          Xalqaro va mahalliy dasturlar, grantlar, stipendiyalar — barcha imkoniyatlar bir joyda.
+        </p>
+        <div class="opp-notice">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="flex-shrink:0;color:#fbbf24;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+          <span><strong>Eslatma:</strong> Biz ushbu dastur va grantlarni tashkillaydigan tashkilot emasmiz. Ma'lumotlarni ochiq manbalardan yig'ib, yoshlarga yetkazamiz.</span>
         </div>
       </div>
     </section>
 
-    <div class="opp-container container">
-      {% if opportunities %}
-        
-        <div class="expiring-soon-box">
-          <div class="expiring-soon-header">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="color: #FBBF24;"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <h3>Shu kunlarda muddati tugaydigan dasturlar:</h3>
-          </div>
-          <ul class="expiring-list">
-            {% for opp in opportunities|slice:":4" %}
-            <li>
-              <a href="{% url 'opportunity_detail' opp.slug %}">
-                {{ opp.title }}
-                {% if opp.country %}
-                  <span class="expiring-country">{{ opp.country|slice:"-2:" }}</span>
-                {% endif %}
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
-          <div class="expiring-footer">
-            Imkoniyatdan foydalanib qoling. Tanlov o'z qo'lingizda! ✨
-          </div>
-        </div>
+    <!-- ===== CONTENT ===== -->
+    <section class="opp-section">
+      <div class="container">
+        {% if opportunities %}
 
-        <div class="opp-grid">
-          {% for opp in opportunities %}
-            <div class="opp-card">
-              {% if opp.image %}
-                <img src="{{ opp.image.url }}" alt="{{ opp.title }}" class="opp-image" />
-              {% endif %}
-              <h2 class="opp-title">
-                <a href="{% url 'opportunity_detail' opp.slug %}" style="color: inherit; text-decoration: none;">
-                  {{ opp.title }}
-                </a>
-              </h2>
-              <div class="opp-meta">
-                {% if opp.country %}<span class="opp-badge">{{ opp.country }}</span>{% endif %}
-                {% if opp.format %}<span class="opp-badge">{{ opp.format }}</span>{% endif %}
-                {% if opp.age_category %}<span class="opp-badge">Yosh: {{ opp.age_category }}</span>{% endif %}
+          <!-- Urgency Banner -->
+          <div class="urgency-banner">
+            <div class="urgency-header">
+              <div class="urgency-icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </div>
-              <div class="opp-desc">
-                {{ opp.description|truncatewords_html:25|safe }}
-              </div>
-              <div class="opp-footer">
-                {% if opp.deadline %}
-                  <span class="opp-deadline">⏳ Muddat: {{ opp.deadline }}</span>
-                {% else %}
-                  <span></span>
-                {% endif %}
-                  <a href="{% url 'opportunity_detail' opp.slug %}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Batafsil</a>
-              </div>
+              <h3>⚡ Tez orada muddati tugaydigan dasturlar</h3>
             </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <!-- Coming Soon Card -->
-        <div style="background: var(--bg-surface); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 70px 40px; text-align: center; backdrop-filter: blur(24px); box-shadow: 0 35px 100px rgba(0,0,0,0.7); max-width: 840px; margin: 0 auto; position: relative; overflow: hidden;" class="reveal">
-          <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,235,0.25) 0%, rgba(0,0,0,0) 70%); pointer-events: none; border-radius: 50%;"></div>
-          <span style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.85rem; padding: 7px 22px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; box-shadow: 0 4px 20px rgba(0,166,235,0.4); margin-bottom: 24px;">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:8px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
-            TEZ KUNDA / COMING SOON
-          </span>
-          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2;">Yangi imkoniyatlar tez kunda!</h2>
-          <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 650px; margin: 0 auto 36px;">Yoshlar uchun eng zo‘r grantlar, xalqaro dasturlar va bellashuvlar shu yerda e’lon qilib boriladi. Tez kunda qaytamiz!</p>
-          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="/" class="btn btn-primary" style="padding: 14px 28px;">Bosh sahifaga qaytish &rarr;</a>
+            <div class="urgency-items">
+              {% for opp in opportunities|slice:":5" %}
+              <div class="urgency-item">
+                <div class="urgency-dot"></div>
+                <a href="{% url 'opportunity_detail' opp.slug %}">
+                  {{ opp.title }}
+                  {% if opp.country %}<span style="font-size:1.1rem;">{{ opp.country|slice:"-2:" }}</span>{% endif %}
+                  {% if opp.deadline %}<span style="font-size:0.8rem; color:#ef4444; font-weight:700; background:rgba(239,68,68,0.1); padding:2px 8px; border-radius:100px;">{{ opp.deadline }}</span>{% endif %}
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="urgency-footer">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:#fbbf24; flex-shrink:0;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Imkoniyatdan foydalanib qoling. Tanlov o'z qo'lingizda!
+            </div>
           </div>
-        </div>
-      {% endif %}
-    </div>
+
+          <!-- Grid -->
+          <div class="opp-grid">
+            {% for opp in opportunities %}
+            <a href="{% url 'opportunity_detail' opp.slug %}" class="opp-card">
+
+              <!-- Image -->
+              <div class="opp-img-wrap">
+                {% if opp.image %}
+                  <img src="{{ opp.image.url }}" alt="{{ opp.title }}" loading="lazy" />
+                {% else %}
+                  <div class="opp-img-placeholder">
+                    <svg width="80" height="80" fill="none" stroke="#00A6EB" stroke-width="1" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </div>
+                {% endif %}
+
+                <!-- Badges on image -->
+                <div class="opp-img-badges">
+                  {% if opp.format %}<span class="opp-badge opp-badge-blue">{{ opp.format }}</span>{% endif %}
+                  {% if opp.age_category %}<span class="opp-badge opp-badge-green">{{ opp.age_category }}</span>{% endif %}
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="opp-body">
+                {% if opp.country %}
+                <div class="opp-country-row">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  {{ opp.country }}
+                </div>
+                {% endif %}
+
+                <h2 class="opp-card-title">{{ opp.title }}</h2>
+
+                <p class="opp-card-desc">
+                  {{ opp.description|truncatewords_html:22|striptags }}
+                </p>
+
+                <div class="opp-card-footer">
+                  {% if opp.deadline %}
+                    <span class="opp-deadline-tag">
+                      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {{ opp.deadline }}
+                    </span>
+                  {% else %}
+                    <span></span>
+                  {% endif %}
+                  <span class="opp-read-more">
+                    Batafsil
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+
+        {% else %}
+          <!-- Empty state -->
+          <div class="opp-empty">
+            <span style="display:inline-flex;align-items:center;background:linear-gradient(135deg,#00A6EB,#0066FF);color:#fff;font-weight:900;font-size:0.8rem;padding:7px 22px;border-radius:100px;letter-spacing:.15em;text-transform:uppercase;box-shadow:0 4px 20px rgba(0,166,235,.4);margin-bottom:24px;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:8px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+              TEZ KUNDA
+            </span>
+            <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:900;margin-bottom:18px;letter-spacing:-0.03em;">Yangi imkoniyatlar<br>tez kunda!</h2>
+            <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.7;max-width:520px;margin:0 auto 36px;">Yoshlar uchun eng zo'r grantlar, xalqaro dasturlar va bellashuvlar shu yerda e'lon qilib boriladi.</p>
+            <a href="/" class="btn btn-primary" style="padding:14px 32px;">Bosh sahifaga qaytish &rarr;</a>
+          </div>
+        {% endif %}
+      </div>
+    </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="site-footer" id="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand" id="footer-brand">
-        <img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="footer-logo" id="footer-logo" />
-        <p class="footer-desc">O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
+        <img src="/static/images/main_logo.png" alt="O'zYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">O'zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
         <div class="footer-social" id="footer-social">
-          <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" id="social-telegram" aria-label="Telegram">
+          <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" aria-label="Telegram">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
           </a>
-          <a href="#" class="social-link" id="social-instagram" aria-label="Instagram">
+          <a href="#" class="social-link" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
         </div>
@@ -286,7 +576,7 @@
     <div class="footer-bottom" id="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
       <div class="container">
         <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
-        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 O'zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
       </div>
     </div>
   </footer>
