@@ -162,9 +162,7 @@ WHITENOISE_MANIFEST_STRICT = False
 # ===== SECURITY SETTINGS =====
 if not DEBUG:
     # HTTPS / SSL
-    # SECURE_SSL_REDIRECT o'chirildi — Cloudflare "Always Use HTTPS" orqali redirect qiladi
-    # Ikkalasi birga bo'lsa redirect loop → ERR_CONNECTION_RESET chiqadi
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # HSTS (HTTP Strict Transport Security)
