@@ -206,15 +206,6 @@
       object-fit: cover;
       display: block;
     }
-    .opp-img-placeholder {
-      width: 100%;
-      height: 180px;
-      background: var(--bg-surface);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .opp-img-placeholder svg { opacity: 0.06; }
 
     .opp-card-body {
       padding: 22px 24px 24px;
@@ -413,10 +404,6 @@
 
             {% if opp.image %}
               <img src="{{ opp.image.url }}" alt="{{ opp.title }}" class="opp-img" loading="lazy" />
-            {% else %}
-              <div class="opp-img-placeholder">
-                <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              </div>
             {% endif %}
 
             <div class="opp-card-body">
