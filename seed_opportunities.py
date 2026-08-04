@@ -1,10 +1,32 @@
 import os
 import django
+import re
+from datetime import date
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 from core.models import Opportunity
+
+MONTH_MAP = {
+    'yanvar': 1, 'fevral': 2, 'mart': 3, 'aprel': 4,
+    'may': 5, 'iyun': 6, 'iyul': 7, 'avgust': 8,
+    'sentabr': 9, 'sentyabr': 9, 'oktyabr': 10, 'noyabr': 11, 'dekabr': 12
+}
+
+def parse_deadline(deadline_str):
+    if not deadline_str:
+        return None
+    deadline_str = deadline_str.lower().strip()
+    match = re.search(r'(\d+)\s*-\s*([a-z]+)', deadline_str)
+    if not match:
+        match = re.search(r'(\d+)\s+([a-z]+)', deadline_str)
+    if match:
+        day = int(match.group(1))
+        month_name = match.group(2)
+        if month_name in MONTH_MAP:
+            return date(2026, MONTH_MAP[month_name], day)
+    return None
 
 data = [
     {
@@ -95,6 +117,7 @@ data = [
 Opportunity.objects.all().delete()
 
 for item in data:
+    item['deadline_date'] = parse_deadline(item.get('deadline'))
     Opportunity.objects.create(**item)
 
 print(f"Successfully seeded {len(data)} opportunities.")

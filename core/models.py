@@ -161,6 +161,7 @@ class Opportunity(models.Model):
     description = RichTextField(verbose_name="Batafsil ma’lumot (Matn va imtiyozlar)")
     registration_link = models.URLField(max_length=500, blank=True, null=True, verbose_name="Ro‘yxatdan o‘tish havolasi")
     deadline = models.CharField(max_length=100, blank=True, null=True, verbose_name="So'nggi muddat (masalan: 30-Avgust)")
+    deadline_date = models.DateField(blank=True, null=True, verbose_name="Haqiqiy sana (Avtomatlashtirish uchun)")
     image = models.ImageField(upload_to='opportunities/', blank=True, null=True, verbose_name="Rasm / Poster")
     is_active = models.BooleanField(default=True, verbose_name="Faol / E'lon qilingan")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana")

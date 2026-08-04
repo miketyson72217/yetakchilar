@@ -378,10 +378,28 @@ def telegram_webhook_view(request):
     return HttpResponse('OK')
 
 
+from django.utils import timezone
+
 def imkoniyatlar_view(request):
-    opportunities = Opportunity.objects.filter(is_active=True).order_by('-created_at')
+    today = timezone.now().date()
+    
+    # Faol va muddati tugamagan dasturlar (yoki sanasi kiritilmaganlar)
+    active_qs = Opportunity.objects.filter(
+        Q(is_active=True) & 
+        (Q(deadline_date__gte=today) | Q(deadline_date__isnull=True))
+    )
+    
+    # Muddati ko'rsatilganlarni o'zimizga kerakli tartibda (yaqin qolganidan) ajratamiz
+    expiring_opportunities = active_qs.filter(deadline_date__isnull=False).order_by('deadline_date')[:4]
+    
+    # Qolgan barcha dasturlarni oddiy ro'yxat uchun ajratamiz (yangi qo'shilganidan boshlab)
+    # Biz expiring ga kirmaganlarini alohida ajratib olishimiz mumkin yoki hammasini ko'rsatishimiz mumkin.
+    # Hammasini 'yangi qo'shilgan' tartibida ko'rsatish mantiqli.
+    opportunities = active_qs.order_by('-created_at')
+
     context = {
         'opportunities': opportunities,
+        'expiring_opportunities': expiring_opportunities,
     }
     return render(request, 'imkoniyatlar.html', context)
 
