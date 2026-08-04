@@ -387,14 +387,14 @@ def imkoniyatlar_view(request):
     active_qs = Opportunity.objects.filter(
         Q(is_active=True) & 
         (Q(deadline_date__gte=today) | Q(deadline_date__isnull=True))
-    )
+    ).exclude(slug__exact='').exclude(slug__isnull=True)
     
-    # Muddati ko'rsatilganlarni o'zimizga kerakli tartibda (yaqin qolganidan) ajratamiz
+    # Muddati ko‘rsatilganlarni o‘zimizga kerakli tartibda (yaqin qolganidan) ajratamiz
     expiring_opportunities = active_qs.filter(deadline_date__isnull=False).order_by('deadline_date')[:4]
     
-    # Qolgan barcha dasturlarni oddiy ro'yxat uchun ajratamiz (yangi qo'shilganidan boshlab)
-    # Biz expiring ga kirmaganlarini alohida ajratib olishimiz mumkin yoki hammasini ko'rsatishimiz mumkin.
-    # Hammasini 'yangi qo'shilgan' tartibida ko'rsatish mantiqli.
+    # Qolgan barcha dasturlarni oddiy ro‘yxat uchun ajratamiz (yangi qo‘shilganidan boshlab)
+    # Biz expiring ga kirmaganlarini alohida ajratib olishimiz mumkin yoki hammasini ko‘rsatishimiz mumkin.
+    # Hammasini 'yangi qo‘shilgan' tartibida ko‘rsatish mantiqli.
     opportunities = active_qs.order_by('-created_at')
 
     context = {
