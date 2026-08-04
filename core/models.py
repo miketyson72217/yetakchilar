@@ -148,9 +148,11 @@ class JournalArticle(models.Model):
     def __str__(self):
         return f"{self.title} ({self.page_number}-sahifa)"
 
+from .countries import COUNTRY_CHOICES
+
 class Opportunity(models.Model):
-    title = models.CharField(max_length=255, verbose_name="Sarlavha (masalan: Edu Grands...)")
-    country = models.CharField(max_length=100, blank=True, null=True, verbose_name="Davlat (masalan: Turkiya 🇹🇷)")
+    title = models.CharField(max_length=255, verbose_name="Sarlavha")
+    country = models.CharField(max_length=100, choices=COUNTRY_CHOICES, blank=True, null=True, verbose_name="Davlat")
     format = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dastur shakli (masalan: Oflayn)")
     age_category = models.CharField(max_length=50, blank=True, null=True, verbose_name="Yosh toifasi (masalan: 18-30)")
     description = RichTextField(verbose_name="Batafsil ma’lumot (Matn va imtiyozlar)")
