@@ -149,9 +149,11 @@ class JournalArticle(models.Model):
         return f"{self.title} ({self.page_number}-sahifa)"
 
 from .countries import COUNTRY_CHOICES
+from django.utils.text import slugify
 
 class Opportunity(models.Model):
     title = models.CharField(max_length=255, verbose_name="Sarlavha")
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True, verbose_name="URL Slug")
     country = models.CharField(max_length=100, choices=COUNTRY_CHOICES, blank=True, null=True, verbose_name="Davlat")
     format = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dastur shakli (masalan: Oflayn)")
     age_category = models.CharField(max_length=50, blank=True, null=True, verbose_name="Yosh toifasi (masalan: 18-30)")
@@ -169,3 +171,8 @@ class Opportunity(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)

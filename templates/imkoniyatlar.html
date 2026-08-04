@@ -135,14 +135,18 @@
               {% if opp.image %}
                 <img src="{{ opp.image.url }}" alt="{{ opp.title }}" class="opp-image" />
               {% endif %}
-              <h2 class="opp-title">{{ opp.title }}</h2>
+              <h2 class="opp-title">
+                <a href="{% url 'opportunity_detail' opp.slug %}" style="color: inherit; text-decoration: none;">
+                  {{ opp.title }}
+                </a>
+              </h2>
               <div class="opp-meta">
                 {% if opp.country %}<span class="opp-badge">{{ opp.country }}</span>{% endif %}
                 {% if opp.format %}<span class="opp-badge">{{ opp.format }}</span>{% endif %}
                 {% if opp.age_category %}<span class="opp-badge">Yosh: {{ opp.age_category }}</span>{% endif %}
               </div>
               <div class="opp-desc">
-                {{ opp.description|safe }}
+                {{ opp.description|truncatewords_html:25|safe }}
               </div>
               <div class="opp-footer">
                 {% if opp.deadline %}
@@ -150,9 +154,7 @@
                 {% else %}
                   <span></span>
                 {% endif %}
-                {% if opp.registration_link %}
-                  <a href="{{ opp.registration_link }}" target="_blank" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Ro‘yxatdan o‘tish</a>
-                {% endif %}
+                  <a href="{% url 'opportunity_detail' opp.slug %}" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Batafsil</a>
               </div>
             </div>
           {% endfor %}

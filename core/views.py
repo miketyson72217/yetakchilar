@@ -384,3 +384,7 @@ def imkoniyatlar_view(request):
         'opportunities': opportunities,
     }
     return render(request, 'imkoniyatlar.html', context)
+
+def opportunity_detail_view(request, slug):
+    opportunity = get_object_or_404(Opportunity, slug=slug, is_active=True)
+    return render(request, 'opportunity_detail.html', {'opportunity': opportunity})

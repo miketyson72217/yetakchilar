@@ -49,6 +49,8 @@ urlpatterns = [
     path('imkoniyatlar/', views.imkoniyatlar_view, name='imkoniyatlar_slash'),
     path('imkoniyatlar', views.imkoniyatlar_view, name='imkoniyatlar_clean'),
     path('imkoniyatlar.html', views.imkoniyatlar_view, name='imkoniyatlar'),
+    path('imkoniyatlar/<slug:slug>/', views.opportunity_detail_view, name='opportunity_detail'),
+    path('imkoniyatlar/<slug:slug>', views.opportunity_detail_view),
 
     # Ariza routes
     path('ariza/', views.ariza_view, name='ariza_slash'),
