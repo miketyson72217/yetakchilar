@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='leader',
             name='show_in_leaders',
-            field=models.BooleanField(default=False, verbose_name="Yetakchilar sahifasida ko'rsatish (Top)"),
+            field=models.BooleanField(default=False, verbose_name="Yetakchilar sahifasida ko‘rsatish (Top)"),
         ),
         migrations.AlterField(
             model_name='leader',
             name='is_featured',
-            field=models.BooleanField(default=False, verbose_name="Bosh sahifada yetakchini ko'rsatish"),
+            field=models.BooleanField(default=False, verbose_name="Bosh sahifada yetakchini ko‘rsatish"),
         ),
     ]

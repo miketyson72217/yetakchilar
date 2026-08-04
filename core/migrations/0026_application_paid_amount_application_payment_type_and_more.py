@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='application',
             name='paid_amount',
-            field=models.PositiveIntegerField(default=0, verbose_name="To'langan summa (so'mda)"),
+            field=models.PositiveIntegerField(default=0, verbose_name="To‘langan summa (so‘mda)"),
         ),
         migrations.AddField(
             model_name='application',
             name='payment_type',
-            field=models.CharField(blank=True, choices=[('full', 'Bir martada — 80,000 so‘m'), ('installment', 'Bo‘lib-bo‘lib — 12 kun')], max_length=20, null=True, verbose_name="To'lov turi"),
+            field=models.CharField(blank=True, choices=[('full', 'Bir martada — 80,000 so‘m'), ('installment', 'Bo‘lib-bo‘lib — 12 kun')], max_length=20, null=True, verbose_name="To‘lov turi"),
         ),
         migrations.AddField(
             model_name='application',

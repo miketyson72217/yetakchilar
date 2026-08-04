@@ -177,24 +177,28 @@
     .opp-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1px;
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--border-subtle);
+      gap: 20px;
     }
 
     /* ── OPPORTUNITY CARD ───────────────────────── */
     .opp-card {
       background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       text-decoration: none;
       color: inherit;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
       position: relative;
     }
-    .opp-card:hover { background: var(--bg-surface-hover); }
+    .opp-card:hover {
+      background: var(--bg-surface-hover);
+      border-color: rgba(0,166,235,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      transform: translateY(-2px);
+    }
 
     .opp-img {
       width: 100%;
@@ -313,7 +317,7 @@
 
     /* ── RESPONSIVE ─────────────────────────────── */
     @media (max-width: 640px) {
-      .opp-grid { grid-template-columns: 1fr; }
+      .opp-grid { grid-template-columns: 1fr; gap: 14px; }
       .deadline-card-head { padding: 14px 16px; }
       .deadline-row a { padding: 13px 16px; }
       .opp-card-body { padding: 18px 16px 20px; }

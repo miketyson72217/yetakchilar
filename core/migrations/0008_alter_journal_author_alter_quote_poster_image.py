@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='journal',
             name='author',
-            field=models.CharField(default='Oʻzbekiston Yetakchi Yoshlari', max_length=255, verbose_name='Muallif'),
+            field=models.CharField(default='O‘zbekiston Yetakchi Yoshlari', max_length=255, verbose_name='Muallif'),
         ),
         migrations.AlterField(
             model_name='quote',

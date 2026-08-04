@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='leader',
             name='full_bio',
-            field=ckeditor.fields.RichTextField(blank=True, verbose_name='Toʻliq biografiya va yutuqlar'),
+            field=ckeditor.fields.RichTextField(blank=True, verbose_name='To‘liq biografiya va yutuqlar'),
         ),
     ]

@@ -23,12 +23,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='leader',
             name='seo_keywords',
-            field=models.CharField(blank=True, max_length=500, verbose_name='SEO kalit soʻzlar'),
+            field=models.CharField(blank=True, max_length=500, verbose_name='SEO kalit so‘zlar'),
         ),
         migrations.AlterField(
             model_name='journal',
             name='author',
-            field=models.CharField(default='OʻzYYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
+            field=models.CharField(default='O‘zYYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
         ),
         migrations.AlterField(
             model_name='journal',

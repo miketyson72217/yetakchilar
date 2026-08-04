@@ -28,7 +28,7 @@ def _bot_request(method, payload):
 
 def _get_keyboard_for_status(application):
     """
-    Returns the correct inline keyboard based on application's current status and payment_type.
+    Returns the correct inline keyboard based on application’s current status and payment_type.
     This is the single source of truth for all bot button states.
     """
     app_id = application.id
@@ -197,7 +197,7 @@ def edit_telegram_message(application):
     message_id = application.telegram_message_id
 
     if not chat_id or not message_id:
-        logger.warning(f"edit_telegram_message: chat_id yoki message_id yo'q (ariza #{application.id})")
+        logger.warning(f"edit_telegram_message: chat_id yoki message_id yo‘q (ariza #{application.id})")
         return False
 
     keyboard = _get_keyboard_for_status(application)

@@ -1,5 +1,5 @@
 /* =============================================
-   script.js — OʻzYYE Website JS
+   script.js — O‘zYYE Website JS
    ============================================= */
 
 // ===== HEADER SCROLL EFFECT =====
@@ -168,13 +168,13 @@ applyForms.forEach(form => {
           btn.disabled = false;
         }, 4000);
       } else {
-        alert('Xatolik yuz berdi. Iltimos qaytadan urinib koʻring.');
+        alert('Xatolik yuz berdi. Iltimos qaytadan urinib ko‘ring.');
         btn.innerHTML = originalText;
         btn.disabled = false;
       }
     } catch (err) {
       console.error(err);
-      alert('Tarmoq xatosi yuz berdi. Iltimos qaytadan urinib koʻring.');
+      alert('Tarmoq xatosi yuz berdi. Iltimos qaytadan urinib ko‘ring.');
       btn.innerHTML = originalText;
       btn.disabled = false;
     }

@@ -45,11 +45,11 @@ class Leader(models.Model):
     education = models.CharField(max_length=255, blank=True, verbose_name="Taʼlim")
     quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (16:9 keng)")
     quote_poster_1x1 = models.ImageField(upload_to='leaders/quotes/1x1/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (1:1 kvadrat)")
-    is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada yetakchini ko'rsatish")
-    show_in_leaders = models.BooleanField(default=False, verbose_name="Yetakchilar sahifasida ko'rsatish (Top)")
-    show_quote = models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish (Top)")
-    is_quote_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada iqtibosini ko'rsatish")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana")
+    is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada yetakchini ko‘rsatish")
+    show_in_leaders = models.BooleanField(default=False, verbose_name="Yetakchilar sahifasida ko‘rsatish (Top)")
+    show_quote = models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko‘rsatish (Top)")
+    is_quote_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada iqtibosini ko‘rsatish")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan sana")
 
     class Meta:
         verbose_name = "Yetakchi"
@@ -161,11 +161,11 @@ class Opportunity(models.Model):
     age_category = models.CharField(max_length=50, blank=True, null=True, verbose_name="Yosh toifasi (masalan: 18-30)")
     description = RichTextField(verbose_name="Batafsil ma’lumot (Matn va imtiyozlar)")
     registration_link = models.URLField(max_length=500, blank=True, null=True, verbose_name="Ro‘yxatdan o‘tish havolasi")
-    deadline = models.CharField(max_length=100, blank=True, null=True, verbose_name="So'nggi muddat (masalan: 30-Avgust)")
+    deadline = models.CharField(max_length=100, blank=True, null=True, verbose_name="So‘nggi muddat (masalan: 30-Avgust)")
     deadline_date = models.DateField(blank=True, null=True, verbose_name="Haqiqiy sana (Avtomatlashtirish uchun)")
     image = models.ImageField(upload_to='opportunities/', blank=True, null=True, verbose_name="Rasm / Poster")
     is_active = models.BooleanField(default=True, verbose_name="Faol / E'lon qilingan")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan sana")
 
     class Meta:
         verbose_name = "Imkoniyat (Grant/Dastur)"

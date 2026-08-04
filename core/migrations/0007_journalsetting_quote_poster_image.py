@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
             name='JournalSetting',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_coming_soon', models.BooleanField(default=False, verbose_name="Jurnal boʻlimini 'Tez orada' (Coming Soon) holatiga oʻtkazish")),
+                ('is_coming_soon', models.BooleanField(default=False, verbose_name="Jurnal bo‘limini 'Tez orada' (Coming Soon) holatiga o‘tkazish")),
                 ('coming_soon_title', models.CharField(default='Online Jurnal — Tez orada!', max_length=255, verbose_name="'Tez orada' sarlavhasi")),
-                ('coming_soon_description', models.TextField(default='Oʻzbekiston Yetakchi Yoshlari online jurnalining yangi soni va barcha nashrlari tayyorlanmoqda. Tez orada ushbu boʻlimda taqdim etiladi!', verbose_name="'Tez orada' tavsifi")),
+                ('coming_soon_description', models.TextField(default='O‘zbekiston Yetakchi Yoshlari online jurnalining yangi soni va barcha nashrlari tayyorlanmoqda. Tez orada ushbu bo‘limda taqdim etiladi!', verbose_name="'Tez orada' tavsifi")),
             ],
             options={
                 'verbose_name': 'Jurnal Sozlamasi',

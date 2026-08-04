@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='journal',
             name='author',
-            field=models.CharField(default='OʻzYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
+            field=models.CharField(default='O‘zYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
         ),
     ]

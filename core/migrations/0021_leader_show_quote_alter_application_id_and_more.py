@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='leader',
             name='show_quote',
-            field=models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish"),
+            field=models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko‘rsatish"),
         ),
         migrations.AlterField(
             model_name='application',

@@ -111,7 +111,7 @@ For example, to apply bottom borders between list items, don't do this:
 ```
 
 This can unintentionally overwrite a desirable `border-bottom` set from another rule.
-The actual intent was to only apply the bottom border to the non-last `li`s. The code above is a workaround that poorly expresses this intent. Instead, this expresses intent more clearly:
+The actual intent was to only apply the bottom border to the non-last `li’s. The code above is a workaround that poorly expresses this intent. Instead, this expresses intent more clearly:
 
 ```css
 .fancy-list li:not(:last-child) {

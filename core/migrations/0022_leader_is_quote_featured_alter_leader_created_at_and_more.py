@@ -13,16 +13,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='leader',
             name='is_quote_featured',
-            field=models.BooleanField(default=False, verbose_name="Bosh sahifada iqtibosini ko'rsatish"),
+            field=models.BooleanField(default=False, verbose_name="Bosh sahifada iqtibosini ko‘rsatish"),
         ),
         migrations.AlterField(
             model_name='leader',
             name='created_at',
-            field=models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana"),
+            field=models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan sana"),
         ),
         migrations.AlterField(
             model_name='leader',
             name='show_quote',
-            field=models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko'rsatish (Top)"),
+            field=models.BooleanField(default=False, verbose_name="Iqtiboslar sahifasida ko‘rsatish (Top)"),
         ),
     ]

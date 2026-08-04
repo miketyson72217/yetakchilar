@@ -36,7 +36,7 @@ data = [
         "age_category": "18-26 yosh",
         "deadline": "24-avgust",
         "registration_link": "https://dohadebates.com",
-        "description": "<p>Qatar Foundation'ning \"Doha Debates\" loyihasi. Ishtirokchilar dunyoning eng murakkab muammolarini muhokama qilish, tinglash va konstruktiv muloqot ko'nikmalarini rivojlantiradi, xalqaro tengdoshlar bilan uzoq muddatli aloqalar o'rnatadi.</p><br><b>Imtiyozlari:</b><ul><li>75+ davlatdan yoshlar bilan networking</li><li>Rasmiy Doha Debates sertifikati</li><li>Kelajakda mentor sifatida qatnashish imkoniyati</li><li>Muloqot, tanqidiy fikrlash va liderlik ko'nikmalarini rivojlantirish</li></ul>"
+        "description": "<p>Qatar Foundation’ning \"Doha Debates\" loyihasi. Ishtirokchilar dunyoning eng murakkab muammolarini muhokama qilish, tinglash va konstruktiv muloqot ko‘nikmalarini rivojlantiradi, xalqaro tengdoshlar bilan uzoq muddatli aloqalar o‘rnatadi.</p><br><b>Imtiyozlari:</b><ul><li>75+ davlatdan yoshlar bilan networking</li><li>Rasmiy Doha Debates sertifikati</li><li>Kelajakda mentor sifatida qatnashish imkoniyati</li><li>Muloqot, tanqidiy fikrlash va liderlik ko‘nikmalarini rivojlantirish</li></ul>"
     },
     {
         "title": "Global FinTech Hackcelerator 2026",
@@ -45,16 +45,16 @@ data = [
         "age_category": "Barcha uchun",
         "deadline": "14-avgust",
         "registration_link": "https://www.fintechfestival.sg/",
-        "description": "<p>Dastur moliya sohasidagi dolzarb muammolarga innovatsion yechim taklif etuvchi startaplar hamda dasturchilarni qo'llab-quvvatlash va xalqaro bozorga olib chiqishga qaratilgan.</p><br><b>Imtiyozlari:</b><ul><li>Finalchilar uchun $20,000 Singapur dollari miqdorida grant</li><li>Top-3 g'olib uchun qo'shimcha $150,000 Singapur dollari mukofot jamg'armasi</li><li>Global investorlar va venchur fondlari oldida pitch qilish imkoniyati</li><li>Yetakchi FinTech ekspertlaridan 1-ga-1 mentorlik hamda texnik qo'llab-quvvatlov</li></ul>"
+        "description": "<p>Dastur moliya sohasidagi dolzarb muammolarga innovatsion yechim taklif etuvchi startaplar hamda dasturchilarni qo‘llab-quvvatlash va xalqaro bozorga olib chiqishga qaratilgan.</p><br><b>Imtiyozlari:</b><ul><li>Finalchilar uchun $20,000 Singapur dollari miqdorida grant</li><li>Top-3 g‘olib uchun qo‘shimcha $150,000 Singapur dollari mukofot jamg‘armasi</li><li>Global investorlar va venchur fondlari oldida pitch qilish imkoniyati</li><li>Yetakchi FinTech ekspertlaridan 1-ga-1 mentorlik hamda texnik qo‘llab-quvvatlov</li></ul>"
     },
     {
         "title": "United World Colleges",
         "country": "Global (Onlayn) 🌍",
-        "format": "To'liq, qisman qoplamali",
+        "format": "To‘liq, qisman qoplamali",
         "age_category": "15-17",
         "deadline": "30-sentabr",
         "registration_link": "https://uz.uwc.org/",
-        "description": "<p>United World Colleges – dunyoning 4 ta qitʼasida joylashgan 18 ta maktab va kollejlar tizimidir. Oʻzlari tanlagan davlatdagi kollej/maktabga qabul qilingan oʻquvchilar u yerda 2 yil o'qishadi.</p><br><b>Imtiyozlari:</b><ul><li>Bepul yotoqxona va oziq-ovqat</li><li>O'qish to'lovlaridan ozod qilinish, darsliklar</li><li>2 yil IB diplomada o'qish</li></ul>"
+        "description": "<p>United World Colleges – dunyoning 4 ta qitʼasida joylashgan 18 ta maktab va kollejlar tizimidir. O‘zlari tanlagan davlatdagi kollej/maktabga qabul qilingan o‘quvchilar u yerda 2 yil o‘qishadi.</p><br><b>Imtiyozlari:</b><ul><li>Bepul yotoqxona va oziq-ovqat</li><li>O‘qish to‘lovlaridan ozod qilinish, darsliklar</li><li>2 yil IB diplomada o‘qish</li></ul>"
     },
     {
         "title": "IT Park International IT Training Program 2026",
@@ -78,7 +78,7 @@ data = [
         "title": "Youth International Math Olympiad (YIMO) 2026",
         "country": "Global (Onlayn) 🌍",
         "format": "Onlayn",
-        "age_category": "Barcha yoshdagi maktab o'quvchilari",
+        "age_category": "Barcha yoshdagi maktab o‘quvchilari",
         "deadline": "27-avgust",
         "registration_link": "https://yimo-official.org",
         "description": "<p>Bu matematikaga qiziqadigan o‘quvchilar uchun mo‘ljallangan xalqaro onlayn olimpiada. Ishtirokchilar o‘z darajasiga mos divizionda qatnashib, 20 ta matematik masalani yechadilar. Har bir divizionning eng yaxshi 8 nafar ishtirokchisi hisoblash va isbotlash masalalaridan iborat final bosqichiga yo‘l oladi.</p><br><b>Imtiyozlari:</b><ul><li>Bepul xalqaro onlayn olimpiadada ishtirok etish.</li><li>Oltin, Kumush va Bronza mukofotlari hamda ishtirok sertifikati.</li><li>Kuchli ishtirokchilar uchun final bosqichida qatnashish imkoniyati.</li><li>Xalqaro miqyosda matematik bilim va tajribani sinab ko‘rish imkoniyati.</li></ul>"
@@ -90,7 +90,7 @@ data = [
         "age_category": "13-18 yosh",
         "deadline": "12-oktyabr",
         "registration_link": "https://www.ino-global.net",
-        "description": "<p>Dunyoning eng yirik yoshlar neyrofan olimpiadalaridan biri. Bu tanlovda ishtirokchilar neyrofan bo'yicha bilimlarini sinovdan o'tkazadi va real ilmiy muammolarga yechim taklif qiladi.</p><br><b>Imtiyozlari:</b><ul><li>G'oliblarga top-20 universitet bilan tadqiqot imkoniyati (yoki pul mukofoti)</li><li>Xalqaro neyrofan ekspertlari bilan networking</li><li>Kollej arizalari uchun kuchli ilmiy tajriba</li></ul>"
+        "description": "<p>Dunyoning eng yirik yoshlar neyrofan olimpiadalaridan biri. Bu tanlovda ishtirokchilar neyrofan bo‘yicha bilimlarini sinovdan o‘tkazadi va real ilmiy muammolarga yechim taklif qiladi.</p><br><b>Imtiyozlari:</b><ul><li>G‘oliblarga top-20 universitet bilan tadqiqot imkoniyati (yoki pul mukofoti)</li><li>Xalqaro neyrofan ekspertlari bilan networking</li><li>Kollej arizalari uchun kuchli ilmiy tajriba</li></ul>"
     },
 
     {
@@ -100,7 +100,7 @@ data = [
         "age_category": "13-18",
         "deadline": "16-oktyabr",
         "registration_link": "https://casecomp.org",
-        "description": "<p>Bu yuqori maktab o'quvchilari o'rtasida business case musobaqasi bo'lib, ishtirokchilar 2-4 kishilik jamoalar sifatida workshoplarda qatnashib, biznes muammolarini hal qilishadi.</p><br><b>Imtiyozlar:</b><ul><li>$2000 gacha bo'lgan pul mukofotlari</li><li>Fortune500 loyihasi workshoplariga qatnashish imkoniyati</li><li>Xalqaro networking imkoniyati</li></ul>"
+        "description": "<p>Bu yuqori maktab o‘quvchilari o‘rtasida business case musobaqasi bo‘lib, ishtirokchilar 2-4 kishilik jamoalar sifatida workshoplarda qatnashib, biznes muammolarini hal qilishadi.</p><br><b>Imtiyozlar:</b><ul><li>$2000 gacha bo‘lgan pul mukofotlari</li><li>Fortune500 loyihasi workshoplariga qatnashish imkoniyati</li><li>Xalqaro networking imkoniyati</li></ul>"
     },
     {
         "title": "KADEM International Entrepreneurship Bootcamp",

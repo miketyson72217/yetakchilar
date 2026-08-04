@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='journal',
             name='author',
-            field=models.CharField(default='OʻzYYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
+            field=models.CharField(default='O‘zYYE Bosh Tahririyati', max_length=255, verbose_name='Muallif / Tahririyat'),
         ),
         migrations.AddField(
             model_name='journal',

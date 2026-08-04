@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='journal',
             name='author',
-            field=models.CharField(default='OʻzYYE Nashri', max_length=255, verbose_name='Muallif / Nashr'),
+            field=models.CharField(default='O‘zYYE Nashri', max_length=255, verbose_name='Muallif / Nashr'),
         ),
         migrations.AlterField(
             model_name='journal',
@@ -51,6 +51,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='leader',
             name='top100_rank',
-            field=models.PositiveIntegerField(blank=True, null=True, verbose_name='TOP 100 oʻrni'),
+            field=models.PositiveIntegerField(blank=True, null=True, verbose_name='TOP 100 o‘rni'),
         ),
     ]

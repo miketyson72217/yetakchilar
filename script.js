@@ -1,5 +1,5 @@
 /* =============================================
-   script.js — OʻzYYE Website JS
+   script.js — O‘zYYE Website JS
    ============================================= */
 
 // ===== HEADER SCROLL EFFECT =====
