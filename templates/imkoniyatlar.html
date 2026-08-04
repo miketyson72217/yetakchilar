@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Imkoniyatlar — Grantlar va Dasturlar | O'zYYE</title>
-  <meta name="description" content="O'zbekiston va dunyoda bo'layotgan turli xil dasturlar, grantlar va bellashuvlar haqida ma'lumot." />
+  <title>Imkoniyatlar — Grantlar va Dasturlar | O‘zYYE</title>
+  <meta name="description" content="O‘zbekiston va dunyoda bo‘layotgan turli xil dasturlar, grantlar va bellashuvlar haqida ma’lumot." />
   <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.css" />
@@ -325,7 +325,7 @@
   <!-- HEADER -->
   <header id="main-header" class="site-header">
     <div class="header-inner container">
-      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O'zYYE" class="logo-img" /></a>
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O‘zYYE" class="logo-img" /></a>
       <nav class="main-nav" id="main-nav">
         <ul class="nav-list" role="list">
           <li><a href="/" class="nav-link">Bosh sahifa</a></li>
@@ -362,7 +362,7 @@
           <div class="pg-eyebrow">Imkoniyatlar</div>
           <h1>Grantlar, dasturlar<br>va stipendiyalar</h1>
           <p>Xalqaro va mahalliy dasturlar, grantlar, bellashuvlar — yoshlar uchun barcha imkoniyatlar bir joyda.</p>
-          <p class="pg-notice">Biz ushbu dasturlarni tashkillaydigan tashkilot emasmiz. Ma'lumotlarni ochiq manbalardan yig'ib, yoshlarga yetkazamiz.</p>
+          <p class="pg-notice">Biz ushbu dasturlarni tashkillaydigan tashkilot emasmiz. Ma’lumotlarni ochiq manbalardan yig‘ib, yoshlarga yetkazamiz.</p>
         </div>
       </div>
     </section>
@@ -383,7 +383,7 @@
           </div>
           {% for opp in expiring_opportunities %}
           <div class="deadline-row">
-            <a href="{% url 'opportunity_detail' opp.uuid %}">
+            <a href="{% url 'opportunity_detail' opp.slug %}">
               <span class="dl-idx">{{ forloop.counter }}</span>
               <span class="dl-name">{{ opp.title }}</span>
               {% if opp.country %}<span class="dl-flag">{{ opp.country|slice:"-2:" }}</span>{% endif %}
@@ -405,7 +405,7 @@
         <!-- Cards -->
         <div class="opp-grid">
           {% for opp in opportunities %}
-          <a href="{% url 'opportunity_detail' opp.uuid %}" class="opp-card">
+          <a href="{% url 'opportunity_detail' opp.slug %}" class="opp-card">
 
             {% if opp.image %}
               <img src="{{ opp.image.url }}" alt="{{ opp.title }}" class="opp-img" loading="lazy" />
@@ -436,7 +436,7 @@
                 <span></span>
                 {% endif %}
                 <span class="opp-card-cta">
-                  Ko'rish
+                  Ko‘rish
                   <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
               </div>
@@ -448,7 +448,7 @@
         {% else %}
         <div class="opp-empty">
           <h2>Tez kunda</h2>
-          <p>Yoshlar uchun eng zo'r grantlar, xalqaro dasturlar va bellashuvlar tez orada e'lon qilinadi.</p>
+          <p>Yoshlar uchun eng zo‘r grantlar, xalqaro dasturlar va bellashuvlar tez orada e'lon qilinadi.</p>
           <a href="/" class="btn btn-primary">Bosh sahifaga &rarr;</a>
         </div>
         {% endif %}
@@ -461,8 +461,8 @@
   <footer class="site-footer" id="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand" id="footer-brand">
-        <img src="/static/images/main_logo.png" alt="O'zYYE Logo" class="footer-logo" id="footer-logo" />
-        <p class="footer-desc">O'zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
+        <img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
         <div class="footer-social" id="footer-social">
           <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" aria-label="Telegram">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
@@ -488,7 +488,7 @@
     <div class="footer-bottom" id="footer-bottom" style="text-align:center;padding:24px 0;border-top:1px solid rgba(255,255,255,0.1);">
       <div class="container">
         <p style="font-size:1rem;font-weight:800;color:#00A6EB;margin-bottom:8px;">Biz bilan tarixga kiring!</p>
-        <p style="font-size:0.85rem;color:#94a3b8;font-weight:700;">© 2026 O'zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+        <p style="font-size:0.85rem;color:#94a3b8;font-weight:700;">© 2026 O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
       </div>
     </div>
   </footer>
