@@ -9,7 +9,7 @@ from core.models import Opportunity
 data = [
     {
         "title": "Doha Debates Ambassador Program",
-        "country": "Qatar",
+        "country": "Qatar 🇶🇦",
         "format": "Onlayn",
         "age_category": "18-26 yosh",
         "deadline": "24-avgust",
@@ -18,7 +18,7 @@ data = [
     },
     {
         "title": "Global FinTech Hackcelerator 2026",
-        "country": "Singapur",
+        "country": "Singapur 🇸🇬",
         "format": "Gibrid",
         "age_category": "Barcha uchun",
         "deadline": "14-avgust",
@@ -27,7 +27,7 @@ data = [
     },
     {
         "title": "United World Colleges",
-        "country": "Global (Onlayn)",
+        "country": "Global (Onlayn) 🌍",
         "format": "To'liq, qisman qoplamali",
         "age_category": "15-17",
         "deadline": "30-sentabr",
@@ -36,7 +36,7 @@ data = [
     },
     {
         "title": "IT Park International IT Training Program 2026",
-        "country": "O‘zbekiston",
+        "country": "O‘zbekiston 🇺🇿",
         "format": "Oflayn",
         "age_category": "18–30",
         "deadline": "20-avgust",
@@ -45,7 +45,7 @@ data = [
     },
     {
         "title": "International Medicine & Health Olympiad",
-        "country": "AQSh",
+        "country": "AQSh 🇺🇸",
         "format": "Onlayn",
         "age_category": "14-21",
         "deadline": "21-avgust",
@@ -54,7 +54,7 @@ data = [
     },
     {
         "title": "Youth International Math Olympiad (YIMO) 2026",
-        "country": "Global (Onlayn)",
+        "country": "Global (Onlayn) 🌍",
         "format": "Onlayn",
         "age_category": "Barcha yoshdagi maktab o'quvchilari",
         "deadline": "27-avgust",
@@ -63,25 +63,17 @@ data = [
     },
     {
         "title": "International Neuroscience Olympiad (INO) 2026",
-        "country": "AQSh",
+        "country": "AQSh 🇺🇸",
         "format": "Onlayn",
         "age_category": "13-18 yosh",
         "deadline": "12-oktyabr",
         "registration_link": "https://edugrants.uz/scholarships/international-neuroscience-olympiad-ino-2026",
         "description": "<p>Dunyoning eng yirik yoshlar neyrofan olimpiadalaridan biri. Bu tanlovda ishtirokchilar neyrofan bo'yicha bilimlarini sinovdan o'tkazadi va real ilmiy muammolarga yechim taklif qiladi.</p><br><b>Imtiyozlari:</b><ul><li>G'oliblarga top-20 universitet bilan tadqiqot imkoniyati (yoki pul mukofoti)</li><li>Xalqaro neyrofan ekspertlari bilan networking</li><li>Kollej arizalari uchun kuchli ilmiy tajriba</li></ul>"
     },
-    {
-        "title": "Rahimov School Farg‘ona filialida grant asosida ta’lim",
-        "country": "O‘zbekiston",
-        "format": "Oflayn",
-        "age_category": "9-, 10-, 11-sinflar",
-        "deadline": "",
-        "registration_link": "https://docs.google.com/forms/d/e/1FAIpQLSdk3tUAodgnyDadRXcY581w04ZkWx3yIvcNCCGznBagyipJQA/viewform",
-        "description": "<p>Rahimov School Farg‘ona filialida grant asosida ta’lim olish imkoniyati! Iqtidorli o‘quvchilar uchun to‘liq 100% gacha o‘rinlari e’lon qilindi! Grant 9-, 10- va 11-sinflar uchun belgilangan.</p><br><p>Grant shartlari bilan batafsil tanishish uchun: <a href=\"https://telegra.ph/Rahimov-School-Fargona-filialida-9-10-11-sinflar-uchun-100-gacha-grant-07-28\" target=\"_blank\">Bu yerga bosing</a></p>"
-    },
+
     {
         "title": "Harvard Crimson Global Case Competition",
-        "country": "AQSh",
+        "country": "AQSh 🇺🇸",
         "format": "Onlayn",
         "age_category": "13-18",
         "deadline": "16-oktyabr",
@@ -90,7 +82,7 @@ data = [
     },
     {
         "title": "KADEM International Entrepreneurship Bootcamp",
-        "country": "Turkiya",
+        "country": "Turkiya 🇹🇷",
         "format": "Oflayn",
         "age_category": "18-30",
         "deadline": "30-Avgust",
