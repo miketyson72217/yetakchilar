@@ -6,358 +6,276 @@
   <title>{{ opportunity.title }} — O'zYYE</title>
   <meta name="description" content="{{ opportunity.title }} haqida batafsil ma'lumot — O'zbekiston Yetakchi Yoshlari Ensiklopediyasi." />
   <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.css" />
   <link rel="stylesheet" href="/static/pages.css" />
   <style>
-    /* ===== DETAIL PAGE ===== */
 
-    /* Hero */
+    /* ── DETAIL HERO ────────────────────────────── */
     .det-hero {
-      padding: calc(var(--header-h) + 48px) 0 64px;
-      position: relative;
+      padding: calc(var(--header-h) + 56px) 0 52px;
       border-bottom: 1px solid var(--border-subtle);
-      overflow: hidden;
     }
-    .det-hero::before {
-      content: '';
-      position: absolute;
-      top: 0; right: -20%;
-      width: 70%; height: 100%;
-      background: radial-gradient(ellipse at right, rgba(0,166,235,0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    /* Back link */
     .det-back {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--text-tertiary);
-      font-size: 0.88rem;
+      gap: 6px;
+      font-size: 0.8rem;
       font-weight: 600;
+      color: var(--text-tertiary);
       text-decoration: none;
-      margin-bottom: 32px;
-      transition: color var(--transition);
-      letter-spacing: 0.02em;
+      margin-bottom: 36px;
+      transition: color 0.18s;
     }
-    .det-back:hover { color: #00A6EB; }
-    .det-back svg { transition: transform var(--transition); }
-    .det-back:hover svg { transform: translateX(-4px); }
+    .det-back:hover { color: var(--text-primary); }
+    .det-back svg { transition: transform 0.18s; }
+    .det-back:hover svg { transform: translateX(-3px); }
 
-    /* Hero top badges */
-    .det-hero-badges {
+    .det-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 8px;
+      margin-bottom: 22px;
     }
-    .det-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
+    .det-tag {
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.06em;
-      padding: 6px 14px;
-      border-radius: 100px;
+      padding: 4px 11px;
+      border-radius: 4px;
     }
-    .det-badge-blue {
-      background: rgba(0,166,235,0.12);
+    .det-tag-blue {
+      background: rgba(0,166,235,0.08);
       color: #00A6EB;
-      border: 1px solid rgba(0,166,235,0.25);
+      border: 1px solid rgba(0,166,235,0.15);
     }
-    .det-badge-green {
-      background: rgba(16,185,129,0.12);
+    .det-tag-green {
+      background: rgba(16,185,129,0.08);
       color: #10b981;
-      border: 1px solid rgba(16,185,129,0.25);
+      border: 1px solid rgba(16,185,129,0.15);
     }
-    .det-badge-gold {
-      background: rgba(201,160,80,0.12);
+    .det-tag-amber {
+      background: rgba(201,160,80,0.1);
       color: #C9A050;
-      border: 1px solid rgba(201,160,80,0.25);
+      border: 1px solid rgba(201,160,80,0.18);
     }
-    .det-badge-red {
-      background: rgba(239,68,68,0.1);
+    .det-tag-red {
+      background: rgba(239,68,68,0.08);
       color: #ef4444;
-      border: 1px solid rgba(239,68,68,0.25);
+      border: 1px solid rgba(239,68,68,0.15);
     }
 
-    /* Title */
     .det-title {
       font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
       font-weight: 700;
       line-height: 1.1;
+      letter-spacing: -0.04em;
       color: var(--text-primary);
-      letter-spacing: -0.035em;
-      margin-bottom: 28px;
-      max-width: 820px;
+      margin-bottom: 24px;
+      max-width: 760px;
     }
-
-    /* Meta row */
-    .det-meta-row {
+    .det-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      margin-bottom: 36px;
     }
     .det-meta-item {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      font-size: 0.95rem;
       font-weight: 500;
     }
-    .det-meta-item svg { color: #00A6EB; flex-shrink: 0; }
+    .det-meta-item svg { color: var(--text-tertiary); }
 
-    /* Action buttons */
-    .det-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .det-btn-share {
+    /* Share button */
+    .det-share-btn {
+      margin-top: 28px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: var(--bg-surface);
-      color: var(--text-secondary);
-      border: 1px solid var(--border-subtle);
-      padding: 10px 20px;
-      border-radius: 100px;
+      gap: 7px;
+      font-size: 0.8rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      color: var(--text-tertiary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 16px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: all 0.18s;
       text-decoration: none;
     }
-    .det-btn-share:hover {
-      border-color: #00A6EB;
+    .det-share-btn:hover {
+      border-color: rgba(0,166,235,0.3);
       color: #00A6EB;
-      transform: translateY(-2px);
     }
 
-    /* ===== HERO IMAGE ===== */
-    .det-hero-img-wrap {
-      margin-top: 48px;
+    /* Cover image */
+    .det-cover {
       width: 100%;
-      max-height: 440px;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      border: 1px solid var(--border-subtle);
-      position: relative;
-    }
-    .det-hero-img-wrap img {
-      width: 100%;
-      height: 440px;
+      max-height: 400px;
       object-fit: cover;
-    }
-    .det-hero-img-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(6,9,19,0.5) 0%, transparent 40%, transparent 60%, rgba(6,9,19,0.5) 100%);
+      display: block;
+      border-radius: 12px;
+      margin-top: 40px;
+      border: 1px solid var(--border-subtle);
     }
 
-    /* ===== CONTENT LAYOUT ===== */
-    .det-content {
-      padding: 64px 0 120px;
-    }
+    /* ── LAYOUT ─────────────────────────────────── */
     .det-layout {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 300px;
       gap: 40px;
+      padding: 52px 0 100px;
       align-items: start;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 900px) {
       .det-layout {
         grid-template-columns: 1fr;
       }
-      .det-sidebar {
-        order: -1;
-      }
+      .det-sidebar { order: -1; }
     }
 
-    /* ===== MAIN CARD ===== */
-    .det-main-card {
-      background: var(--bg-surface);
+    /* ── DESCRIPTION ────────────────────────────── */
+    .det-body {
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: 44px;
+      border-radius: 14px;
+      overflow: hidden;
     }
-    @media (max-width: 640px) {
-      .det-main-card { padding: 28px 20px; }
-    }
-    .det-main-card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-      padding-bottom: 24px;
+    .det-body-head {
+      padding: 18px 28px;
       border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
     }
-    .det-main-card-header .icon-wrap {
-      width: 44px;
-      height: 44px;
-      background: rgba(0,166,235,0.1);
-      border: 1px solid rgba(0,166,235,0.2);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #00A6EB;
-      flex-shrink: 0;
-    }
-    .det-main-card-header h2 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
+    .det-body-content {
+      padding: 32px 28px;
     }
     .det-description {
-      font-size: 1.05rem;
+      font-size: 0.97rem;
       color: var(--text-secondary);
       line-height: 1.8;
     }
-    .det-description p { margin-bottom: 18px; }
+    .det-description p { margin-bottom: 16px; }
     .det-description p:last-child { margin-bottom: 0; }
-    .det-description h2, .det-description h3 {
+    .det-description h2,
+    .det-description h3 {
       font-family: var(--font-heading);
-      color: var(--text-primary);
+      font-size: 1.2rem;
       font-weight: 700;
-      margin: 28px 0 14px;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin: 28px 0 12px;
     }
-    .det-description ul, .det-description ol {
+    .det-description ul,
+    .det-description ol {
       margin-left: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
     .det-description li {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: var(--text-secondary);
     }
     .det-description a {
       color: #00A6EB;
-      text-decoration: underline;
-      text-decoration-color: rgba(0,166,235,0.3);
+      text-underline-offset: 2px;
     }
-    .det-description strong { color: var(--text-primary); }
+    .det-description strong { color: var(--text-primary); font-weight: 600; }
 
-    /* ===== SIDEBAR ===== */
+    /* ── SIDEBAR ────────────────────────────────── */
     .det-sidebar {
       position: sticky;
       top: calc(var(--header-h) + 24px);
-    }
-    .det-sidebar-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-    }
-    .det-sidebar-header {
-      background: linear-gradient(135deg, rgba(0,166,235,0.1) 0%, transparent 100%);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 22px 26px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .det-sidebar-header h3 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
-    }
-    .det-sidebar-body {
-      padding: 24px 26px;
-    }
-    .sidebar-row {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      margin-bottom: 28px;
+      gap: 16px;
     }
-    .sidebar-item {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .sidebar-item-icon {
-      width: 36px;
-      height: 36px;
-      background: var(--bg-surface-hover);
+    .det-info-card {
       border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #00A6EB;
-      flex-shrink: 0;
-    }
-    .sidebar-item-text {}
-    .sidebar-item-label {
-      font-size: 0.78rem;
-      color: var(--text-tertiary);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
-    .sidebar-item-value {
-      font-size: 0.98rem;
-      color: var(--text-primary);
-      font-weight: 700;
-    }
-    .sidebar-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin: 4px 0 8px;
-    }
-
-    /* Apply button */
-    .det-apply-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%);
-      color: #fff;
-      padding: 16px 24px;
-      border-radius: var(--radius-md);
-      font-weight: 800;
-      font-size: 1rem;
-      text-decoration: none;
-      letter-spacing: -0.01em;
-      transition: all var(--transition);
-      box-shadow: 0 6px 24px rgba(0,166,235,0.35);
-      position: relative;
+      border-radius: 14px;
       overflow: hidden;
     }
-    .det-apply-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .det-apply-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(0,166,235,0.5);
-    }
-    .det-apply-btn:active { transform: translateY(-1px); }
-
-    /* ===== RELATED (future) placeholder ===== */
-    .det-related-label {
-      font-size: 0.8rem;
+    .det-info-head {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
       letter-spacing: 0.12em;
-      margin-top: 16px;
-      display: block;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      background: var(--bg-surface);
+    }
+    .det-info-rows {
+      background: var(--bg-surface);
+    }
+    .det-info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .det-info-row:last-child { border-bottom: none; }
+    .det-info-row-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: var(--bg-surface-hover);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+    .det-info-row-text {}
+    .det-info-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 2px;
+    }
+    .det-info-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .det-info-value-red { color: #ef4444; }
+    .det-info-value-green { color: #10b981; }
+
+    /* Apply button */
+    .det-apply {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #00A6EB;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 14px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
+      letter-spacing: -0.01em;
+    }
+    .det-apply:hover {
+      background: #0091cc;
+      transform: translateY(-2px);
+    }
+    .det-apply-note {
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
       text-align: center;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -396,184 +314,166 @@
   </div>
 
   <main>
-    <!-- ===== HERO ===== -->
+    <!-- HERO -->
     <section class="det-hero">
       <div class="container">
 
         <a href="/imkoniyatlar/" class="det-back">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-          Barcha imkoniyatlar
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+          Imkoniyatlar
         </a>
 
-        <!-- Badges -->
-        <div class="det-hero-badges">
-          {% if opportunity.country %}<span class="det-badge det-badge-blue">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            {{ opportunity.country }}
-          </span>{% endif %}
-          {% if opportunity.format %}<span class="det-badge det-badge-green">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
-            {{ opportunity.format }}
-          </span>{% endif %}
-          {% if opportunity.age_category %}<span class="det-badge det-badge-gold">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            {{ opportunity.age_category }}
-          </span>{% endif %}
-          {% if opportunity.deadline %}<span class="det-badge det-badge-red">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Muddat: {{ opportunity.deadline }}
-          </span>{% endif %}
+        <div class="det-tags">
+          {% if opportunity.country %}
+          <span class="det-tag det-tag-blue">{{ opportunity.country }}</span>
+          {% endif %}
+          {% if opportunity.format %}
+          <span class="det-tag det-tag-green">{{ opportunity.format }}</span>
+          {% endif %}
+          {% if opportunity.age_category %}
+          <span class="det-tag det-tag-amber">{{ opportunity.age_category }}</span>
+          {% endif %}
+          {% if opportunity.deadline %}
+          <span class="det-tag det-tag-red">Muddat: {{ opportunity.deadline }}</span>
+          {% endif %}
         </div>
 
-        <!-- Title -->
         <h1 class="det-title">{{ opportunity.title }}</h1>
 
-        <!-- Meta -->
-        <div class="det-meta-row">
+        <div class="det-meta">
           {% if opportunity.country %}
           <span class="det-meta-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
             {{ opportunity.country }}
           </span>
           {% endif %}
           {% if opportunity.deadline %}
           <span class="det-meta-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-            Ariza muddati: <strong style="color:var(--text-primary);">{{ opportunity.deadline }}</strong>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            {{ opportunity.deadline }}
           </span>
           {% endif %}
           {% if opportunity.format %}
           <span class="det-meta-item">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
             {{ opportunity.format }}
           </span>
           {% endif %}
         </div>
 
-        <!-- Actions -->
-        <div class="det-actions">
-          <button class="det-btn-share" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.innerHTML='<svg width=\'18\' height=\'18\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\' viewBox=\'0 0 24 24\'><polyline points=\'20 6 9 17 4 12\'/></svg> Nusxalandi!'; setTimeout(()=>location.reload(),1500)})">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
-            Ulashish
-          </button>
-        </div>
+        <button class="det-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='✓ Nusxalandi';setTimeout(()=>location.reload(),1200)})">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+          Ulashish
+        </button>
 
-        <!-- Hero image -->
         {% if opportunity.image %}
-        <div class="det-hero-img-wrap">
-          <img src="{{ opportunity.image.url }}" alt="{{ opportunity.title }}" />
-        </div>
+        <img src="{{ opportunity.image.url }}" alt="{{ opportunity.title }}" class="det-cover" />
         {% endif %}
 
       </div>
     </section>
 
-    <!-- ===== CONTENT ===== -->
-    <section class="det-content">
-      <div class="container">
-        <div class="det-layout">
+    <!-- CONTENT -->
+    <div class="container">
+      <div class="det-layout">
 
-          <!-- Main description -->
-          <div class="det-main-col">
-            <div class="det-main-card">
-              <div class="det-main-card-header">
-                <div class="icon-wrap">
-                  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                </div>
-                <h2>Dastur haqida batafsil</h2>
-              </div>
+        <!-- Description -->
+        <div class="det-main">
+          <div class="det-body">
+            <div class="det-body-head">Dastur haqida</div>
+            <div class="det-body-content">
               <div class="det-description">
                 {{ opportunity.description|safe }}
               </div>
             </div>
           </div>
-
-          <!-- Sidebar -->
-          <aside class="det-sidebar">
-            <div class="det-sidebar-card">
-              <div class="det-sidebar-header">
-                <svg width="18" height="18" fill="none" stroke="#00A6EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                <h3>Qisqa ma'lumot</h3>
-              </div>
-              <div class="det-sidebar-body">
-                <div class="sidebar-row">
-                  {% if opportunity.country %}
-                  <div class="sidebar-item">
-                    <div class="sidebar-item-icon">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </div>
-                    <div class="sidebar-item-text">
-                      <div class="sidebar-item-label">Davlat / Mintaqa</div>
-                      <div class="sidebar-item-value">{{ opportunity.country }}</div>
-                    </div>
-                  </div>
-                  {% endif %}
-
-                  {% if opportunity.deadline %}
-                  <div class="sidebar-item">
-                    <div class="sidebar-item-icon" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.2); color:#ef4444;">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
-                    <div class="sidebar-item-text">
-                      <div class="sidebar-item-label">Ariza muddati</div>
-                      <div class="sidebar-item-value" style="color:#ef4444;">{{ opportunity.deadline }}</div>
-                    </div>
-                  </div>
-                  {% endif %}
-
-                  {% if opportunity.format %}
-                  <div class="sidebar-item">
-                    <div class="sidebar-item-icon">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                    </div>
-                    <div class="sidebar-item-text">
-                      <div class="sidebar-item-label">Format</div>
-                      <div class="sidebar-item-value">{{ opportunity.format }}</div>
-                    </div>
-                  </div>
-                  {% endif %}
-
-                  {% if opportunity.age_category %}
-                  <div class="sidebar-item">
-                    <div class="sidebar-item-icon" style="background:rgba(201,160,80,0.1); border-color:rgba(201,160,80,0.2); color:#C9A050;">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <div class="sidebar-item-text">
-                      <div class="sidebar-item-label">Yosh toifasi</div>
-                      <div class="sidebar-item-value">{{ opportunity.age_category }}</div>
-                    </div>
-                  </div>
-                  {% endif %}
-
-                  {% if opportunity.badge %}
-                  <div class="sidebar-item">
-                    <div class="sidebar-item-icon" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.2); color:#10b981;">
-                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </div>
-                    <div class="sidebar-item-text">
-                      <div class="sidebar-item-label">Moliyalashtirish</div>
-                      <div class="sidebar-item-value" style="color:#10b981;">{{ opportunity.badge }}</div>
-                    </div>
-                  </div>
-                  {% endif %}
-                </div>
-
-                <!-- Apply CTA -->
-                {% if opportunity.registration_link %}
-                <div class="sidebar-divider"></div>
-                <a href="{{ opportunity.registration_link }}" target="_blank" rel="noopener noreferrer" class="det-apply-btn">
-                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                  Hoziroq ariza topshirish
-                </a>
-                <span class="det-related-label">Rasmiy saytga yo'naltirilasiz</span>
-                {% endif %}
-              </div>
-            </div>
-          </aside>
-
         </div>
+
+        <!-- Sidebar -->
+        <aside class="det-sidebar">
+
+          <!-- Info card -->
+          <div class="det-info-card">
+            <div class="det-info-head">Ma'lumotlar</div>
+            <div class="det-info-rows">
+
+              {% if opportunity.country %}
+              <div class="det-info-row">
+                <div class="det-info-row-icon">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="det-info-row-text">
+                  <div class="det-info-label">Davlat</div>
+                  <div class="det-info-value">{{ opportunity.country }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if opportunity.deadline %}
+              <div class="det-info-row">
+                <div class="det-info-row-icon" style="color:#ef4444;background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.15);">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="det-info-row-text">
+                  <div class="det-info-label">Ariza muddati</div>
+                  <div class="det-info-value det-info-value-red">{{ opportunity.deadline }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if opportunity.format %}
+              <div class="det-info-row">
+                <div class="det-info-row-icon">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+                </div>
+                <div class="det-info-row-text">
+                  <div class="det-info-label">Format</div>
+                  <div class="det-info-value">{{ opportunity.format }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if opportunity.age_category %}
+              <div class="det-info-row">
+                <div class="det-info-row-icon">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="det-info-row-text">
+                  <div class="det-info-label">Yosh toifasi</div>
+                  <div class="det-info-value">{{ opportunity.age_category }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if opportunity.badge %}
+              <div class="det-info-row">
+                <div class="det-info-row-icon" style="color:#10b981;background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.15);">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div class="det-info-row-text">
+                  <div class="det-info-label">Moliyalashtirish</div>
+                  <div class="det-info-value det-info-value-green">{{ opportunity.badge }}</div>
+                </div>
+              </div>
+              {% endif %}
+
+            </div>
+          </div>
+
+          <!-- Apply button -->
+          {% if opportunity.registration_link %}
+          <div>
+            <a href="{{ opportunity.registration_link }}" target="_blank" rel="noopener noreferrer" class="det-apply">
+              Ariza topshirish
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+            </a>
+            <p class="det-apply-note">Rasmiy saytga yo'naltirilasiz</p>
+          </div>
+          {% endif %}
+
+        </aside>
       </div>
-    </section>
+    </div>
   </main>
 
   <!-- FOOTER -->
@@ -604,10 +504,10 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom" id="footer-bottom" style="text-align:center; padding:24px 0; border-top:1px solid rgba(255,255,255,0.1);">
+    <div class="footer-bottom" id="footer-bottom" style="text-align:center;padding:24px 0;border-top:1px solid rgba(255,255,255,0.1);">
       <div class="container">
-        <p style="font-size:1rem; font-weight:800; color:#00A6EB; margin-bottom:8px;">Biz bilan tarixga kiring!</p>
-        <p style="font-size:0.85rem; color:#94a3b8; font-weight:700;">© 2026 O'zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
+        <p style="font-size:1rem;font-weight:800;color:#00A6EB;margin-bottom:8px;">Biz bilan tarixga kiring!</p>
+        <p style="font-size:0.85rem;color:#94a3b8;font-weight:700;">© 2026 O'zbekiston Yetakchi Yoshlari Ensiklopediyasi (yetakchilar.uz). Barcha huquqlar himoyalangan.</p>
       </div>
     </div>
   </footer>
