@@ -73,127 +73,79 @@
       line-height: 1.7;
     }
     .opp-notice {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(251,191,36,0.08);
-      border: 1px solid rgba(251,191,36,0.25);
-      border-radius: 12px;
-      padding: 12px 22px;
-      font-size: 0.9rem;
-      color: #fbbf24;
-      max-width: 640px;
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      max-width: 580px;
       margin: 0 auto;
-      text-align: left;
+      line-height: 1.6;
     }
-    .opp-notice strong { color: #fde68a; }
+    .opp-notice strong { color: var(--text-secondary); }
 
-    /* ===== URGENCY BANNER ===== */
+    /* ===== DEADLINE SECTION ===== */
     .urgency-banner {
-      background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.03) 100%);
-      border: 1px solid rgba(251,191,36,0.2);
-      border-radius: var(--radius-xl);
-      padding: 32px 36px;
-      margin-bottom: 60px;
-      position: relative;
-      overflow: hidden;
-    }
-    .urgency-banner::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      background: linear-gradient(to bottom, #fbbf24, #f59e0b);
-      border-radius: 4px 0 0 4px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 28px 0;
+      margin-bottom: 56px;
     }
     .urgency-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .urgency-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(251,191,36,0.15);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fbbf24;
-      flex-shrink: 0;
+      gap: 8px;
+      margin-bottom: 16px;
     }
     .urgency-header h3 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fbbf24;
-      letter-spacing: -0.01em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
+    .urgency-header svg { color: var(--text-tertiary); }
     .urgency-items {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 0;
     }
     .urgency-item {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
-    .urgency-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #fbbf24;
-      flex-shrink: 0;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
-    }
+    .urgency-item:last-child { border-bottom: none; }
+    .urgency-dot { display: none; }
     .urgency-item a {
       color: var(--text-primary);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 500;
       transition: color var(--transition);
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: nowrap;
+      width: 100%;
     }
-    .urgency-item a:hover { color: #fbbf24; }
+    .urgency-item a:hover { color: #00A6EB; }
     .urgency-title {
       flex: 1;
       min-width: 0;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .urgency-flag {
-      font-size: 1rem;
+      font-size: 0.95rem;
       flex-shrink: 0;
     }
     .urgency-date {
       flex-shrink: 0;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #ef4444;
-      background: rgba(239,68,68,0.1);
-      border: 1px solid rgba(239,68,68,0.2);
-      padding: 3px 10px;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-    }
-    .urgency-footer {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--text-tertiary);
-      padding-top: 14px;
-      border-top: 1px dashed rgba(255,255,255,0.07);
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      letter-spacing: 0.03em;
     }
+    .urgency-footer { display: none; }
 
     /* ===== OPP GRID ===== */
     .opp-section {
@@ -458,10 +410,9 @@
         <p class="opp-hero-sub">
           Xalqaro va mahalliy dasturlar, grantlar, stipendiyalar — barcha imkoniyatlar bir joyda.
         </p>
-        <div class="opp-notice">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="flex-shrink:0;color:#fbbf24;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-          <span><strong>Eslatma:</strong> Biz ushbu dastur va grantlarni tashkillaydigan tashkilot emasmiz. Ma'lumotlarni ochiq manbalardan yig'ib, yoshlarga yetkazamiz.</span>
-        </div>
+        <p class="opp-notice">
+          Biz ushbu dastur va grantlarni tashkillaydigan tashkilot emasmiz. Ochiq manbalardan yig'ib, yoshlarga yetkazamiz.
+        </p>
       </div>
     </section>
 
@@ -471,10 +422,8 @@
       {% if expiring_opportunities %}
         <div class="urgency-banner">
           <div class="urgency-header">
-            <div class="urgency-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <h3>Tez orada muddati tugaydigan dasturlar</h3>
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <h3>Muddati tugamoqda</h3>
           </div>
           <div class="urgency-items">
             {% for opp in expiring_opportunities %}
