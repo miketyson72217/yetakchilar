@@ -150,6 +150,7 @@ class JournalArticle(models.Model):
 
 from .countries import COUNTRY_CHOICES
 from django.utils.text import slugify
+import uuid
 
 class Opportunity(models.Model):
     title = models.CharField(max_length=255, verbose_name="Sarlavha")
@@ -176,5 +177,5 @@ class Opportunity(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = str(uuid.uuid4())
         super().save(*args, **kwargs)
