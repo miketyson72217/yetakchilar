@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dasturlar va Grantlar — O‘zYYE</title>
+  <meta name="description" content="O‘zbekiston va dunyoda bo‘layotgan turli xil dasturlar, grantlar va bellashuvlar haqida ma'lumot." />
+  <link rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    .opp-container {
+      padding: 60px 0 100px;
+    }
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    .opp-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .opp-card:hover {
+      border-color: #00A6EB;
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,166,235,0.12);
+    }
+    .opp-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .opp-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .opp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .opp-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #00A6EB;
+      background: rgba(0,166,235,0.1);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+    .opp-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .opp-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+    .opp-deadline {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header id="main-header" class="site-header">
+    <div class="header-inner container">
+      <a href="/" class="logo-link"><img src="/static/images/main_logo.png" alt="O‘zYYE" class="logo-img" /></a>
+      <nav class="main-nav" id="main-nav">
+        <ul class="nav-list" role="list">
+          <li><a href="/" class="nav-link">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/" class="nav-link">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/" class="nav-link">Yetakchilar</a></li>
+          <li><a href="/imkoniyatlar/" class="nav-link active">Imkoniyatlar</a></li>
+          <li><a href="/jurnal/" class="nav-link">Yetakchilar online jurnali</a></li>
+          <li><a href="/ariza/" class="nav-link nav-cta">Ariza qoldirish</a></li>
+        </ul>
+      </nav>
+      <button class="burger-btn" id="burger-btn"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-nav-list" role="list">
+      <li><a href="/" class="mobile-nav-link">Bosh sahifa</a></li>
+      <li><a href="/biz-haqimizda/" class="mobile-nav-link">Biz haqimizda</a></li>
+      <li><a href="/yetakchilar/" class="mobile-nav-link">Yetakchilar</a></li>
+      <li><a href="/imkoniyatlar/" class="mobile-nav-link">Imkoniyatlar</a></li>
+      <li><a href="/jurnal/" class="mobile-nav-link">Yetakchilar online jurnali</a></li>
+      <li><a href="/ariza/" class="mobile-nav-link mobile-nav-cta">Ariza qoldirish</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section class="page-hero" id="page-hero">
+      <div class="container page-hero-content">
+        <span class="section-label">GRANTLAR VA DASTURLAR</span>
+        <h1 class="page-hero-title">Imkoniyatlar</h1>
+        <p class="page-hero-subtitle">Xalqaro dasturlar va O'zbekistonda bo'layotgan turli xil bellashuvlar haqida ma'lumot</p>
+      </div>
+    </section>
+
+    <div class="opp-container container">
+      {% if opportunities %}
+        <div class="opp-grid">
+          {% for opp in opportunities %}
+            <div class="opp-card">
+              {% if opp.image %}
+                <img src="{{ opp.image.url }}" alt="{{ opp.title }}" class="opp-image" />
+              {% endif %}
+              <h2 class="opp-title">{{ opp.title }}</h2>
+              <div class="opp-meta">
+                {% if opp.country %}<span class="opp-badge">{{ opp.country }}</span>{% endif %}
+                {% if opp.format %}<span class="opp-badge">{{ opp.format }}</span>{% endif %}
+                {% if opp.age_category %}<span class="opp-badge">Yosh: {{ opp.age_category }}</span>{% endif %}
+              </div>
+              <div class="opp-desc">
+                {{ opp.description|safe }}
+              </div>
+              <div class="opp-footer">
+                {% if opp.deadline %}
+                  <span class="opp-deadline">⏳ Muddat: {{ opp.deadline }}</span>
+                {% else %}
+                  <span></span>
+                {% endif %}
+                {% if opp.registration_link %}
+                  <a href="{{ opp.registration_link }}" target="_blank" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Ro'yxatdan o'tish</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <!-- Coming Soon Card -->
+        <div style="background: var(--bg-surface); border: 1px solid rgba(0, 166, 235, 0.35); border-radius: var(--radius-xl); padding: 70px 40px; text-align: center; backdrop-filter: blur(24px); box-shadow: 0 35px 100px rgba(0,0,0,0.7); max-width: 840px; margin: 0 auto; position: relative; overflow: hidden;" class="reveal">
+          <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,235,0.25) 0%, rgba(0,0,0,0) 70%); pointer-events: none; border-radius: 50%;"></div>
+          <span style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #00A6EB 0%, #0066FF 100%); color: #ffffff; font-weight: 900; font-size: 0.85rem; padding: 7px 22px; border-radius: 100px; letter-spacing: 0.15em; text-transform: uppercase; box-shadow: 0 4px 20px rgba(0,166,235,0.4); margin-bottom: 24px;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="margin-right:8px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+            TEZ KUNDA / COMING SOON
+          </span>
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2;">Yangi imkoniyatlar tez kunda!</h2>
+          <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.7; max-width: 650px; margin: 0 auto 36px;">Yoshlar uchun eng zo'r grantlar, xalqaro dasturlar va bellashuvlar shu yerda e'lon qilib boriladi. Tez kunda qaytamiz!</p>
+          <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="btn btn-primary" style="padding: 14px 28px;">Bosh sahifaga qaytish &rarr;</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand" id="footer-brand">
+        <img src="/static/images/main_logo.png" alt="O‘zYYE Logo" class="footer-logo" id="footer-logo" />
+        <p class="footer-desc">O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi — kelajak qurayotgan zamondoshlarimiz haqida.</p>
+        <div class="footer-social" id="footer-social">
+          <a href="https://t.me/uzyye_rasmiy" target="_blank" class="social-link" id="social-telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-nav" id="footer-nav">
+        <h3 class="footer-nav-title">Sahifalar</h3>
+        <ul class="footer-nav-list" role="list">
+          <li><a href="/">Bosh sahifa</a></li>
+          <li><a href="/biz-haqimizda/">Biz haqimizda</a></li>
+          <li><a href="/yetakchilar/">Yetakchilar</a></li>
+          <li><a href="/imkoniyatlar/">Imkoniyatlar</a></li>
+          <li><a href="/jurnal/">Online jurnal</a></li>
+          <li><a href="/ariza/">Ariza qoldirish</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="/static/script.js"></script>
+</body>
+</html>

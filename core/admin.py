@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Leader, Journal, Application, JournalArticle
+from .models import Leader, Journal, Application, JournalArticle, Opportunity
 
 admin.site.site_header = "O‘zbekiston Yetakchi Yoshlari Ensiklopediyasi"
 admin.site.site_title = "O‘zYYE Boshqaruv Paneli"
@@ -68,5 +68,12 @@ class ApplicationAdmin(admin.ModelAdmin):
             'fields': ('status',)
         }),
     )
+
+@admin.register(Opportunity)
+class OpportunityAdmin(admin.ModelAdmin):
+    list_display = ('title', 'country', 'format', 'deadline', 'is_active', 'created_at')
+    list_filter = ('is_active', 'format', 'country')
+    search_fields = ('title', 'description', 'country')
+    list_editable = ('is_active',)
 
 

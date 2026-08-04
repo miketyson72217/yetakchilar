@@ -45,6 +45,11 @@ urlpatterns = [
     path('iqtiboslar.html', views.iqtiboslar_view, name='iqtiboslar'),
 
 
+    # Imkoniyatlar routes
+    path('imkoniyatlar/', views.imkoniyatlar_view, name='imkoniyatlar_slash'),
+    path('imkoniyatlar', views.imkoniyatlar_view, name='imkoniyatlar_clean'),
+    path('imkoniyatlar.html', views.imkoniyatlar_view, name='imkoniyatlar'),
+
     # Ariza routes
     path('ariza/', views.ariza_view, name='ariza_slash'),
     path('ariza', views.ariza_view, name='ariza_clean'),

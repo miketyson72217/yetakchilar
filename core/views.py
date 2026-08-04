@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from .models import Leader, Journal, Application
+from .models import Leader, Journal, Application, Opportunity
 from .telegram_bot import (
     send_telegram_application_notification,
     edit_telegram_message,
@@ -377,3 +377,10 @@ def telegram_webhook_view(request):
 
     return HttpResponse('OK')
 
+
+def imkoniyatlar_view(request):
+    opportunities = Opportunity.objects.filter(is_active=True).order_by('-created_at')
+    context = {
+        'opportunities': opportunities,
+    }
+    return render(request, 'imkoniyatlar.html', context)

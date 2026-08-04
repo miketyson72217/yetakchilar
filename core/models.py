@@ -147,3 +147,23 @@ class JournalArticle(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.page_number}-sahifa)"
+
+class Opportunity(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Sarlavha (masalan: Edu Grands...)")
+    country = models.CharField(max_length=100, blank=True, null=True, verbose_name="Davlat (masalan: Turkiya 🇹🇷)")
+    format = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dastur shakli (masalan: Oflayn)")
+    age_category = models.CharField(max_length=50, blank=True, null=True, verbose_name="Yosh toifasi (masalan: 18-30)")
+    description = RichTextField(verbose_name="Batafsil ma'lumot (Matn va imtiyozlar)")
+    registration_link = models.URLField(max_length=500, blank=True, null=True, verbose_name="Ro'yxatdan o'tish havolasi")
+    deadline = models.CharField(max_length=100, blank=True, null=True, verbose_name="So'nggi muddat (masalan: 30-Avgust)")
+    image = models.ImageField(upload_to='opportunities/', blank=True, null=True, verbose_name="Rasm / Poster")
+    is_active = models.BooleanField(default=True, verbose_name="Faol / E'lon qilingan")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo'shilgan sana")
+
+    class Meta:
+        verbose_name = "Imkoniyat (Grant/Dastur)"
+        verbose_name_plural = "Imkoniyatlar (Grantlar/Dasturlar)"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
