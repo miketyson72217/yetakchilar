@@ -80,6 +80,61 @@
       font-weight: 700;
       color: #ef4444;
     }
+    .expiring-soon-box {
+      background: rgba(255, 184, 0, 0.05);
+      border: 1px solid rgba(255, 184, 0, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 24px 32px;
+      margin-bottom: 40px;
+    }
+    .expiring-soon-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .expiring-soon-header h3 {
+      font-size: 1.25rem;
+      color: #FBBF24;
+      font-weight: 800;
+    }
+    .expiring-list {
+      list-style: none;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .expiring-list li {
+      display: flex;
+      align-items: center;
+    }
+    .expiring-list li::before {
+      content: '-';
+      color: var(--text-tertiary);
+      margin-right: 12px;
+    }
+    .expiring-list a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: color var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .expiring-list a:hover {
+      color: #FBBF24;
+    }
+    .expiring-country {
+      font-size: 1rem;
+    }
+    .expiring-footer {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+    }
   </style>
 </head>
 <body>
@@ -129,6 +184,29 @@
 
     <div class="opp-container container">
       {% if opportunities %}
+        
+        <div class="expiring-soon-box">
+          <div class="expiring-soon-header">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="color: #FBBF24;"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <h3>Shu kunlarda muddati tugaydigan dasturlar:</h3>
+          </div>
+          <ul class="expiring-list">
+            {% for opp in opportunities|slice:":4" %}
+            <li>
+              <a href="{% url 'opportunity_detail' opp.slug %}">
+                {{ opp.title }}
+                {% if opp.country %}
+                  <span class="expiring-country">{{ opp.country|slice:"-2:" }}</span>
+                {% endif %}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <div class="expiring-footer">
+            Imkoniyatdan foydalanib qoling. Tanlov o'z qo'lingizda! ✨
+          </div>
+        </div>
+
         <div class="opp-grid">
           {% for opp in opportunities %}
             <div class="opp-card">
