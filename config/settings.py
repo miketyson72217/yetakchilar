@@ -112,6 +112,7 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SILENCED_SYSTEM_CHECKS = ['ckeditor.W001']
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
