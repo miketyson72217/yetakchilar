@@ -157,31 +157,6 @@
       const emptyState = document.getElementById('leaders-empty-state');
       const grid = document.getElementById('leaders-grid');
 
-      // ---- MOZAIKA: assign card size variants ----
-      // Pattern repeats every 7 cards for variety
-      const MOSAIC_PATTERN = [
-        'card--featured', // 1 — katta, baland
-        'card--mini',     // 2 — kichik
-        'card--tall',     // 3 — uzun portret
-        'card--mini',     // 4 — kichik
-        '',               // 5 — oddiy
-        'card--square',   // 6 — kvadrat
-        'card--tall',     // 7 — uzun
-      ];
-
-      function applyMosaicClasses() {
-        const cards = grid.querySelectorAll('a.leader-card');
-        const VARIANTS = ['card--featured', 'card--tall', 'card--square', 'card--mini'];
-        cards.forEach((card, i) => {
-          // Remove existing variant classes
-          VARIANTS.forEach(v => card.classList.remove(v));
-          const variant = MOSAIC_PATTERN[i % MOSAIC_PATTERN.length];
-          if (variant) card.classList.add(variant);
-        });
-      }
-
-      applyMosaicClasses();
-
       function getCards() {
         return grid.querySelectorAll('a.leader-card');
       }
@@ -207,7 +182,7 @@
         });
 
         clearBtn.style.display = q ? '' : 'none';
-        emptyState.style.display = (visible === 0 && q) ? 'block' : 'none';
+        emptyState.style.display = (visible === 0 && q) ? 'grid' : 'none';
         countText.textContent = q ? `${visible} ta natija topildi` : '';
       }
 
