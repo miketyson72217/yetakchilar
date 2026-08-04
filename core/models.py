@@ -156,6 +156,7 @@ class Opportunity(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True, verbose_name="URL Slug")
     country = models.CharField(max_length=100, choices=COUNTRY_CHOICES, blank=True, null=True, verbose_name="Davlat")
     format = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dastur shakli (masalan: Oflayn)")
+    badge = models.CharField(max_length=50, blank=True, null=True, verbose_name="Maxsus belgi (Masalan: Maxsus grant)")
     age_category = models.CharField(max_length=50, blank=True, null=True, verbose_name="Yosh toifasi (masalan: 18-30)")
     description = RichTextField(verbose_name="Batafsil ma’lumot (Matn va imtiyozlar)")
     registration_link = models.URLField(max_length=500, blank=True, null=True, verbose_name="Ro‘yxatdan o‘tish havolasi")
