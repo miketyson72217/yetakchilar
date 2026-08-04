@@ -17,7 +17,7 @@ class LeaderAdmin(admin.ModelAdmin):
 
 
     fieldsets = (
-        ("Asosiy Maʼlumotlar", {
+        ("Asosiy Ma’lumotlar", {
             'fields': ('name', 'slug', 'sphere', 'region', 'photo', 'short_bio', 'is_featured', 'show_in_leaders', 'show_quote', 'is_quote_featured')
         }),
         ("Iqtibos Poster Rasmlari", {
@@ -61,7 +61,7 @@ class ApplicationAdmin(admin.ModelAdmin):
     readonly_fields = ('full_name', 'phone', 'telegram_username', 'created_at')
 
     fieldsets = (
-        ("Nomzod Maʼlumotlari", {
+        ("Nomzod Ma’lumotlari", {
             'fields': ('full_name', 'phone', 'telegram_username', 'created_at')
         }),
         ("Qaror / Holat", {

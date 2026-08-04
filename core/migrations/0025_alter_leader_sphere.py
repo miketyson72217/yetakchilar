@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='leader',
             name='sphere',
-            field=models.CharField(choices=[('biznes', 'Tadbirkorlik & Biznes'), ('texno', 'Texnologiya & IT'), ('sport', 'Sport'), ('fan', 'Fan & Taʼlim'), ('sanat', 'Sanʼat & Madaniyat'), ('tibbiyot', 'Tibbiyot'), ('ijtimoiy', 'Ijtimoiy faoliyat'), ('media', 'Media va Jurnalistika')], max_length=50, verbose_name='Soha'),
+            field=models.CharField(choices=[('biznes', 'Tadbirkorlik & Biznes'), ('texno', 'Texnologiya & IT'), ('sport', 'Sport'), ('fan', 'Fan & Ta’lim'), ('sanat', 'San’at & Madaniyat'), ('tibbiyot', 'Tibbiyot'), ('ijtimoiy', 'Ijtimoiy faoliyat'), ('media', 'Media va Jurnalistika')], max_length=50, verbose_name='Soha'),
         ),
     ]

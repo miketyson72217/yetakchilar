@@ -8,8 +8,8 @@ class Leader(models.Model):
         ('biznes', 'Tadbirkorlik va Biznes'),
         ('texno', 'Texnologiya va IT'),
         ('sport', 'Sport'),
-        ('fan', 'Fan va Taʼlim'),
-        ('sanat', 'Sanʼat va Madaniyat'),
+        ('fan', 'Fan va Ta’lim'),
+        ('sanat', 'San’at va Madaniyat'),
         ('tibbiyot', 'Tibbiyot'),
         ('ijtimoiy', 'Ijtimoiy faoliyat'),
         ('media', 'Media va Jurnalistika'),
@@ -42,7 +42,7 @@ class Leader(models.Model):
     bio_file = models.FileField(upload_to='bios/', blank=True, null=True, verbose_name="Biografiya fayli (PDF/DOCX, ixtiyoriy)")
     birth_date = models.CharField(max_length=100, blank=True, verbose_name="Tug‘ilgan sana")
     birth_place = models.CharField(max_length=100, blank=True, verbose_name="Tug‘ilgan joy")
-    education = models.CharField(max_length=255, blank=True, verbose_name="Taʼlim")
+    education = models.CharField(max_length=255, blank=True, verbose_name="Ta’lim")
     quote_poster = models.ImageField(upload_to='leaders/quotes/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (16:9 keng)")
     quote_poster_1x1 = models.ImageField(upload_to='leaders/quotes/1x1/', blank=True, null=True, verbose_name="Iqtibos poster rasmi (1:1 kvadrat)")
     is_featured = models.BooleanField(default=False, verbose_name="Bosh sahifada yetakchini ko‘rsatish")
@@ -81,7 +81,7 @@ class Journal(models.Model):
     file_size = models.CharField(max_length=50, default='24 MB', verbose_name="Fayl hajmi")
     issn = models.CharField(max_length=50, default='ISSN 2023-1234', verbose_name="ISSN raqami")
     release_date = models.CharField(max_length=100, default='Iyun 2024', verbose_name="Chop etilgan sana")
-    is_active = models.BooleanField(default=True, verbose_name="Faol / Eʼlon qilingan")
+    is_active = models.BooleanField(default=True, verbose_name="Faol / E’lon qilingan")
 
     class Meta:
         verbose_name = "Online Jurnal"
@@ -164,7 +164,7 @@ class Opportunity(models.Model):
     deadline = models.CharField(max_length=100, blank=True, null=True, verbose_name="So‘nggi muddat (masalan: 30-Avgust)")
     deadline_date = models.DateField(blank=True, null=True, verbose_name="Haqiqiy sana (Avtomatlashtirish uchun)")
     image = models.ImageField(upload_to='opportunities/', blank=True, null=True, verbose_name="Rasm / Poster")
-    is_active = models.BooleanField(default=True, verbose_name="Faol / E'lon qilingan")
+    is_active = models.BooleanField(default=True, verbose_name="Faol / E’lon qilingan")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Qo‘shilgan sana")
 
     class Meta:
