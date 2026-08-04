@@ -43,4 +43,7 @@ class SecurityHeadersMiddleware:
             'payment=(), usb=(), magnetometer=()'
         )
 
+        # Disable QUIC/HTTP3 to prevent ERR_QUIC_PROTOCOL_ERROR on mobile
+        response['Alt-Svc'] = 'clear'
+
         return response
