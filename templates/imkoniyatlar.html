@@ -83,67 +83,98 @@
 
     /* ===== DEADLINE SECTION ===== */
     .urgency-banner {
-      border-top: 1px solid var(--border-subtle);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 28px 0;
-      margin-bottom: 56px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 64px;
     }
     .urgency-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .urgency-header h3 {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    .urgency-header svg { color: var(--text-tertiary); }
-    .urgency-items {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .urgency-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 11px 0;
+      justify-content: space-between;
+      padding: 20px 28px;
       border-bottom: 1px solid var(--border-subtle);
     }
-    .urgency-item:last-child { border-bottom: none; }
-    .urgency-dot { display: none; }
-    .urgency-item a {
-      color: var(--text-primary);
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: color var(--transition);
+    .urgency-header-left {
       display: flex;
       align-items: center;
       gap: 10px;
-      width: 100%;
     }
-    .urgency-item a:hover { color: #00A6EB; }
+    .urgency-header-left h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .urgency-count {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(0,166,235,0.12);
+      color: #00A6EB;
+      border: 1px solid rgba(0,166,235,0.2);
+      padding: 2px 9px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+    .urgency-dot { display: none; }
+    .urgency-items { display: flex; flex-direction: column; }
+    .urgency-item {
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background var(--transition);
+    }
+    .urgency-item:last-child { border-bottom: none; }
+    .urgency-item:hover { background: var(--bg-surface-hover); }
+    .urgency-item a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 28px;
+      text-decoration: none;
+    }
+    .urgency-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      width: 20px;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
     .urgency-title {
       flex: 1;
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: var(--text-primary);
       min-width: 0;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      transition: color var(--transition);
     }
+    .urgency-item:hover .urgency-title { color: #00A6EB; }
     .urgency-flag {
-      font-size: 0.95rem;
+      font-size: 1rem;
       flex-shrink: 0;
     }
     .urgency-date {
       flex-shrink: 0;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--text-tertiary);
-      letter-spacing: 0.03em;
+      font-variant-numeric: tabular-nums;
+      min-width: 80px;
+      text-align: right;
+    }
+    .urgency-arrow {
+      flex-shrink: 0;
+      color: var(--text-tertiary);
+      transition: transform var(--transition), color var(--transition);
+      opacity: 0;
+    }
+    .urgency-item:hover .urgency-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+      color: #00A6EB;
     }
     .urgency-footer { display: none; }
 
@@ -422,24 +453,24 @@
       {% if expiring_opportunities %}
         <div class="urgency-banner">
           <div class="urgency-header">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <h3>Muddati tugamoqda</h3>
+            <div class="urgency-header-left">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:#00A6EB;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <h3>Muddati yaqinlashmoqda</h3>
+              <span class="urgency-count">{{ expiring_opportunities|length }} ta</span>
+            </div>
           </div>
           <div class="urgency-items">
             {% for opp in expiring_opportunities %}
             <div class="urgency-item">
-              <div class="urgency-dot"></div>
               <a href="{% url 'opportunity_detail' opp.slug %}">
+                <span class="urgency-num">0{{ forloop.counter }}</span>
                 <span class="urgency-title">{{ opp.title }}</span>
                 {% if opp.country %}<span class="urgency-flag">{{ opp.country|slice:"-2:" }}</span>{% endif %}
                 {% if opp.deadline %}<span class="urgency-date">{{ opp.deadline }}</span>{% endif %}
+                <svg class="urgency-arrow" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
               </a>
             </div>
             {% endfor %}
-          </div>
-          <div class="urgency-footer">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:#fbbf24; flex-shrink:0;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Imkoniyatdan foydalanib qoling. Tanlov o'z qo'lingizda!
           </div>
         </div>
       {% endif %}
