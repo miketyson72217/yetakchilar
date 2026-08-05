@@ -18,6 +18,8 @@ from django.db.models import Q
 from django_ratelimit.decorators import ratelimit
 import bleach
 
+from bleach.css_sanitizer import CSSSanitizer
+
 ALLOWED_TAGS = [
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'hr',
     'strong', 'em', 'u', 's', 'a', 'img', 'ul', 'ol', 'li',
@@ -34,6 +36,8 @@ ALLOWED_ATTRIBUTES = {
     'p': ['style'],
 }
 
+css_sanitizer = CSSSanitizer()
+
 def sanitize_html(html_content):
     """Sanitize HTML content to prevent XSS attacks."""
     if not html_content:
@@ -42,6 +46,7 @@ def sanitize_html(html_content):
         html_content,
         tags=ALLOWED_TAGS,
         attributes=ALLOWED_ATTRIBUTES,
+        css_sanitizer=css_sanitizer,
         strip=True,
     )
 
