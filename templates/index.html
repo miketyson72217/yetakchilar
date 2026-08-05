@@ -194,10 +194,10 @@
           <span class="section-label">IQTIBOSLAR</span>
           <h2 class="section-title" id="quotes-title">Yetakchi yoshlardan iqtiboslar</h2>
         </div>
-        <div class="quotes-grid" id="quotes-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:32px; align-items:start;">
+        <div class="quotes-grid" id="quotes-grid" style="display: block; column-width: 320px; column-gap: 32px;">
           {% if quotes %}
             {% for q in quotes %}
-                <div style="width:100%; overflow:hidden; border-radius:var(--radius-xl); box-shadow:0 15px 35px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.05); position:relative;">
+                <div style="break-inside: avoid; margin-bottom: 32px; width:100%; overflow:hidden; border-radius:var(--radius-xl); box-shadow:0 15px 35px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.05); position:relative;">
                   <a href="/iqtiboslar/" style="display:block; width:100%;">
                     <img src="{{ q.random_poster_url }}" alt="{{ q.name }}" style="width:100%; height:auto; display:block; transition:transform 0.4s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
                   </a>
