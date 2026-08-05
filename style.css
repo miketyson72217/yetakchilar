@@ -567,24 +567,22 @@ p, .section-desc {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 280px;
+  grid-auto-flow: dense;
   gap: 20px;
 }
 
-/* === MOZAIKA PATTERN ===
-   Har 5 ta kartadan:
-   1-chi: keng (2 ustun) + baland (2 qator) — hero karta
-   2-3-chi: odd/kichik
-   4-5-chi: keng (2 ustun) biri
+/* === MOZAIKA PATTERN (JS tomonidan class qo'shiladi) ===
+   .card-hero : 2 ustun × 2 qator (katta hero)
+   .card-wide : 2 ustun × 1 qator (keng)
+   default    : 1 × 1 (oddiy)
 */
 
-/* 1-chi, 6-chi, 11-chi... (5n+1) => hero: 2x2 */
-.leaders-grid .leader-card:nth-child(5n+1) {
+.leaders-grid .leader-card.card-hero {
   grid-column: span 2;
   grid-row: span 2;
 }
 
-/* 4-chi, 9-chi, 14-chi... (5n+4) => keng gorizontal */
-.leaders-grid .leader-card:nth-child(5n+4) {
+.leaders-grid .leader-card.card-wide {
   grid-column: span 2;
 }
 
@@ -612,57 +610,45 @@ p, .section-desc {
 }
 
 /* Hero karta uchun gradient overlay */
-.leaders-grid .leader-card:nth-child(5n+1)::after {
+.leaders-grid .leader-card.card-hero::after,
+.leaders-grid .leader-card.card-wide::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
     rgba(2, 6, 20, 0.92) 0%,
-    rgba(2, 6, 20, 0.4) 45%,
+    rgba(2, 6, 20, 0.4) 50%,
     transparent 100%
   );
   z-index: 1;
   pointer-events: none;
 }
 
-/* Hero karta info — pastiga joylashsin */
-.leaders-grid .leader-card:nth-child(5n+1) .leader-info {
+/* Hero va Wide karta info — pastiga joylashsin */
+.leaders-grid .leader-card.card-hero .leader-info,
+.leaders-grid .leader-card.card-wide .leader-info {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 32px 28px;
+  padding: 28px 24px;
   background: transparent;
 }
 
-.leaders-grid .leader-card:nth-child(5n+1) .leader-name {
-  font-size: 1.65rem;
+.leaders-grid .leader-card.card-hero .leader-name {
+  font-size: 1.6rem;
 }
 
-/* Keng gorizontal karta uchun ham overlay + absolute info */
-.leaders-grid .leader-card:nth-child(5n+4)::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(2, 6, 20, 0.88) 0%,
-    rgba(2, 6, 20, 0.2) 60%,
-    transparent 100%
-  );
-  z-index: 1;
-  pointer-events: none;
+.leaders-grid .leader-card.card-wide .leader-name {
+  font-size: 1.2rem;
 }
 
-.leaders-grid .leader-card:nth-child(5n+4) .leader-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  background: transparent;
+/* Oddiy kartalar info — oddiy (static) */
+.leaders-grid .leader-card:not(.card-hero):not(.card-wide) .leader-info {
+  position: static;
+  background: var(--bg-surface);
 }
 
 .leader-card:hover {
@@ -680,8 +666,8 @@ p, .section-desc {
   flex: 1;
 }
 
-/* Oddiy kartalar uchun aspect-ratio (flex-1 bilan to'ladi) */
-.leaders-grid .leader-card:not(:nth-child(5n+1)):not(:nth-child(5n+4)) .leader-photo-wrap {
+/* Oddiy kartalar photo-wrap */
+.leaders-grid .leader-card:not(.card-hero):not(.card-wide) .leader-photo-wrap {
   flex: 1;
 }
 

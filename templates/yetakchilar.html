@@ -158,7 +158,22 @@
       const grid = document.getElementById('leaders-grid');
 
       function getCards() {
-        return grid.querySelectorAll('a.leader-card');
+        return Array.from(grid.querySelectorAll('a.leader-card'));
+      }
+
+      /* Ko'rinadigan kartalar tartibiga qarab mozaika class berish */
+      function assignMosaicClasses() {
+        const cards = getCards();
+        let visibleIdx = 0;
+        cards.forEach(card => {
+          card.classList.remove('card-hero', 'card-wide');
+          if (card.style.display !== 'none') {
+            const mod = visibleIdx % 5;
+            if (mod === 0) card.classList.add('card-hero');
+            else if (mod === 3) card.classList.add('card-wide');
+            visibleIdx++;
+          }
+        });
       }
 
       function updateSearch() {
@@ -180,6 +195,9 @@
             if (match) visible++;
           }
         });
+
+        /* Mozaika classlarini yangilash */
+        assignMosaicClasses();
 
         clearBtn.style.display = q ? '' : 'none';
         emptyState.style.display = (visible === 0 && q) ? 'grid' : 'none';
