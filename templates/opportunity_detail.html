@@ -133,11 +133,13 @@
     }
     @media (max-width: 900px) {
       .det-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
       }
       .det-sidebar { 
         order: -1; 
-        position: static;
+        position: static !important;
+        width: 100%;
       }
     }
 
