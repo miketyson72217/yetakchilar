@@ -127,16 +127,7 @@
         <div class="leaders-grid" id="leaders-grid">
           {# ===== TOP YETAKCHILAR — mozaika pattern server-side ===== #}
           {% for leader in top_leaders %}
-            {% if forloop.counter|divisibleby:5 and not forloop.counter == 0 %}
-              {% with card_class="" %}
-            {% elif forloop.counter == 1 or forloop.counter == 6 or forloop.counter == 11 or forloop.counter == 16 or forloop.counter == 21 or forloop.counter == 26 or forloop.counter == 31 or forloop.counter == 36 or forloop.counter == 41 %}
-              {% with card_class="card-hero" %}
-            {% elif forloop.counter == 4 or forloop.counter == 9 or forloop.counter == 14 or forloop.counter == 19 or forloop.counter == 24 or forloop.counter == 29 or forloop.counter == 34 or forloop.counter == 39 or forloop.counter == 44 %}
-              {% with card_class="card-wide" %}
-            {% else %}
-              {% with card_class="" %}
-            {% endif %}
-              <a href="{% url 'leader_detail' leader.slug %}" class="leader-card {{ card_class }} reveal" style="text-decoration:none;" data-category="{{ leader.sphere }}" data-is-top="true">
+              <a href="{% url 'leader_detail' leader.slug %}" class="leader-card {% if forloop.counter == 1 or forloop.counter == 6 or forloop.counter == 11 or forloop.counter == 16 or forloop.counter == 21 or forloop.counter == 26 or forloop.counter == 31 or forloop.counter == 36 or forloop.counter == 41 %}card-hero{% elif forloop.counter == 4 or forloop.counter == 9 or forloop.counter == 14 or forloop.counter == 19 or forloop.counter == 24 or forloop.counter == 29 or forloop.counter == 34 or forloop.counter == 39 or forloop.counter == 44 %}card-wide{% endif %} reveal" style="text-decoration:none;" data-category="{{ leader.sphere }}" data-is-top="true">
                 <div class="leader-photo-wrap">
                   <img src="{% if leader.photo %}{{ leader.photo.url }}{% else %}/static/images/leader_male_default.png{% endif %}" alt="{{ leader.name }}" class="leader-photo" onerror="this.onerror=null; this.src='/static/images/leader_male_default.png'" />
                 </div>
@@ -145,7 +136,6 @@
                   <span class="leader-sphere">{{ leader.get_sphere_display }} — {{ leader.get_region_display }}</span>
                 </div>
               </a>
-            {% endwith %}
           {% empty %}
             <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text-secondary);">
               Ushbu soha bo'yicha yetakchilar topilmadi.
