@@ -230,3 +230,41 @@ navLinks.forEach(link => {
     link.classList.add('active');
   }
 });
+
+// ===== CSS GRID MASONRY =====
+function initGridMasonry() {
+  const grids = document.querySelectorAll('.masonry-grid');
+  grids.forEach(grid => {
+    const items = grid.querySelectorAll('.masonry-item');
+    
+    function layoutGrid() {
+      // Reset spans
+      items.forEach(item => { item.style.gridRowEnd = 'auto'; });
+      // Calculate new spans
+      items.forEach(item => {
+        if(window.getComputedStyle(item).display === 'none') return;
+        const height = item.getBoundingClientRect().height;
+        const rowSpan = Math.ceil((height + 32) / 10);
+        item.style.gridRowEnd = `span ${rowSpan}`;
+      });
+    }
+
+    layoutGrid(); // initial run
+
+    // Observe size changes of grid items (e.g. image loads, text reflow)
+    if (window.ResizeObserver) {
+      const resizeObserver = new ResizeObserver(() => {
+        // Debounce to prevent performance issues
+        clearTimeout(grid._masonryTimeout);
+        grid._masonryTimeout = setTimeout(layoutGrid, 50);
+      });
+      items.forEach(item => resizeObserver.observe(item));
+    }
+  });
+}
+
+// Global listeners
+window.addEventListener('load', initGridMasonry);
+window.addEventListener('resize', initGridMasonry);
+
+
