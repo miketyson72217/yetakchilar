@@ -146,6 +146,8 @@ def _get_status_header(application):
     return label
 
 
+from django.utils import timezone
+
 def _build_message_text(application):
     """Builds the full message text."""
     status_header = _get_status_header(application)
@@ -153,7 +155,7 @@ def _build_message_text(application):
         f"📥 <b>ARIZA #{application.id} — {application.full_name}</b>\n\n"
         f"📞 <b>Telefon:</b> {application.phone}\n"
         f"✈️ <b>Telegram:</b> {application.telegram_username}\n"
-        f"📅 <b>Vaqti:</b> {application.created_at.strftime('%Y-%m-%d %H:%M')}\n\n"
+        f"📅 <b>Vaqti:</b> {timezone.localtime(application.created_at).strftime('%Y-%m-%d %H:%M')}\n\n"
         f"<b>Holat:</b> {status_header}"
     )
 
