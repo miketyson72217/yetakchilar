@@ -237,34 +237,25 @@ function initGridMasonry() {
   grids.forEach(grid => {
     const items = grid.querySelectorAll('.masonry-item');
     
-    function layoutGrid() {
-      // Reset spans
-      items.forEach(item => { item.style.gridRowEnd = 'auto'; });
-      // Calculate new spans
-      items.forEach(item => {
-        if(window.getComputedStyle(item).display === 'none') return;
-        const height = item.getBoundingClientRect().height;
-        const rowSpan = Math.ceil((height + 32) / 10);
-        item.style.gridRowEnd = `span ${rowSpan}`;
-      });
-    }
-
-    layoutGrid(); // initial run
-
-    // Observe size changes of grid items (e.g. image loads, text reflow)
-    if (window.ResizeObserver) {
-      const resizeObserver = new ResizeObserver(() => {
-        // Debounce to prevent performance issues
-        clearTimeout(grid._masonryTimeout);
-        grid._masonryTimeout = setTimeout(layoutGrid, 50);
-      });
-      items.forEach(item => resizeObserver.observe(item));
-    }
+    // First, reset all spans to measure natural heights
+    items.forEach(item => {
+      item.style.gridRowEnd = 'auto';
+    });
+    
+    // Measure and set span
+    items.forEach(item => {
+      // If hidden (e.g. by search), ignore
+      if(window.getComputedStyle(item).display === 'none') return;
+      
+      const height = item.getBoundingClientRect().height;
+      // 10px is grid-auto-rows, 32px is the gap we want between items
+      const rowSpan = Math.ceil((height + 32) / 10);
+      item.style.gridRowEnd = `span ${rowSpan}`;
+    });
   });
 }
 
-// Global listeners
+// Run masonry after images load to ensure correct heights
 window.addEventListener('load', initGridMasonry);
 window.addEventListener('resize', initGridMasonry);
-
 
