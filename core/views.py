@@ -86,8 +86,14 @@ def yetakchilar_view(request):
     if sphere and sphere != 'all':
         leaders = leaders.filter(sphere=sphere)
 
+    # Top yetakchilar tartibda (mozaika uchun server-side index)
+    top_leaders = leaders.filter(show_in_leaders=True)
+    other_leaders = leaders.filter(show_in_leaders=False)
+
     context = {
         'leaders': leaders,
+        'top_leaders': top_leaders,
+        'other_leaders': other_leaders,
         'active_sphere': sphere or 'all',
     }
     return render(request, 'yetakchilar.html', context)
