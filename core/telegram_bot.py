@@ -19,10 +19,17 @@ def _bot_request(method, payload):
     url = f"https://api.telegram.org/bot{bot_token}/{method}"
     try:
         resp = requests.post(url, json=payload, timeout=5)
-        resp.raise_for_status()
-        return resp.json()
+        try:
+            data = resp.json()
+        except ValueError:
+            resp.raise_for_status()
+            return None
+            
+        if not data.get('ok') and 'message is not modified' not in data.get('description', ''):
+            logger.error(f"Telegram API xatosi ({method}): {data.get('description', 'Unknown error')}")
+        return data
     except Exception as e:
-        logger.error(f"Telegram API xatosi ({method}): {e}")
+        logger.error(f"Telegram tarmoq/ulanish xatosi ({method}): {e}")
         return None
 
 
@@ -213,9 +220,14 @@ def edit_telegram_message(application):
         'reply_markup': {'inline_keyboard': keyboard},
     })
 
-    if result and result.get('ok'):
-        logger.info(f"Telegram xabari yangilandi, ariza #{application.id}")
-        return True
+    if result:
+        if result.get('ok'):
+            logger.info(f"Telegram xabari yangilandi, ariza #{application.id}")
+            return True
+        elif 'message is not modified' in result.get('description', ''):
+            logger.info(f"Telegram xabari o'zgarmagan (ariza #{application.id})")
+            return True
+
     logger.error(f"Telegram xabarini yangilashda xato: {result}")
     return False
 
