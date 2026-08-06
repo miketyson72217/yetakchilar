@@ -3,6 +3,13 @@ from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 import uuid
 
+import os
+
+def get_profile_image_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4()}.{ext}"
+    return os.path.join('leaders/', filename)
+
 class Leader(models.Model):
     SPHERE_CHOICES = [
         ('biznes', 'Tadbirkorlik va Biznes'),
@@ -36,7 +43,7 @@ class Leader(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, verbose_name="URL slagi")
     sphere = models.CharField(max_length=50, choices=SPHERE_CHOICES, verbose_name="Soha")
     region = models.CharField(max_length=100, choices=REGION_CHOICES, verbose_name="Hudud")
-    photo = models.ImageField(upload_to='leaders/', verbose_name="Portret rasm")
+    photo = models.ImageField(upload_to=get_profile_image_path, verbose_name="Portret rasm")
     short_bio = models.CharField(max_length=255, blank=True, null=True, verbose_name="Qisqa status (masalan: Ijodkor | Jamoatchilik faoli)")
     full_bio = RichTextField(blank=True, verbose_name="To‘liq biografiya va yutuqlar")
     bio_file = models.FileField(upload_to='bios/', blank=True, null=True, verbose_name="Biografiya fayli (PDF/DOCX, ixtiyoriy)")
