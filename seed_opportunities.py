@@ -51,7 +51,7 @@ data = [
         "title": "United World Colleges",
         "country": "Global (Onlayn) 🌍",
         "format": "To‘liq, qisman qoplamali",
-        "age_category": "15-17",
+        "age_category": "15-17 yosh",
         "deadline": "30-sentabr",
         "registration_link": "https://uz.uwc.org/",
         "description": "<p>United World Colleges – dunyoning 4 ta qitʼasida joylashgan 18 ta maktab va kollejlar tizimidir. O‘zlari tanlagan davlatdagi kollej/maktabga qabul qilingan o‘quvchilar u yerda 2 yil o‘qishadi.</p><br><b>Imtiyozlari:</b><ul><li>Bepul yotoqxona va oziq-ovqat</li><li>O‘qish to‘lovlaridan ozod qilinish, darsliklar</li><li>2 yil IB diplomada o‘qish</li></ul>"
@@ -60,7 +60,7 @@ data = [
         "title": "IT Park International IT Training Program 2026",
         "country": "O‘zbekiston 🇺🇿",
         "format": "Oflayn",
-        "age_category": "18–30",
+        "age_category": "18–30 yosh",
         "deadline": "20-avgust",
         "registration_link": "https://it-park.uz/",
         "description": "<p>IT Park Uzbekistan, Raqamli texnologiyalar vazirligi, American International University–Bangladesh va World Bank hamkorligida tashkil etilgan bepul IT-trening dasturiga arizalar qabul qilinmoqda. Darslar ingliz tilida olib boriladi va bitiruvchilarga IT/ITES kompaniyalarida ishga joylashishda ko‘mak beriladi.</p><br><b>Imtiyozlari:</b><ul><li>To‘liq bepul IT-trening</li><li>Dastur yakunida sertifikat</li><li>50% o‘rinlar qizlar uchun ajratilgan</li><li>IT/ITES kompaniyalarida ishga joylashish bo‘yicha ko‘mak</li></ul>"
@@ -69,7 +69,7 @@ data = [
         "title": "International Medicine & Health Olympiad",
         "country": "AQSh 🇺🇸",
         "format": "Onlayn",
-        "age_category": "14-21",
+        "age_category": "14-21 yosh",
         "deadline": "21-avgust",
         "registration_link": "https://usmdo.org",
         "description": "<p>Tibbiyot, biologiya va sog‘liqni saqlash sohalariga qiziqadigan o‘quvchilar uchun xalqaro olimpiada. Ishtirokchilar dastlab onlayn saralash bosqichida qatnashadilar. Eng yaxshi natija ko‘rsatganlar xalqaro oflayn final bosqichiga taklif etiladi.</p><br><b>Imtiyozlari:</b><ul><li>Oltin, Kumush, Bronza va Honorable Mention mukofotlari;</li><li>Kuchli ishtirokchilar uchun oflayn final bosqichiga yo‘llanma;</li><li>Rasmiy sertifikat va xalqaro e'tirofga ega bo‘lish imkoniyati.</li></ul>"
@@ -97,7 +97,7 @@ data = [
         "title": "Harvard Crimson Global Case Competition",
         "country": "AQSh 🇺🇸",
         "format": "Onlayn",
-        "age_category": "13-18",
+        "age_category": "13-18 yosh",
         "deadline": "16-oktyabr",
         "registration_link": "https://casecomp.org",
         "description": "<p>Bu yuqori maktab o‘quvchilari o‘rtasida business case musobaqasi bo‘lib, ishtirokchilar 2-4 kishilik jamoalar sifatida workshoplarda qatnashib, biznes muammolarini hal qilishadi.</p><br><b>Imtiyozlar:</b><ul><li>$2000 gacha bo‘lgan pul mukofotlari</li><li>Fortune500 loyihasi workshoplariga qatnashish imkoniyati</li><li>Xalqaro networking imkoniyati</li></ul>"
@@ -106,7 +106,7 @@ data = [
         "title": "KADEM International Entrepreneurship Bootcamp",
         "country": "Turkiya 🇹🇷",
         "format": "Oflayn",
-        "age_category": "18-30",
+        "age_category": "18-30 yosh",
         "deadline": "30-Avgust",
         "registration_link": "https://www.inovasyondakadin.org",
         "description": "<p>Ushbu lager dunyoning turli mamlakatlaridan kelgan ayol tadbirkorlarni bir joyga jamlaydi hamda ishtirokchilarga madaniyatlararo o‘quv muhiti, treninglar, soha mutaxassislari bilan yakka tartibdagi mentorlik sessiyalari va tajriba almashish uchrashuvlarini taqdim etadi.</p><br><b>Imtiyozlar:</b><ul><li>10 000 AQSH dollarigacha pul mukofoti</li><li>Soha ekspertlari bilan sessiyalar</li><li>Loyiha uchun investitsiya olish imkoniyati</li></ul>"
